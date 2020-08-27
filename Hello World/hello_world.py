@@ -3,19 +3,19 @@ import pygame
 
 pygame.init()
 
-GRAY = (150, 150, 150)
-BLACK = (0, 0, 0)
+BLACK = (15, 15, 15)
+WHITE = (255, 255, 255)
 
-window_size = (400, 300)
+window_size = (420, 300)
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption('Hello World PyGame')
 font = pygame.font.SysFont('Purisa', 33, bold=True)
-text = font.render('Hello World PyGame', True, BLACK)
+text = font.render('Hello World PyGame!', True, WHITE)
 text_size = text.get_size()
 
 x, y = 0, 0
 x_hat, y_hat = 1, 1
-speed = 2
+speed = 0.5
 
 clock = pygame.time.Clock()
 
@@ -25,7 +25,7 @@ while True:
 		if event.type == pygame.QUIT:
 			exit()
 
-	screen.fill(GRAY)
+	screen.fill(BLACK)
 	
 	x += speed * x_hat
 	y += speed * y_hat
