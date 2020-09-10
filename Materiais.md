@@ -2,6 +2,7 @@
 
 - [PyGame Docs](https://www.pygame.org/docs/)
 - [PyGame Tutorial Documentation](https://buildmedia.readthedocs.org/media/pdf/pygame/latest/pygame.pdf)
+- [PyGame Tutorial](https://pygame.readthedocs.io/en/latest/index.html)
 - [PyGame Tutorials](http://pygametutorials.wikidot.com/)
 - [PyGame For Beginners](https://medium.com/iothincvit/pygame-for-beginners-234da7d3c56f)
 - [Tutoriales PyGame](http://razonartificial.com/tutoriales-pygame/)
