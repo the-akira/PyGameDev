@@ -68,7 +68,7 @@ pygame.init()
 pygame.quit()
 ```
 
-- `pygame.init()`: Inicialize todos os módulos de pygame importados. Podemos sempre inicializar módulos individuais manualmente, mas `pygame.init()` inicializa todos os módulos pygame importados, é uma maneira conveniente de começar tudo.
+- `pygame.init()`: Inicialize todos os módulos de pygame importados. Podemos sempre inicializar módulos individuais manualmente, mas **pygame.init()** inicializa todos os módulos pygame importados, é uma maneira conveniente de começar tudo.
 - `pygame.quit()`: Desinicializa todos os módulos do pygame que foram inicializados anteriormente. Quando o interpretador Python é encerrado, este método é chamado independentemente, portanto, seu programa não deve precisar dele, exceto quando deseja encerrar seus recursos de pygame e continuar. É seguro chamar esta função mais de uma vez, pois as chamadas repetidas não surtem efeito.
 
 Se eventualmente precisarmos obter ajuda sobre algum método do Pygame, podemos utilizar a função **help()** do Python, por exemplo:
@@ -100,7 +100,7 @@ O sistema de coordenadas cartesianas, é o sistema ao qual a maioria das pessoas
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/coordinates.png)
 
-Pygame usa um sistema de coordenadas **x** e **y** onde a posição `(0,0)` é definida como o canto superior esquerdo da tela. Mover para baixo significa ter um valor de y mais alto, mover para a direita significa ter um valor de x mais alto.
+Pygame usa um sistema de coordenadas **x** e **y** onde a posição `(0,0)` é definida como o canto superior esquerdo da tela. Mover para baixo significa ter um valor de **y** mais alto, mover para a direita significa ter um valor de **x** mais alto.
 
 ### Imagens e Rects
 
@@ -139,3 +139,25 @@ A atribuição desses 5 atributos a seguir altera o tamanho do retângulo, mante
 - size, width, height, w, h
 
 Como podemos observar, a classe Rect define **4** pontos de canto, **4** pontos médios e **1** ponto central.
+
+A tabela a seguir apresenta uma lista dos atributos mais importantes que os objetos **pygame.Rect** fornecem (neste exemplo, a variável onde o objeto Rect é armazenado é chamada de **meuRet**):
+
+| Nome do Atributo  | Descrição |
+|---|---|
+| meuRet.left  | O valor int da coordenada X do lado esquerdo do retângulo. |
+| meuRet.right  | O valor int da coordenada X do lado direito do retângulo. |
+| meuRet.top  | O valor int da coordenada Y do lado superior do retângulo. |
+| meuRet.bottom  | O valor int da coordenada Y do lado inferior. |
+| meuRet.centerx  | O valor int da coordenada X do centro do retângulo. |
+| meuRet.centery  | O valor int da coordenada Y do centro do retângulo.  |
+| meuRet.width  | O valor int da largura do retângulo. |
+| meuRet.height  | O valor int da altura do retângulo. |
+| meuRet.size  | Uma tupla de dois ints: (width, height) |
+| meuRet.topleft  | Uma tupla de dois ints: (left, top) |
+| meuRet.topright  | Uma tupla de dois ints: (right, top) |
+| meuRet.bottomleft  | Uma tupla de dois ints: (left, bottom) |
+| meuRet.bottomright  | Uma tupla de dois ints: (right, bottom) |
+| meuRet.midleft  | Uma tupla de dois ints: (left, centery) |
+| meuRet.midright  | Uma tupla de dois ints: (right, centery) |
+| meuRet.midtop  | Uma tupla de dois ints: (centerx, top) |
+| meuRet.midbottom  | Uma tupla de dois ints: (centerx, bottom) |
