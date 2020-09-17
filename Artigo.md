@@ -194,6 +194,21 @@ MAGENTA = (255, 0, 255)
 
 O método `screen.fill(COR)` preenche toda a tela com a cor especificada. Para mostrar qualquer coisa na tela, devemos sempre lembrar de chamar a função `pygame.display.update()`.
 
+É importante lembrarmos que Pygame também conta com cores já definidas, para vermos todas elas podemos usar o seguinte script:
+
+```python
+from pprint import pprint
+import pygame
+
+pprint(pygame.color.THECOLORS)
+```
+
+Neste caso, podemos por exemplo definir a cor preta da seguinte forma:
+
+```python
+BLACK = pygame.Color("black")
+```
+
 ### Game Loop
 
 Todo Game, de Pong à Diablo, usa um [Game Loop](https://gamedevelopment.tutsplus.com/articles/gamedev-glossary-what-is-the-game-loop--gamedev-2469) para controlar a jogabilidade. O Game Loop possui quatro elementos muito importantes:
@@ -215,3 +230,114 @@ O fluxograma a seguir nos apresenta uma ideia geral de como um Game é estrutura
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/pgflowchart.png)
 
 #### Processando Eventos
+
+A parte mais essencial de qualquer aplicação interativa é o **loop de eventos**. Reagir a eventos permite que o usuário interaja com a aplicação. Eventos são ações que podem acontecer em um programa, como:
+
+- Clique do mouse
+- Movimento do mouse
+- Teclado pressionado
+- Ação do joystick
+
+A seguir temos um exemplo de um loop infinito que imprime todos os eventos no console:
+
+```python
+import pygame 
+pygame.init()
+
+# Variável que inicializa a tela
+screen = pygame.display.set_mode((500,500))
+# Variável para manter o loop principal funcionando
+running = True 
+
+while running: 
+	# Observa cada evento na fila de eventos
+	for event in pygame.event.get():
+		print(event)
+		# O usuário clicou no botão fechar da janela? Se sim, pára o Loop
+		if event.type == pygame.QUIT:
+			running = False
+
+pygame.quit()
+```
+
+Ao executarmos o script acima veremos uma janela com uma tela preta, ela não irá desaparecer até que cliquemos no botão fechar, todas as ações executadas por nós serão impressas em nosso console.
+
+### Template Básico
+
+Uma vez que adquirimos o conhecimento dos conceitos fundamentais do Pygame, vamos definir um template que servirá como um esqueleto para nossos projetos.
+
+```python
+from pygame.locals import *
+import pygame
+
+# Valores constantes
+WIDTH = 500
+HEIGHT = 400
+FPS = 60
+
+# Cores
+BLACK = (13, 13, 13)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+# Inicializa pygame e cria a janela
+pygame.init()
+pygame.mixer.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Título do Game")
+clock = pygame.time.Clock()
+
+# Game Loop
+running = True
+while running:
+	# Manter o loop rodando na velocidade correta
+	clock.tick(FPS)
+	# Processar Inputs (Eventos)
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			running = False
+	# Atualizar
+	# Desenhar / Renderizar
+	screen.fill(BLACK)
+	# Depois de desenhar tudo: flipar o display
+	pygame.display.flip()
+
+pygame.quit()
+```
+
+O módulo **[pygame.locals](https://www.pygame.org/docs/ref/locals.html)** contém cerca de 280 constantes usadas e definidas por Pygame. Colocar esta declaração no início de seu programa importa todos eles.
+
+Encontramos nele, por exemplo, os modificadores de tecla (alt, ctrl, cmd, etc.):
+
+```
+KMOD_ALT, KMOD_CAPS, KMOD_CTRL, KMOD_LALT,
+KMOD_LCTRL, KMOD_LMETA, KMOD_LSHIFT, KMOD_META,
+KMOD_MODE, KMOD_NONE, KMOD_NUM, KMOD_RALT, KMOD_RCTRL,
+KMOD_RMETA, KMOD_RSHIFT, KMOD_SHIFT,
+```
+
+As teclas numéricas:
+
+```
+K_0, K_1, K_2, K_3, K_4, K_5, K_6, K_7, K_8, K_9,
+```
+
+As teclas de caracteres especiais:
+
+```
+K_AMPERSAND, K_ASTERISK, K_AT, K_BACKQUOTE,
+K_BACKSLASH, K_BACKSPACE, K_BREAK,
+```
+
+As teclas das letras do alfabeto:
+
+```
+K_a, K_b, K_c, K_d, K_e, K_f, K_g, K_h, K_i, K_j, K_k, K_l, K_m,
+K_n, K_o, K_p, K_q, K_r, K_s, K_t, K_u, K_v, K_w, K_x, K_y, K_z,
+```
+
+O comando `pygame.mixer.init()` inicialize o [módulo do mixer](https://www.pygame.org/docs/ref/mixer.html#pygame.mixer.init) para carregamento e reprodução de som. Os argumentos padrão podem ser substituídos para fornecer mixagem de áudio específica. 
+
+O comando `pygame.time.Clock()` cria um [objeto relógio](https://www.pygame.org/docs/ref/time.html#pygame.time.Clock) que nos ajuda a rastrear o tempo. O relógio também fornece várias funções para ajudar a controlar a taxa de frames de um jogo.
