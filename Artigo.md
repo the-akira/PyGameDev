@@ -161,3 +161,35 @@ A tabela a seguir apresenta uma lista dos atributos mais importantes que os obje
 | meuRet.midright  | Uma tupla de dois ints: (right, centery) |
 | meuRet.midtop  | Uma tupla de dois ints: (centerx, top) |
 | meuRet.midbottom  | Uma tupla de dois ints: (centerx, bottom) |
+
+### Cores
+
+As cores são definidas como tuplas das cores básicas **vermelho**, **verde** e **azul**. Isso é chamado de [modelo RGB](https://en.wikipedia.org/wiki/RGB_color_model). Cada cor de base é representada como um número entre 0 (mínimo) e 255 (máximo) que ocupa 1 byte na memória. Uma cor RGB é então representada como um valor de 3 bytes. A mistura de duas ou mais cores resulta em novas cores. Um total aproximado de 16 milhões (255³) de cores diferentes podem ser representadas dessa forma.
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/colors.png)
+
+Definimos então as cores básicas como tuplas dos três valores base. Como as cores são constantes, vamos escrevê-las em maiúsculas. A ausência de todas as cores resulta em preto. O valor máximo para todos os três componentes resulta em branco. Três valores intermediários idênticos resultam em cinza:
+
+```python
+PRETO = (0, 0, 0)
+CINZA = (127, 127, 127)
+BRANCO = (255, 255, 255)
+```
+
+As três cores base são definidas como:
+
+```python
+VERMELHO = (255, 0, 0)
+VERDE = (0, 255, 0)
+AZUL = (0, 0, 255)
+```
+
+Ao misturar duas cores de base, podemos obter mais cores:
+
+```python
+AMARELO = (255, 255, 0)
+CIANO = (0, 255, 255)
+MAGENTA = (255, 0, 255)
+```
+
+O método `screen.fill(COR)` preenche toda a tela com a cor especificada. Para mostrar qualquer coisa na tela, devemos sempre lembrar de chamar a função `pygame.display.update()`.
