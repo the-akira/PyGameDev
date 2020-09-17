@@ -172,7 +172,7 @@ Definimos então as cores básicas como tuplas dos três valores base. Como as c
 
 ```python
 PRETO = (0, 0, 0)
-CINZA = (127, 127, 127)
+CINZA = (128, 128, 128)
 BRANCO = (255, 255, 255)
 ```
 
@@ -193,3 +193,25 @@ MAGENTA = (255, 0, 255)
 ```
 
 O método `screen.fill(COR)` preenche toda a tela com a cor especificada. Para mostrar qualquer coisa na tela, devemos sempre lembrar de chamar a função `pygame.display.update()`.
+
+### Game Loop
+
+Todo Game, de Pong à Diablo, usa um [Game Loop](https://gamedevelopment.tutsplus.com/articles/gamedev-glossary-what-is-the-game-loop--gamedev-2469) para controlar a jogabilidade. O Game Loop possui quatro elementos muito importantes:
+
+1. Processar o *Input* do Usuário
+2. Atualizar o estado de todos os objetos do Game
+3. Atualizar o display e o *output* de áudio
+4. Manter a velocidade do Game
+
+Cada ciclo do Game Loop é chamado de *frame* e quanto mais rápido fizermos as ações em cada ciclo, mais rápido o jogo será executado. Os frames continuam a ocorrer até que alguma condição para sair do jogo seja satisfeita. Em seu projeto, existem duas condições que podem encerrar o Game Loop:
+
+1. O jogador colide com um obstáculo.
+2. O jogador fecha a janela do Game.
+
+A primeira coisa que o Game Loop faz é processar o *Input* do Usuário para permitir que o jogador se mova pela tela. Portanto, precisamos de alguma forma para capturar e processar uma variedade de *inputs*. Fazemos isso usando o [sistema de eventos](https://www.pygame.org/docs/ref/event.html) do Pygame.
+
+O fluxograma a seguir nos apresenta uma ideia geral de como um Game é estruturado e funciona no PyGame
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/pgflowchart.png)
+
+#### Processando Eventos
