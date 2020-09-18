@@ -80,6 +80,8 @@ help(pygame.event)
 help(pygame.image)
 ```
 
+**Bônus**: Para acessar todos os exemplos utilizados neste tutorial e outros adicionais, você pode visitar o repositório do GitHub **[PyGameDev](https://github.com/the-akira/PyGameDev/tree/master/Exemplos)**
+
 ### Displays e Superfícies
 
 Além dos módulos, o Pygame também inclui várias classes Python, que encapsulam conceitos não dependentes de hardware. Um deles é a **Surface**, que em sua forma mais básica, define uma área retangular na qual podemos desenhar. Objetos Surface são usados em muitos contextos no pygame.
@@ -401,7 +403,9 @@ pygame.draw.ellipse(screen, BLUE, (450, 100, 160, 100), 8)
 pygame.display.update()
 ```
 
-`display.update()` nos permite atualizar uma parte da tela, em vez de toda a área da tela. Sem passar argumentos, atualiza toda a tela.
+**Importante**: `display.update()` nos permite atualizar uma parte da tela, em vez de toda a área da tela. Sem passar argumentos, atualizará toda a tela.
+
+Para compreender a diferença entre **update()** e **flip()** você pode visitar este [Link](https://stackoverflow.com/questions/29314987/difference-between-pygame-display-update-and-pygame-display-flip)
 
 O script a seguir nos apresenta um exemplo de todas as formas possíveis que podemos desenhar:
 
@@ -497,7 +501,7 @@ Salvar imagens suporta apenas um conjunto limitado de formatos. Podemos salvar n
 - PNG
 - JPEG
 
-O método **load()** carrega uma imagem do sistema de arquivos e retorna um objeto Surface. O método **convert()** otimiza o formato da imagem e torna o desenho mais rápido:
+O método **load()** carrega uma imagem do sistema de arquivos e retorna um objeto Surface. O método **convert()** otimiza o formato da imagem e torna o desenho mais rápido. Por exemplo:
 
 ```python
 imagem = pygame.image.load('personagem.png')
@@ -577,6 +581,154 @@ while True:
 	clock.tick(60) # mantém 60 FPS
 ```
 
+A função **blit()** é muito importante, o termo **blit** significa *Block Transfer* e é como copiamos o conteúdo de um Surface para outra. O desenho ou imagem pode ser posicionado com o argumento **dest**. Dest pode ser um par de coordenadas que representam o canto superior esquerdo da superfície de origem. Um Rect também pode ser passado como o destino e o canto superior esquerdo do retângulo será usado como a posição para o blit. O tamanho do retângulo de destino não afeta o blit.
+
+Sendo assim, **blit()** recebe dois importantes argumentos:
+
+1. A superfície para desenhar (neste caso estamos usando uma imagem)
+2. O local onde desenhá-lo na superfície de origem
+
 Perceba também que definimos uma variável chamada de **player_location** que representa as coordenadas da posição do player na tela. A variável **velocity** representa a velocidade de deslocamento do player. Para movermos o player usamos as setas do teclado (<- & ->), ao pressionarmos elas, iremos acionar as respectivas variáveis **moving_right** e **moving_left** como **True** fazendo assim o player se movimentar. Por fim definimos os limites da tela, para que o player não desapareça de nossa visão e atualizamos a tela com o comando `pygame.display.update()`.
 
 Para transparência alfa, como em imagens **.png**, usamos o método **convert_alpha()** após o carregamento para que a imagem tenha transparência por pixel.
+
+### Detectando Colisões
+
+Verificar colisões é uma técnica fundamental de programação de Games e geralmente requer um pouco de matemática para determinar se dois sprites estão se sobrepondo.
+
+É neste momento que uma biblioteca como o Pygame se torna muito útil! Escrever código de detecção de colisão é tedioso, por isso Pygame possui [diversos métodos](https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.collide_rect) de detecção de colisão disponíveis para usarmos, sem precisarmos "reinventar a roda".
+
+No exemplo a seguir usaremos o método [colliderect](https://www.pygame.org/docs/ref/rect.html#pygame.Rect.colliderect), que retornará **True** se qualquer parte do retângulo se sobrepor (exceto as bordas top + bottom ou left + right).
+
+```python
+from pygame.locals import * 
+from random import randint
+from sys import exit
+import pygame
+pygame.init()
+
+# Define cores
+BLACK = (12, 12, 12)
+WHITE = (255, 255, 255)
+BLUE = (96, 110, 150)
+RED = (255, 0, 0)
+ 
+# Define o width e height da screen [width, height]
+width = 500
+height = 400
+size = (width, height)
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption("My Game")
+ 
+# Game Loop fica ativo até que jogando seja False
+playing = True
+clock = pygame.time.Clock()
+
+player_image = pygame.image.load('sprites/player.png').convert_alpha()
+player_transformed = pygame.transform.scale(player_image, (70,70))
+player_rect = player_transformed.get_rect()
+
+portal_image = pygame.image.load('sprites/portal.png')
+portal_transformed = pygame.transform.scale(portal_image, (70,70))
+portal_rect = portal_transformed.get_rect()
+
+trunk_image = pygame.image.load('sprites/trunk.png')
+trunk_image.set_colorkey(WHITE)
+trunk_transformed = pygame.transform.scale(trunk_image, (80,80))
+trunk_rect = portal_transformed.get_rect()
+
+# Posição Inicial do player
+player_x = 20
+player_y = 20
+
+# Velocidade e Direção do player
+player_change = 3.5
+
+moving_right = False 
+moving_left = False
+moving_top = False 
+moving_down = False
+ 
+while playing:
+    screen.fill(BLUE)
+
+    if moving_right == True:
+        player_x += player_change
+    if moving_left == True: 
+        player_x -= player_change
+    if moving_top == True:
+        player_y -= player_change
+    if moving_down == True: 
+        player_y += player_change  
+
+    player_rect.x = player_x
+    player_rect.y = player_y
+    portal_rect.x = 140
+    portal_rect.y = 170
+    trunk_rect.x = 300
+    trunk_rect.y = 250
+
+    if player_rect.colliderect(portal_rect):
+        print('ocorreu uma colisão entre os objetos')
+        player_x = randint(35,450)
+        player_y = randint(35,350)
+
+    if player_rect.colliderect(trunk_rect):
+        print('ocorreu uma colisão entre os objetos')
+        exit()
+
+    if player_x < 0:
+        player_x = 0
+    elif player_x + player_transformed.get_width() > width:
+        player_x = width - player_transformed.get_width()
+    if player_y < 0:
+        player_y = 0
+    elif player_y + player_transformed.get_height() > height:
+        player_y = height - player_transformed.get_height()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            playing = False
+        if event.type == KEYDOWN:
+            if event.key == K_RIGHT:
+                moving_right = True 
+            if event.key == K_LEFT:
+                moving_left = True 
+            if event.key == K_UP:
+                moving_top = True
+            if event.key == K_DOWN:
+                moving_down = True
+        if event.type == KEYUP:
+            if event.key == K_RIGHT:
+                moving_right = False 
+            if event.key == K_LEFT:
+                moving_left = False
+            if event.key == K_UP:
+                moving_top = False
+            if event.key == K_DOWN:
+                moving_down = False
+
+    screen.blit(player_transformed, [player_rect.x, player_rect.y])
+    screen.blit(portal_transformed, [portal_rect.x, portal_rect.y])
+    screen.blit(trunk_transformed, [trunk_rect.x, trunk_rect.y])
+
+    pygame.display.flip()
+    pygame.display.update()
+    clock.tick(60)
+
+pygame.quit()
+```
+
+Observe que estamos carregando três imagens, redimensionando-as e usando o método **get_rect()** para obter um retângulo delas (necessário para testarmos as colisões).
+
+As imagens, representam, respectivamente:
+
+- Um [jogador](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/player.png)
+- Um [portal](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/portal.png)
+- Um [tronco](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/trunk.png)
+
+Um detalhe que devemos citar é que o fundo do tronco é branco, então estamos usando uma técnica chamada *colorkey* que torna uma cor totalmente transparente. A função é bastante simples, é chamada `set_colorkey(COR)`.
+
+**Atenção**: Se uma imagem tiver um valor alfa definido, o colorkey não funcionará! Um truque simples para fazer o colorkey funcionar é: `image.set_alpha(None)` para desabilitá-lo e então você poderá usar `set_colorkey(COR)`.
+
+O jogador poderá se mover livremente para as quatro direções (norte, sul, leste e oeste) e testaremos se ele irá colidir com o portal ou o tronco. Se houver uma colisão com o portal, iremos mover o jogador para uma posição aleatória da tela, caso haja uma colisão com o tronco, encerraremos o Game com a função **exit()** da biblioteca [sys](https://docs.python.org/3/library/sys.html).
