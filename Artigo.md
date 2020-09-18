@@ -731,4 +731,8 @@ Um detalhe que devemos citar é que o fundo do tronco é branco, então estamos 
 
 **Atenção**: Se uma imagem tiver um valor alfa definido, o colorkey não funcionará! Um truque simples para fazer o colorkey funcionar é: `image.set_alpha(None)` para desabilitá-lo e então você poderá usar `set_colorkey(COR)`.
 
-O jogador poderá se mover livremente para as quatro direções (norte, sul, leste e oeste) e testaremos se ele irá colidir com o portal ou o tronco. Se houver uma colisão com o portal, iremos mover o jogador para uma posição aleatória da tela, caso haja uma colisão com o tronco, encerraremos o Game com a função **exit()** da biblioteca [sys](https://docs.python.org/3/library/sys.html).
+O jogador poderá se mover livremente para as quatro direções (norte, sul, leste e oeste) usando as Arrow Keys: 
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/arrowkeys.png)
+
+E testaremos se ele irá colidir com o **portal** ou o **tronco**. Se houver uma colisão com o portal, iremos mover o jogador para uma posição aleatória da tela, caso haja uma colisão com o tronco, encerraremos o Game com a função **exit()** da biblioteca [sys](https://docs.python.org/3/library/sys.html).
