@@ -252,6 +252,7 @@ running = True
 while running: 
 	# Observa cada evento na fila de eventos
 	for event in pygame.event.get():
+		# Imprime no console todos os eventos que vierem a ocorrer
 		print(event)
 		# O usuário clicou no botão fechar da janela? Se sim, pára o Loop
 		if event.type == pygame.QUIT:
@@ -340,4 +341,242 @@ K_n, K_o, K_p, K_q, K_r, K_s, K_t, K_u, K_v, K_w, K_x, K_y, K_z,
 
 O comando `pygame.mixer.init()` inicialize o [módulo do mixer](https://www.pygame.org/docs/ref/mixer.html#pygame.mixer.init) para carregamento e reprodução de som. Os argumentos padrão podem ser substituídos para fornecer mixagem de áudio específica. 
 
-O comando `pygame.time.Clock()` cria um [objeto relógio](https://www.pygame.org/docs/ref/time.html#pygame.time.Clock) que nos ajuda a rastrear o tempo. O relógio também fornece várias funções para ajudar a controlar a taxa de frames de um jogo.
+O método **set_caption()** mudará o nome na janela, se o monitor possuir um título de janela.
+
+O comando `pygame.time.Clock()` cria um [objeto relógio](https://www.pygame.org/docs/ref/time.html#pygame.time.Clock) que nos ajuda a rastrear o tempo. O relógio também fornece várias funções para ajudar a controlar a taxa de frames de um jogo, neste caso específico estamos setando nosso template para rodar em 60 frames por segundo.
+
+### Desenhando
+
+O módulo [pygame.draw](https://www.pygame.org/docs/ref/draw.html) permite desenharmos formas simples em uma superfície. Pode ser a superfície da tela ou qualquer objeto Surface, como uma imagem ou desenho. 
+
+Podemos desenhar formas como:
+
+- Retângulo
+- Polígono
+- Círculo 
+- Elipse
+
+As funções têm em comum que:
+
+- Recebem um objeto Surface como primeiro argumento
+- Recebem uma cor como segundo argumento 
+- Recebem um parâmetro de largura como último argumento
+- Retornam um objeto Rect que delimita a área alterada
+
+Seguimos então o seguinte formato:
+
+```
+rect(Surface, color, Rect, width) -> Rect
+polygon(Surface, color, pointlist, width) -> Rect
+circle(Surface, color, center, radius, width) -> Rect
+```
+
+A maioria das funções tem um argumento de largura. Se a largura for 0, a forma será preenchida com a devida cor.
+
+O seguinte código desenha primeiro a cor de fundo e, em seguida, adiciona três retângulos sólidos sobrepostos e, ao lado, três retângulos sobrepostos contornados com largura de linha crescente:
+
+```python
+screen.fill(COR)
+pygame.draw.rect(screen, RED, (50, 20, 120, 100))
+pygame.draw.rect(screen, GREEN, (100, 60, 120, 100))
+pygame.draw.rect(screen, BLUE, (150, 100, 120, 100))
+
+pygame.draw.rect(screen, RED, (350, 20, 120, 100), 1)
+pygame.draw.rect(screen, GREEN, (400, 60, 120, 100), 4)
+pygame.draw.rect(screen, BLUE, (450, 100, 120, 100), 8)
+```
+
+O código a seguir desenha primeiro a cor de fundo e, em seguida, adiciona três elipses sólidas sobrepostas e, ao lado, três elipses sobrepostas contornadas com largura de linha crescente:
+
+```python
+screen.fill(COR)
+pygame.draw.ellipse(screen, RED, (50, 20, 160, 100))
+pygame.draw.ellipse(screen, GREEN, (100, 60, 160, 100))
+pygame.draw.ellipse(screen, BLUE, (150, 100, 160, 100))
+
+pygame.draw.ellipse(screen, RED, (350, 20, 160, 100), 1)
+pygame.draw.ellipse(screen, GREEN, (400, 60, 160, 100), 4)
+pygame.draw.ellipse(screen, BLUE, (450, 100, 160, 100), 8)
+
+pygame.display.update()
+```
+
+`display.update()` nos permite atualizar uma parte da tela, em vez de toda a área da tela. Sem passar argumentos, atualiza toda a tela.
+
+O script a seguir nos apresenta um exemplo de todas as formas possíveis que podemos desenhar:
+
+```python
+from math import pi
+import pygame as pg
+pg.init()
+
+# Cores
+BLACK = (27, 27, 27)
+WHITE = (255, 255, 255)
+GREEN = (42, 130, 72)
+BLUE = (92, 127, 184)
+YELLOW = (199, 177, 36)
+RED = (179, 41, 7)
+
+# Define dimensões do display
+width = 600
+height = 450
+screen = pg.display.set_mode([width, height])
+
+# Define três retângulos
+retangulos = [
+	pg.Rect(20, 20, 100, 50), 
+	pg.Rect(20, 90, 50, 50),
+	pg.Rect(500, 30, 80, 60)
+]
+
+done = True
+
+while done:
+    screen.fill(BLACK)
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            done = False
+    
+    # Desenha três retângulos azuis
+    for retangulo in retangulos:
+    	pg.draw.rect(screen, BLUE, retangulo)
+
+    # Desenha um retângulo verde
+    pg.draw.rect(screen, GREEN, [115, 280, 70, 40])
+    # Desenha um retângulo vermelho (borda)
+    pg.draw.rect(screen, RED, [115, 280, 71, 41], 2)
+    # Desenha um círculo amarelo
+    pg.draw.circle(screen, YELLOW, (325,70), 30)
+    # Desenha um círculo azul
+    pg.draw.circle(screen, BLUE, [250, 250], 25, True)
+    # Desenha uma elipse branca
+    pg.draw.ellipse(screen, WHITE, (250, 300, 100, 100))
+    # Desenha um arco vermelho
+    pg.draw.arc(screen, RED, [430, 150, 150, 125], pi/100, 1.13*pi, 2)
+    # Desenha uma linha azul
+    pg.draw.line(screen, BLUE, (0, height-100), (width, height-100), 5)
+    # Desenha uma linha verde
+    pg.draw.aaline(screen, GREEN, (0, height-200), (width, height-200))
+    # Desenha linhas brancas
+    pg.draw.lines(screen, WHITE, False, [[400, 400], [400, 20], [200, 20]], 2)
+    # Desenha um polígono amarelo
+    pg.draw.polygon(screen, YELLOW, [[140, 120], [100, 200], [300, 200]])
+    # Desenha um polígono verde (borda)
+    pg.draw.polygon(screen, GREEN, [[140, 120], [100, 200], [300, 200]], 3)
+
+    pg.display.update()
+    
+pg.quit()
+```
+
+Observe que neste exemplo específico estamos importando **pygame** como **pg**, uma forma conveniente que Python nos fornece de abreviarmos a escrita dos módulos.
+
+### Trabalhando com Imagens
+
+O [módulo de imagem](https://www.pygame.org/docs/ref/image.html) contém funções para carregar e salvar imagens, bem como transferir Superfícies para formatos utilizáveis por outros pacotes.
+
+Observe que não há classe Image; uma imagem é carregada como um objeto Surface. A classe Surface permite a manipulação (desenhar linhas, definir pixels, capturar regiões, etc).
+
+Quando construída com suporte total de imagem, a função `pygame.image.load()` pode suportar os formatos a seguir.
+
+- JPG
+- PNG
+- GIF (não-animado)
+- BMP
+- TGA (não-comprimido)
+- TIF
+- LBM (e PBM)
+- PBM (e PGM, PPM)
+- XPM
+
+Salvar imagens suporta apenas um conjunto limitado de formatos. Podemos salvar nos seguintes formatos.
+
+- BMP
+- TGA
+- PNG
+- JPEG
+
+O método **load()** carrega uma imagem do sistema de arquivos e retorna um objeto Surface. O método **convert()** otimiza o formato da imagem e torna o desenho mais rápido:
+
+```python
+imagem = pygame.image.load('personagem.png')
+imagem.convert()
+```
+
+O método **get_rect()** retorna um objeto Rect de uma imagem, nos permitindo assim trabalhar com colisões.
+
+O módulo [pygame.transform](https://www.pygame.org/docs/ref/transform.html) fornece métodos para **dimensionar**, **girar** e **inverter** imagens.
+
+No exemplo a seguir iremos carregar a imagem [player.png](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Sprite/player.png), redimensioná-la e desenhá-la na tela.
+
+```python
+from sys import exit
+from pygame.locals import * 
+import pygame
+
+# Define o relógio
+clock = pygame.time.Clock()
+
+# Inicializa pygame
+pygame.init()
+
+# Define o nome da janela
+pygame.display.set_caption('PyGame')
+
+# Define o tamanho da tela
+WIDTH, HEIGHT = 450, 200
+WINDOW_SIZE = (WIDTH, HEIGHT)
+
+# Inicia a tela
+screen = pygame.display.set_mode(WINDOW_SIZE, True, 32)
+
+# Carrega a imagem do personagem
+player_image = pygame.image.load('player.png').convert_alpha()
+player_transformed = pygame.transform.scale(player_image, (50,75))
+
+moving_right = False 
+moving_left = False
+
+player_location = [155, 310]
+velocity = 3.5
+
+# Game Loop
+while True:					
+	screen.fill((70,86,94)) # Preenche a tela com cinza
+	screen.blit(player_transformed, player_location)
+
+	if moving_right == True:
+		player_location[0] += velocity
+	if moving_left == True: 
+		player_location[0] -= velocity
+
+	for event in pygame.event.get():
+		if event.type == QUIT:
+			pygame.quit()
+			exit()
+		if event.type == KEYDOWN:
+			if event.key == K_RIGHT:
+				moving_right = True 
+			if event.key == K_LEFT:
+				moving_left = True 
+		if event.type == KEYUP:
+			if event.key == K_RIGHT:
+				moving_right = False 
+			if event.key == K_LEFT:
+				moving_left = False
+	
+	if player_location[0] < 0:
+		player_location[0] = 0
+	elif player_location[0] + player_transformed.get_width() > WIDTH:
+		player_location[0] = WIDTH - player_transformed.get_width()
+	elif player_location[1] + player_transformed.get_height() > HEIGHT:
+		player_location[1] = HEIGHT - player_transformed.get_height()
+
+	pygame.display.update() # atualiza a tela
+	clock.tick(60) # mantém 60 FPS
+```
+
+Perceba também que definimos uma variável chamada de **player_location** que representa as coordenadas da posição do player na tela. A variável **velocity** representa a velocidade de deslocamento do player. Para movermos o player usamos as setas do teclado (<- & ->), ao pressionarmos elas, iremos acionar as respectivas variáveis **moving_right** e **moving_left** como **True** fazendo assim o player se movimentar. Por fim definimos os limites da tela, para que o player não desapareça de nossa visão e atualizamos a tela com o comando `pygame.display.update()`.
+
+Para transparência alfa, como em imagens **.png**, usamos o método **convert_alpha()** após o carregamento para que a imagem tenha transparência por pixel.
