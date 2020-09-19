@@ -592,6 +592,78 @@ Perceba também que definimos uma variável chamada de **player_location** que r
 
 Para transparência alfa, como em imagens **.png**, usamos o método **convert_alpha()** após o carregamento para que a imagem tenha transparência por pixel.
 
+### Trabalhando com Textos
+
+No pygame, o texto não pode ser escrito diretamente na tela, o módulo [pygame.font](https://www.pygame.org/docs/ref/font.html) nos permite "desenhar" textos em nossa tela. Para isso precisamos seguir alguns passos. 
+
+1. A primeira etapa é criar um [objeto Font](https://www.pygame.org/docs/ref/font.html#pygame.font.SysFont) com um determinado tamanho de fonte. 
+2. A segunda etapa é transformar o texto em uma imagem com uma determinada cor. 
+3. A terceira etapa é enviar a imagem para a tela. 
+
+Por exemplo:
+
+```python
+font = pygame.font.SysFont(None, 24)
+imagem = font.render('Texto', True, VERDE)
+screen.blit(imagem, (20, 20))
+``` 
+
+Pygame vem com uma fonte padrão embutida. Isso sempre pode ser acessado passando **None** como o nome da fonte como argumento para o método **SysFont()**, o segundo argumento representa o tamanho da Font.
+
+Uma vez que a fonte é criada, seu tamanho não pode ser alterado. Um objeto **Font** é usado para criar um objeto **Surface** a partir de uma string. O Pygame não fornece uma maneira direta de escrever texto em um objeto **Surface**. O método **render()** deve ser usado para criar um objeto **Surface** a partir do texto, que então pode ser enviado para a tela. O método **render()** só pode renderizar linhas simples. Um caractere de nova linha não é renderizado.
+
+A função **get_fonts()** retorna uma lista de todas as fontes instaladas e disponíveis. O código a seguir verifica quais fontes estão em seu sistema e quantas existem, e as imprime no console:
+
+```python
+from pprint import pprint 
+import pygame
+
+fonts = pygame.font.get_fonts()
+
+print(f'Existem {len(fonts)} fonts disponíveis')
+pprint(fonts)
+```
+
+No exemplo a seguir vamos exibir o texto "Hello PyGame" no centro de nossa tela.
+
+```python
+import pygame
+pygame.init()
+
+def main():
+    # Inicializa a Tela
+    screen = pygame.display.set_mode((250, 100))
+    pygame.display.set_caption('PyGame Text')
+
+    # Define e Preenche o Background
+    background = pygame.Surface(screen.get_size())
+    background = background.convert()
+    background.fill((15, 15, 15))
+
+    # Define, Posiciona e Apresenta o Texto no Background
+    font = pygame.font.SysFont('dyuthi', 36)
+    text = font.render("Hello PyGame", 1, (195, 195, 195))
+    textpos = text.get_rect()
+    textpos.centerx = background.get_rect().centerx
+    textpos.centery = background.get_rect().centery
+    background.blit(text, textpos)
+
+    # Loop de Eventos
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+
+        # Desenha o Background
+        screen.blit(background, (0, 0))
+        pygame.display.flip()
+
+if __name__ == '__main__': 
+    main()
+```
+
+Observe que escolhemos a fonta *dyuthi*. Também utilizamos os atributos **centerx** e **centery** para nos auxiliar a centralizar o texto.
+
 ### Detectando Colisões
 
 Verificar colisões é uma técnica fundamental de programação de Games e geralmente requer um pouco de matemática para determinar se dois sprites estão se sobrepondo.
