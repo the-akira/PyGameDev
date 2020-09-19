@@ -347,6 +347,12 @@ O método **set_caption()** mudará o nome na janela, se o monitor possuir um t�
 
 O comando `pygame.time.Clock()` cria um [objeto relógio](https://www.pygame.org/docs/ref/time.html#pygame.time.Clock) que nos ajuda a rastrear o tempo. O relógio também fornece várias funções para ajudar a controlar a taxa de frames de um jogo, neste caso específico estamos setando nosso template para rodar em 60 frames por segundo.
 
+Ao executarmos este **template**, vamos obter o seguinte resultado:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot1.png)
+
+Como podemos observar, é apenas uma tela preenchida com a cor preta, mas que servirá como estrutura básica para nossos projetos futuros.
+
 ### Desenhando
 
 O módulo [pygame.draw](https://www.pygame.org/docs/ref/draw.html) permite desenharmos formas simples em uma superfície. Pode ser a superfície da tela ou qualquer objeto Surface, como uma imagem ou desenho. 
@@ -476,6 +482,10 @@ pg.quit()
 
 Observe que neste exemplo específico estamos importando **pygame** como **pg**, uma forma conveniente que Python nos fornece de abreviarmos a escrita dos módulos.
 
+Ao executarmos este script, obteremos como resultado diversos desenhos em nossa tela:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot2.png)
+
 ### Trabalhando com Imagens
 
 O [módulo de imagem](https://www.pygame.org/docs/ref/image.html) contém funções para carregar e salvar imagens, bem como transferir Superfícies para formatos utilizáveis por outros pacotes.
@@ -592,6 +602,10 @@ Perceba também que definimos uma variável chamada de **player_location** que r
 
 Para transparência alfa, como em imagens **.png**, usamos o método **convert_alpha()** após o carregamento para que a imagem tenha transparência por pixel.
 
+Este exemplo nos trará o seguinte resultado:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot3.png)
+
 ### Trabalhando com Textos
 
 No pygame, o texto não pode ser escrito diretamente na tela, o módulo [pygame.font](https://www.pygame.org/docs/ref/font.html) nos permite "desenhar" textos em nossa tela. Para isso precisamos seguir alguns passos. 
@@ -662,7 +676,9 @@ if __name__ == '__main__':
     main()
 ```
 
-Observe que escolhemos a fonta *dyuthi*. Também utilizamos os atributos **centerx** e **centery** para nos auxiliar a centralizar o texto.
+Observe que escolhemos a fonta *dyuthi*. Também utilizamos os atributos **centerx** e **centery** para nos auxiliar a centralizar o texto. O resultado será este:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot4.png)
 
 ### Detectando Colisões
 
@@ -809,6 +825,10 @@ O jogador poderá se mover livremente para as quatro direções (norte, sul, les
 
 E testaremos se ele irá colidir com o **portal** ou o **tronco**. Se houver uma colisão com o portal, iremos mover o jogador para uma posição aleatória da tela, caso haja uma colisão com o tronco, encerraremos o Game com a função **exit()** da biblioteca [sys](https://docs.python.org/3/library/sys.html).
 
+Executando este script, teremos a seguinte tela como *output*:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot5.png)
+
 ### Sprites
 
 Em computação gráfica, um sprite é um bitmap bidimensional integrado em uma cena maior, na maioria das vezes usado no contexto de um videogame 2D. O termo foi usado pela primeira vez por [Danny Hillis](https://en.wikipedia.org/wiki/Danny_Hillis) na Texas Instruments no final dos anos 1970.
@@ -924,4 +944,6 @@ Instanciamos o objeto **Group** em uma variável chamada de **all_sprites**, lem
 
 Em seguida instanciamos o sprite **Player** e guardamos ele na variável **player**, que por sua vez é adicionada ao grupo **all_sprites**.
 
-Em nosso Game Loop estamos atualizando todos os Sprites do grupo **all_sprites** e também desenhando eles (neste exemplo é apenas um Sprite). Preenchemos o fundo com a cor preta.
+Em nosso Game Loop estamos atualizando todos os Sprites do grupo **all_sprites** e também desenhando eles (neste exemplo é apenas um Sprite). Preenchemos o fundo com a cor preta, que eventualmente nos fornece o seguinte resultado:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot6.png)
