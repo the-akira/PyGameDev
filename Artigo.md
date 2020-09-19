@@ -36,7 +36,7 @@ python3 -m pygame.examples.eventlist
 python3 -m pygame.examples.liquid
 ```
 
-Se uma janela de jogo for exibida, isso índica Pygame está instalado corretamente! Se você tiver problemas, o [guia de primeiros passos](https://www.pygame.org/wiki/GettingStarted) descreve alguns problemas conhecidos e advertências para todas as plataformas.
+Se uma janela de Game for exibida, isso indica que Pygame está instalado corretamente! Se você tiver problemas, o [guia de primeiros passos](https://www.pygame.org/wiki/GettingStarted) descreve alguns problemas conhecidos e advertências para todas as plataformas.
 
 Observe que cada exemplo apresenta uma funcionalidade que o Pygame nos proporciona. Para conhecer todos os exemplos disponíveis você pode visitar: [pygame.examples](https://www.pygame.org/docs/ref/examples.html)
 
@@ -947,3 +947,5 @@ Em seguida instanciamos o sprite **Player** e guardamos ele na variável **playe
 Em nosso Game Loop estamos atualizando todos os Sprites do grupo **all_sprites** e também desenhando eles (neste exemplo é apenas um Sprite). Preenchemos o fundo com a cor preta, que eventualmente nos fornece o seguinte resultado:
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot6.png)
+
+### Efeitos Sonoros
