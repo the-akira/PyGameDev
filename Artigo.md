@@ -949,3 +949,78 @@ Em nosso Game Loop estamos atualizando todos os Sprites do grupo **all_sprites**
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot6.png)
 
 ### Efeitos Sonoros
+
+O módulo [pygame.mixer](https://www.pygame.org/docs/ref/mixer.html) permite reproduzir arquivos OGG compactados ou WAV descompactados.
+
+O exemplo a seguir verifica os parâmetros de inicialização e imprime o número de canais disponíveis. Ele inicializa um objeto som e imprime o tempo do arquivo em segundos, ao pressionarmos a tecla `[Enter]` o som de um [Corvo Americano](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Sound/american_crow_spring.ogg) será tocado.
+
+```python
+import pygame
+pygame.mixer.init()
+
+print(f'init = {pygame.mixer.get_init()}')
+print(f'channels = {pygame.mixer.get_num_channels()}')
+som = pygame.mixer.Sound('american_crow_spring.ogg')
+print(f'length = {som.get_length()}')
+
+while True:
+	input('Aperte Enter para tocar o Som')
+	som.play()
+	print('Tocando o som... CTRL+Z para cancelar')
+```
+
+Para cancelarmos a execução do script podemos usar os comandos `CTRL + Z` ou `CTRL + D`.
+
+No exemplo a seguir vamos tocar a [Piano Sonata No. 14](https://en.wikipedia.org/wiki/Piano_Sonata_No._14_(Beethoven)) de [Ludwig van Beethoven](https://en.wikipedia.org/wiki/Ludwig_van_Beethoven), popularmente conhecida como [Moonlight Sonata](https://github.com/the-akira/PyGameDev/blob/master/Exemplos/Sound/beethoven.ogg).
+
+```python
+from pygame.locals import *
+import pygame
+
+WIDTH = 500
+HEIGHT = 150
+FPS = 60
+
+BLACK = (13, 13, 13)
+WHITE = (255, 255, 255)
+
+pygame.init()
+pygame.mixer.init()
+logo = pygame.image.load("icon.png")
+pygame.display.set_icon(logo)
+pygame.display.set_caption("Moonlight Sonata - Beethoven")
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+sound = pygame.mixer.Sound('beethoven.ogg') 
+sound.set_volume(0.7)
+myriad_pro_font = pygame.font.SysFont("Myriad Pro", 48)
+text = myriad_pro_font.render("p = play | s = stop", 1, WHITE)
+
+running = True
+while running:
+	clock.tick(FPS)
+
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			running = False
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_p:
+				sound.play()
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_s:
+				sound.stop()
+
+	screen.fill(BLACK)
+	screen.blit(text, (100, 50))
+	pygame.display.flip()
+
+pygame.quit()
+```
+
+Este exemplo irá nos apresentar a seguinte tela:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot7.png)
+
+Usamos a tecla **P** para dar Play na música e a tecla **S** para dar Stop.
+
+Perceba também que estamos carregando um [ícone](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Sound/icon.png) para customizar nossa janela.
