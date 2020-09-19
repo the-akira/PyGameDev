@@ -105,7 +105,7 @@ help(pygame.image)
 
 ### Displays e Superfícies
 
-Além dos módulos, o Pygame também inclui várias classes Python, que encapsulam conceitos não dependentes de hardware. Um deles é a **Surface**, que em sua forma mais básica, define uma área retangular na qual podemos desenhar. Objetos Surface são usados em muitos contextos no pygame.
+Além dos módulos, o Pygame também inclui várias classes Python que encapsulam conceitos não dependentes de hardware. Um deles é a **Surface**, que em sua forma mais básica, define uma área retangular na qual podemos desenhar. Objetos Surface são usados em muitos contextos no pygame.
 
 No Pygame, tudo é visualizado em uma única tela criada pelo usuário, que pode ser uma janela ou tela inteira. O **[display](https://www.pygame.org/docs/ref/display.html)** é criado usando o método **[set_mode()](https://www.pygame.org/docs/ref/display.html#pygame.display.set_mode)**, que retorna uma Surface representando a parte visível da janela. É essa superfície que passamos para as funções de desenho, como por exemplo **[pygame.draw.rect()](https://www.pygame.org/docs/ref/draw.html#pygame.draw.rect)**, e o conteúdo dessa superfície é colocado no display quando chamamos **[pygame.display.flip()](https://www.pygame.org/docs/ref/display.html#pygame.display.flip)**.
 
@@ -619,7 +619,7 @@ Sendo assim, **blit()** recebe dois importantes argumentos:
 1. A superfície para desenhar (neste caso estamos usando uma imagem)
 2. O local onde desenhá-lo na superfície de origem
 
-Perceba também que definimos uma variável chamada de **player_location** que representa as coordenadas da posição do player na tela. A variável **velocity** representa a velocidade de deslocamento do player. Para movermos o player usamos as setas do teclado (<- & ->), ao pressionarmos elas, iremos acionar as respectivas variáveis **moving_right** e **moving_left** como **True** fazendo assim o player se movimentar. Por fim definimos os limites da tela, para que o player não desapareça de nossa visão e atualizamos a tela com o comando `pygame.display.update()`.
+Perceba também que definimos uma variável chamada de **player_location** que representa as coordenadas da posição do player na tela. A variável **velocity** representa a velocidade de deslocamento do player. Para movermos o player usamos as Arrow Keys do teclado (<- & ->), ao pressionarmos elas, iremos acionar as respectivas variáveis **moving_right** e **moving_left** como **True** fazendo assim o player se movimentar. Por fim definimos os limites da tela, para que o player não desapareça de nossa visão e atualizamos a tela com o comando `pygame.display.update()`.
 
 Para transparência alfa, como em imagens **.png**, usamos o método **convert_alpha()** após o carregamento para que a imagem tenha transparência por pixel.
 
@@ -1264,7 +1264,7 @@ Irei salvar o código como `mario.py` e executá-lo com o comando `python mario.
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot8.png)
 
-Usamos as Arrow Keys para movimentar o personagem pela tela.
+Usamos as Arrow Keys para movimentar o personagem pela tela. Para encerrar o Game podemos clicar no botão fechar ou pressionar a tecla `[ESC]`.
 
 Devemos agora considerar alguns detalhes importantes sobre nosso código.
 
