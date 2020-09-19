@@ -808,3 +808,120 @@ O jogador poderá se mover livremente para as quatro direções (norte, sul, les
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/arrowkeys.png)
 
 E testaremos se ele irá colidir com o **portal** ou o **tronco**. Se houver uma colisão com o portal, iremos mover o jogador para uma posição aleatória da tela, caso haja uma colisão com o tronco, encerraremos o Game com a função **exit()** da biblioteca [sys](https://docs.python.org/3/library/sys.html).
+
+### Sprites
+
+Em computação gráfica, um sprite é um bitmap bidimensional integrado em uma cena maior, na maioria das vezes usado no contexto de um videogame 2D. O termo foi usado pela primeira vez por [Danny Hillis](https://en.wikipedia.org/wiki/Danny_Hillis) na Texas Instruments no final dos anos 1970.
+
+Pygame fornece uma [classe Sprite](https://www.pygame.org/docs/ref/sprite.html) que é projetada para conter uma ou várias representações gráficas de qualquer objeto do Game que você deseja exibir na tela. Para usá-la, criamos uma nova classe que estende **Sprite**. Isso permite usarmos todos os seus métodos embutidos.
+
+Existe a classe Sprite principal e várias classes de Grupo que contêm Sprites. O uso dessas classes é totalmente opcional ao usar pygame. As classes são bastante leves e fornecem apenas um ponto de partida para o código comum à maioria dos Games.
+
+A classe Sprite tem como intenção ser usada como uma classe base para os diferentes tipos de objetos do Game. Existe também uma classe base [Group](https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Group) que simplesmente armazena sprites. Um Game pode criar novos tipos de classes de Grupo que operam em instâncias de Sprite especialmente personalizadas.
+
+A classe Sprite básica pode desenhar os Sprites que ela contém em uma **Surface**. O método `Group.draw()` requer que cada Sprite tenha um atributo **Surface.image** e um **Surface.rect**. O método `Group.clear()` requer esses mesmos atributos e pode ser usado para apagar todos os Sprites com background. Existem também grupos mais avançados: `pygame.sprite.RenderUpdates()` e `pygame.sprite.OrderedUpdates()`.
+
+Finalmente, este módulo **Sprite** contém várias funções de colisão. Isso ajuda a encontrar sprites dentro de vários grupos que possuem retângulos delimitadores que se cruzam. Para encontrar as colisões, os Sprites precisam ter um atributo **Surface.rect** atribuído.
+
+Os grupos são projetados para alta eficiência na remoção e adição de Sprites a eles. Eles também permitem testes de baixo custo computacional para ver se um Sprite já existe em um Grupo. Um determinado Sprite pode existir em qualquer número de grupos. Um Game pode usar alguns grupos para controlar a renderização de objetos e um conjunto completamente separado de grupos para controlar a interação ou o movimento do jogador. Em vez de adicionar atributos de tipo ou bools a uma classe Sprite derivada, considere manter os Sprites dentro de Grupos organizados. Isso permitirá uma pesquisa mais fácil posteriormente no Game.
+
+Sprites e grupos gerenciam seus relacionamentos com os métodos **add()** e **remove()**. Esses métodos podem aceitar um único ou vários destinos para associação. Os inicializadores padrão para essas classes também usam um único ou uma lista de destinos para a associação inicial. É seguro adicionar e remover repetidamente o mesmo Sprite de um Grupo.
+
+A classe base para objetos visíveis do Game. As classes derivadas necessitarão substituir `Sprite.update()` e atribuir atributos **Sprite.image** e **Sprite.rect**. O inicializador pode aceitar qualquer número de instâncias de Grupo a serem adicionadas.
+
+Ao criar uma subclasse do Sprite, certifique-se de chamar o inicializador base antes de adicionar o Sprite aos grupos. Por exemplo:
+
+```python
+class Block(pygame.sprite.Sprite):
+	# Construtor. Recebe a cor do bloco
+	# e sua posição x e y como argumento
+    def __init__(self, color, width, height):
+       # Chama o construtor da classe pai (Sprite)
+       pygame.sprite.Sprite.__init__(self)
+       # Cria uma imagem do bloco e preenche com uma cor respectiva
+       # Também pode ser uma imagem carregada do disco
+       self.image = pygame.Surface([width, height])
+       self.image.fill(color)
+
+       # Busca o objeto retângulo que possui as dimensões da imagem
+       # Atualiza a posição deste objeto setando os valores de rect.x e rect.y
+       self.rect = self.image.get_rect()
+```
+
+Observe que neste exemplo estamos apenas definindo um simples Bloco.
+
+O método **update()** é utilizado para controlar o comportamento de um Sprite. A implementação padrão deste método não faz nada, é apenas um "gancho" conveniente que você pode sobrescrever. Este método é chamado por `Group.update()` com quaisquer argumentos que você fornecer a ele.
+
+Vejamos agora um exemplo com mais detalhes:
+
+```python
+import pygame 
+import random 
+import os
+
+WIDTH = 800
+HEIGHT = 600
+FPS = 30
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+# setup assets folders
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, 'img')
+
+class Player(pygame.sprite.Sprite):
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.image.load(os.path.join(img_folder, 'guy.png')).convert()
+		self.image.set_colorkey(BLACK)
+		self.rect = self.image.get_rect()
+		self.rect.center = (WIDTH / 2, HEIGHT / 2)
+		self.y_speed = 10
+
+	def update(self):
+		self.rect.x += 4
+		self.rect.y += self.y_speed
+		if self.rect.bottom > HEIGHT - 100:
+			self.y_speed = -5
+		if self.rect.top < 100:
+			self.y_speed = 5
+		if self.rect.left > WIDTH:
+			self.rect.right = 0
+
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('Sprite OOP')
+clock = pygame.time.Clock()
+
+all_sprites = pygame.sprite.Group()
+player = Player()
+all_sprites.add(player)
+
+running = True 
+while running:
+	clock.tick(FPS)
+
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			running = False
+
+	all_sprites.update()
+
+	screen.fill(BLACK)
+	all_sprites.draw(screen)
+	pygame.display.flip()
+
+pygame.quit()
+```
+
+Neste exemplo definimos um Sprite chamado de **Player**, que é uma imagem do personagem [Guy Fawkes](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/SpriteOOP/img/guy.png) que carregamos de nosso disco, localizada em um diretório que denominei **img**, também estamos definindo algumas propriedades básicas para este Sprite, como o retângulo e sua velocidade no eixo **y**. Também estamos sobrescrevendo o método **update()**, fazendo o Sprite se deslocar para a direita e alternando os valores do eixo **y** quando o Sprite atinge uma determinada posição na tela, nos dando assim a impressão de um movimento diagonal.
+
+Instanciamos o objeto **Group** em uma variável chamada de **all_sprites**, lembre que Group é uma classe de contêiner para armazenar e gerenciar vários objetos Sprite.
+
+Em seguida instanciamos o sprite **Player** e guardamos ele na variável **player**, que por sua vez é adicionada ao grupo **all_sprites**.
+
+Em nosso Game Loop estamos atualizando todos os Sprites do grupo **all_sprites** e também desenhando eles (neste exemplo é apenas um Sprite). Preenchemos o fundo com a cor preta.
