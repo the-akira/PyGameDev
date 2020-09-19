@@ -30,6 +30,7 @@
 	- [Sprites](#sprites)
 	- [Efeitos Sonoros](#efeitos-sonoros)
 - [Construindo um Platform Game](#construindo-um-platform-game)
+- [Conclusão](#conclusão)
 
 ## Introdução
 
@@ -100,7 +101,7 @@ help(pygame.event)
 help(pygame.image)
 ```
 
-**Bônus**: Para acessar todos os exemplos utilizados neste tutorial e outros adicionais, você pode visitar o repositório do GitHub **[PyGameDev](https://github.com/the-akira/PyGameDev/tree/master/Exemplos)**
+**Bônus**: Para acessar todos os exemplos utilizados neste tutorial e outros adicionais, você pode visitar o repositório do GitHub: **[PyGameDev](https://github.com/the-akira/PyGameDev/tree/master/Exemplos)**
 
 ### Displays e Superfícies
 
@@ -1282,3 +1283,13 @@ Um detalhe importante que devemos lembrar é que estamos utilizando o conceito d
 Na função **main()** de nosso Game, estamos definindo o mapa de nosso Jogo na variável **level**, onde todos os **P's** serão renderizados como tijolos, perceba que esta variável é uma list de strings.
 
 Finalmente construímos o nosso "level" através da classe **Platform**, damos início ao Game Loop, atualizamos todas as entities, preenchemos o background com a cor definida na variável **BACKGROUND_BLUE**, desenhamos as entities na tela e atualizamos o display. Nosso clock é setado para operar em 60 FPS.
+
+## Conclusão
+
+Através deste tutorial fomos capazes de aprender diversos conceitos importantes no campo de Desenvolvimento de Games 2D, porém exploramos somente a superfície deste grandioso universo. 
+
+Com este conhecimento obtido, podemos agora aprofundar nossa sabedoria, para isso, fiz esta [lista de materiais importantes](https://github.com/the-akira/PyGameDev/blob/master/Materiais.md) que poderá nos ajudar bastante e que também serviu como inspiração e referência quando escrevi este material.
+
+Você também poderá explorar todos os códigos utilizados neste tutorial no repositório do GitHub: [PyGameDev](https://github.com/the-akira/PyGameDev/tree/master/Exemplos). Espero que você possa aperfeiçoá-los e criar games ultra divertidos.
+
+Boa diversão e bons estudos.

@@ -16,7 +16,6 @@
 - [The Python Game Book](http://thepythongamebook.com/en:pygame:start)
 - [Making Games with Python & PyGame](https://inventwithpython.com/makinggames.pdf)
 - [Getting Started with PyGame](https://riptutorial.com/pygame)
-- [Learn the Basics of PyGame](https://ukdevguy.com/pygame-tutorial-in-python-3/)
 - [Learning Pygame with Pong](https://nick.sarbicki.com/blog/learn-pygame-with-pong/)
 - [PyGame Physics Simulation](http://www.petercollingridge.co.uk/tutorials/pygame-physics-simulation/)
 - [Python Game Development Course](https://www.youtube.com/watch?v=FfWpgLFMI7w)
