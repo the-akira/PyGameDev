@@ -62,7 +62,13 @@ player_rect = pygame.Rect(100,100,23,30)
 
 while True: 
     display.fill((154,166,166)) 
-    true_scroll[0] += (player_rect.x-true_scroll[0]-152)/20
+    if player_rect.x < 130:
+        true_scroll[0] += (player_rect.x-true_scroll[0]+93)/20
+    if player_rect.x > 1750:
+        true_scroll[0] += (player_rect.x-true_scroll[0]-363)/20
+    if player_rect.y < 3:
+        true_scroll[1] += (player_rect.y-true_scroll[1]-56)/20
+    true_scroll[0] += (player_rect.x-true_scroll[0]-132)/20
     true_scroll[1] += (player_rect.y-true_scroll[1]-106)/20
     scroll = true_scroll.copy()
     scroll[0] = int(scroll[0])
