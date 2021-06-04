@@ -273,13 +273,13 @@ screen = pygame.display.set_mode((500,500))
 running = True 
 
 while running: 
-	# Observa cada evento na fila de eventos
-	for event in pygame.event.get():
-		# Imprime no console todos os eventos que vierem a ocorrer
-		print(event)
-		# O usuário clicou no botão fechar da janela? Se sim, pára o Loop
-		if event.type == pygame.QUIT:
-			running = False
+    # Observa cada evento na fila de eventos
+    for event in pygame.event.get():
+        # Imprime no console todos os eventos que vierem a ocorrer
+        print(event)
+        # O usuário clicou no botão fechar da janela? Se sim, pára o Loop
+        if event.type == pygame.QUIT:
+           running = False
 
 pygame.quit()
 ```
@@ -316,17 +316,17 @@ clock = pygame.time.Clock()
 # Game Loop
 running = True
 while running:
-	# Manter o loop rodando na velocidade correta
-	clock.tick(FPS)
-	# Processar Inputs (Eventos)
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
-	# Atualizar
-	# Desenhar / Renderizar
-	screen.fill(BLACK)
-	# Depois de desenhar tudo: flipar o display
-	pygame.display.flip()
+    # Manter o loop rodando na velocidade correta
+    clock.tick(FPS)
+    # Processar Inputs (Eventos)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    # Atualizar
+    # Desenhar / Renderizar
+    screen.fill(BLACK)
+    # Depois de desenhar tudo: flipar o display
+    pygame.display.flip()
 
 pygame.quit()
 ```
@@ -456,9 +456,9 @@ screen = pg.display.set_mode([width, height])
 
 # Define três retângulos
 retangulos = [
-	pg.Rect(20, 20, 100, 50), 
-	pg.Rect(20, 90, 50, 50),
-	pg.Rect(500, 30, 80, 60)
+    pg.Rect(20, 20, 100, 50), 
+    pg.Rect(20, 90, 50, 50),
+    pg.Rect(500, 30, 80, 60)
 ]
 
 done = True
@@ -578,35 +578,35 @@ velocity = 3.5
 
 # Game Loop
 while True:					
-	screen.fill((70,86,94)) # Preenche a tela com cinza
-	screen.blit(player_transformed, player_location)
+    screen.fill((70,86,94)) # Preenche a tela com cinza
+    screen.blit(player_transformed, player_location)
 
-	if moving_right == True:
-		player_location[0] += velocity
-	if moving_left == True: 
-		player_location[0] -= velocity
+    if moving_right == True:
+        player_location[0] += velocity
+    if moving_left == True: 
+        player_location[0] -= velocity
 
-	for event in pygame.event.get():
-		if event.type == QUIT:
-			pygame.quit()
-			exit()
-		if event.type == KEYDOWN:
-			if event.key == K_RIGHT:
-				moving_right = True 
-			if event.key == K_LEFT:
-				moving_left = True 
-		if event.type == KEYUP:
-			if event.key == K_RIGHT:
-				moving_right = False 
-			if event.key == K_LEFT:
-				moving_left = False
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            exit()
+        if event.type == KEYDOWN:
+            if event.key == K_RIGHT:
+                moving_right = True 
+            if event.key == K_LEFT:
+                moving_left = True 
+        if event.type == KEYUP:
+            if event.key == K_RIGHT:
+                moving_right = False 
+            if event.key == K_LEFT:
+                moving_left = False
 	
-	if player_location[0] < 0:
-		player_location[0] = 0
-	elif player_location[0] + player_transformed.get_width() > WIDTH:
-		player_location[0] = WIDTH - player_transformed.get_width()
-	elif player_location[1] + player_transformed.get_height() > HEIGHT:
-		player_location[1] = HEIGHT - player_transformed.get_height()
+    if player_location[0] < 0:
+        player_location[0] = 0
+    elif player_location[0] + player_transformed.get_width() > WIDTH:
+        player_location[0] = WIDTH - player_transformed.get_width()
+    elif player_location[1] + player_transformed.get_height() > HEIGHT:
+        player_location[1] = HEIGHT - player_transformed.get_height()
 
 	pygame.display.update() # atualiza a tela
 	clock.tick(60) # mantém 60 FPS
@@ -874,8 +874,8 @@ Ao criar uma subclasse do Sprite, certifique-se de chamar o inicializador base a
 
 ```python
 class Block(pygame.sprite.Sprite):
-	# Construtor. Recebe a cor do bloco
-	# e sua posição x e y como argumento
+    # Construtor. Recebe a cor do bloco
+    # e sua posição x e y como argumento
     def __init__(self, color, width, height):
        # Chama o construtor da classe pai (Sprite)
        pygame.sprite.Sprite.__init__(self)
@@ -915,23 +915,23 @@ game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, 'img')
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self):
-		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load(os.path.join(img_folder, 'guy.png')).convert()
-		self.image.set_colorkey(BLACK)
-		self.rect = self.image.get_rect()
-		self.rect.center = (WIDTH / 2, HEIGHT / 2)
-		self.y_speed = 10
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join(img_folder, 'guy.png')).convert()
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.center = (WIDTH / 2, HEIGHT / 2)
+        self.y_speed = 10
 
-	def update(self):
-		self.rect.x += 4
-		self.rect.y += self.y_speed
-		if self.rect.bottom > HEIGHT - 100:
-			self.y_speed = -5
-		if self.rect.top < 100:
-			self.y_speed = 5
-		if self.rect.left > WIDTH:
-			self.rect.right = 0
+    def update(self):
+        self.rect.x += 4
+        self.rect.y += self.y_speed
+        if self.rect.bottom > HEIGHT - 100:
+            self.y_speed = -5
+        if self.rect.top < 100:
+            self.y_speed = 5
+        if self.rect.left > WIDTH:
+            self.rect.right = 0
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -944,17 +944,17 @@ all_sprites.add(player)
 
 running = True 
 while running:
-	clock.tick(FPS)
+    clock.tick(FPS)
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-	all_sprites.update()
+    all_sprites.update()
 
-	screen.fill(BLACK)
-	all_sprites.draw(screen)
-	pygame.display.flip()
+    screen.fill(BLACK)
+    all_sprites.draw(screen)
+    pygame.display.flip()
 
 pygame.quit()
 ```
@@ -985,9 +985,9 @@ som = pygame.mixer.Sound('american_crow_spring.ogg')
 print(f'length = {som.get_length()}')
 
 while True:
-	input('Aperte Enter para tocar o Som')
-	som.play()
-	print('Tocando o som... CTRL+Z para cancelar')
+    input('Aperte Enter para tocar o Som')
+    som.play()
+    print('Tocando o som... CTRL+Z para cancelar')
 ```
 
 Para cancelarmos a execução do script podemos usar os comandos `CTRL + Z` ou `CTRL + D`.
@@ -1019,21 +1019,21 @@ text = myriad_pro_font.render("p = play | s = stop", 1, WHITE)
 
 running = True
 while running:
-	clock.tick(FPS)
+    clock.tick(FPS)
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_p:
-				sound.play()
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_s:
-				sound.stop()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                sound.play()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_s:
+                sound.stop()
 
-	screen.fill(BLACK)
-	screen.blit(text, (100, 50))
-	pygame.display.flip()
+    screen.fill(BLACK)
+    screen.blit(text, (100, 50))
+    pygame.display.flip()
 
 pygame.quit()
 ```
