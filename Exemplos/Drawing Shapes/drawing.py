@@ -17,9 +17,9 @@ screen = pg.display.set_mode([width, height])
 
 # Define três retângulos
 retangulos = [
-	pg.Rect(20, 20, 100, 50), 
-	pg.Rect(20, 90, 50, 50),
-	pg.Rect(500, 30, 80, 60)
+    pg.Rect(20, 20, 100, 50), 
+    pg.Rect(20, 90, 50, 50),
+    pg.Rect(500, 30, 80, 60)
 ]
 
 done = True
@@ -32,7 +32,7 @@ while done:
     
     # Desenha três retângulos azuis
     for retangulo in retangulos:
-    	pg.draw.rect(screen, BLUE, retangulo)
+        pg.draw.rect(screen, BLUE, retangulo)
 
     # Desenha um retângulo verde
     pg.draw.rect(screen, GREEN, [115, 280, 70, 40])

@@ -10,10 +10,10 @@ SIZE = 500, 200
 screen = pygame.display.set_mode(SIZE)
 
 def draw_point(text, pos):
-	font = pygame.font.SysFont('Purisa', 15, bold=True)
-	img = font.render(text, True, BLACK)
-	pygame.draw.circle(screen, RED, pos, 6)
-	screen.blit(img, pos)
+    font = pygame.font.SysFont('Purisa', 15, bold=True)
+    img = font.render(text, True, BLACK)
+    pygame.draw.circle(screen, RED, pos, 6)
+    screen.blit(img, pos)
 
 rect = pygame.Rect(110, 57, 250, 80)
 pts = ('topleft', 'topright', 'bottomleft', 'bottomright',

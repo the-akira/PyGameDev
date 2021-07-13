@@ -22,20 +22,20 @@ text = myriad_pro_font.render("p = play | s = stop", 1, WHITE)
 
 running = True
 while running:
-	clock.tick(FPS)
+    clock.tick(FPS)
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_p:
-				sound.play()
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_s:
-				sound.stop()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                sound.play()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_s:
+                sound.stop()
 
-	screen.fill(BLACK)
-	screen.blit(text, (100, 50))
-	pygame.display.flip()
+    screen.fill(BLACK)
+    screen.blit(text, (100, 50))
+    pygame.display.flip()
 
 pygame.quit()

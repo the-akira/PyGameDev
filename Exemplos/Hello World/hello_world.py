@@ -20,21 +20,21 @@ speed = 0.5
 clock = pygame.time.Clock()
 
 while True:
-	clock.tick(60)
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			exit()
+    clock.tick(60)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
 
-	screen.fill(BLACK)
-	
-	x += speed * x_hat
-	y += speed * y_hat
+    screen.fill(BLACK)
+    
+    x += speed * x_hat
+    y += speed * y_hat
 
-	if x + text_size[0] > screen.get_width() or x <= 0:
-		x_hat *= -1
+    if x + text_size[0] > screen.get_width() or x <= 0:
+        x_hat *= -1
 
-	if y + text_size[1] > screen.get_height() or y <= 0:
-		y_hat *= -1
+    if y + text_size[1] > screen.get_height() or y <= 0:
+        y_hat *= -1
 
-	screen.blit(text,(x, y))
-	pygame.display.update()
+    screen.blit(text,(x, y))
+    pygame.display.update()

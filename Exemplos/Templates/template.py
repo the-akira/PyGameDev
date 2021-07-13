@@ -23,16 +23,16 @@ clock = pygame.time.Clock()
 # Game Loop
 running = True
 while running:
-	# Manter o loop rodando na velocidade correta
-	clock.tick(FPS)
-	# Processar Inputs (Eventos)
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
-	# Atualizar
-	# Desenhar / Renderizar
-	screen.fill(BLACK)
-	# Depois de desenhar tudo: flipar o display
-	pygame.display.flip()
+    # Manter o loop rodando na velocidade correta
+    clock.tick(FPS)
+    # Processar Inputs (Eventos)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    # Atualizar
+    # Desenhar / Renderizar
+    screen.fill(BLACK)
+    # Depois de desenhar tudo: flipar o display
+    pygame.display.flip()
 
 pygame.quit()

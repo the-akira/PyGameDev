@@ -27,14 +27,14 @@ clock = pygame.time.Clock()
 
 running = True
 while running:
-	clock.tick(FPS)
-	screen.fill(BLACK)
+    clock.tick(FPS)
+    screen.fill(BLACK)
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-	pygame.draw.rect(screen, WHITE, rect)
-	pygame.display.update()
+    pygame.draw.rect(screen, WHITE, rect)
+    pygame.display.update()
 
 pygame.quit()

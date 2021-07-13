@@ -17,23 +17,23 @@ game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, 'img')
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self):
-		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load(os.path.join(img_folder, 'guy.png')).convert()
-		self.image.set_colorkey(BLACK)
-		self.rect = self.image.get_rect()
-		self.rect.center = (WIDTH / 2, HEIGHT / 2)
-		self.y_speed = 10
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join(img_folder, 'guy.png')).convert()
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.center = (WIDTH / 2, HEIGHT / 2)
+        self.y_speed = 10
 
-	def update(self):
-		self.rect.x += 4
-		self.rect.y += self.y_speed
-		if self.rect.bottom > HEIGHT - 100:
-			self.y_speed = -5
-		if self.rect.top < 100:
-			self.y_speed = 5
-		if self.rect.left > WIDTH:
-			self.rect.right = 0
+    def update(self):
+        self.rect.x += 4
+        self.rect.y += self.y_speed
+        if self.rect.bottom > HEIGHT - 100:
+            self.y_speed = -5
+        if self.rect.top < 100:
+            self.y_speed = 5
+        if self.rect.left > WIDTH:
+            self.rect.right = 0
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -46,16 +46,16 @@ all_sprites.add(player)
 
 running = True 
 while running:
-	clock.tick(FPS)
+    clock.tick(FPS)
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-	all_sprites.update()
+    all_sprites.update()
 
-	screen.fill(BLACK)
-	all_sprites.draw(screen)
-	pygame.display.flip()
+    screen.fill(BLACK)
+    all_sprites.draw(screen)
+    pygame.display.flip()
 
 pygame.quit()
