@@ -270,9 +270,9 @@ pygame.init()
 # Inicializa a tela
 screen = pygame.display.set_mode((500,500))
 pygame.display.set_caption("Eventos")
+
 # Game Loop ficará ativo até que running seja False
 running = True 
-
 while running: 
     # Observa cada evento na fila de eventos
     for event in pygame.event.get():
