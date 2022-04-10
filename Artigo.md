@@ -148,7 +148,7 @@ Rect(posicao, tamanho)
 Rect(objeto)
 ```
 
-A figura a seguir nos ajuda a compreender a criação do retângulo:
+A figura a seguir nos ajuda a compreender a criação do retângulo e seu posicionamento:
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/retangulo.png)
 
