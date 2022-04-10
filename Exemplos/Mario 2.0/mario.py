@@ -19,8 +19,8 @@ class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
     def update(self, *args):
         super().update(*args)
         if self.target:
-            x = -self.target.rect.center[0] + SCREEN_SIZE.width/2
-            y = -self.target.rect.center[1] + SCREEN_SIZE.height/2
+            x = -self.target.rect.centerx + SCREEN_SIZE.width/2
+            y = -self.target.rect.centery + SCREEN_SIZE.height/2
             self.cam += (pygame.Vector2((x, y)) - self.cam) * 0.05
             self.cam.x = max(-(self.world_size.width-SCREEN_SIZE.width), min(0, self.cam.x))
             self.cam.y = max(-(self.world_size.height-SCREEN_SIZE.height), min(0, self.cam.y))
@@ -105,7 +105,7 @@ class Player(Entity):
         self.rect.left += self.vel.x
         # executar colisão no eixo-x
         self.collide(self.vel.x, 0, self.platforms)
-        # incrementar na diretação y
+        # incrementar na direção y
         self.rect.top += self.vel.y
         # assumindo que estamos no ar
         self.on_ground = False
