@@ -703,7 +703,7 @@ print(f'Existem {len(fonts)} fonts disponíveis')
 pprint(fonts)
 ```
 
-No exemplo a seguir vamos exibir o texto "Hello PyGame" no centro de nossa tela.
+No exemplo a seguir vamos exibir o texto "Hello PyGame" no centro de nossa tela:
 
 ```python
 import pygame
@@ -963,8 +963,7 @@ Ao criar uma subclasse do Sprite, certifique-se de chamar o inicializador base a
 
 ```python
 class Block(pygame.sprite.Sprite):
-    # Construtor. Recebe a cor do bloco
-    # e sua posição x e y como argumento
+    # Construtor. Recebe a cor do bloco e sua posição x e y como argumento
     def __init__(self, color, width, height):
        # Chama o construtor da classe pai (Sprite)
        pygame.sprite.Sprite.__init__(self)
@@ -972,7 +971,6 @@ class Block(pygame.sprite.Sprite):
        # Também pode ser uma imagem carregada do disco
        self.image = pygame.Surface([width, height])
        self.image.fill(color)
-
        # Busca o objeto retângulo que possui as dimensões da imagem
        # Atualiza a posição deste objeto setando os valores de rect.x e rect.y
        self.rect = self.image.get_rect()
@@ -986,7 +984,6 @@ Vejamos agora um exemplo com mais detalhes:
 
 ```python
 import pygame 
-import random 
 import os
 
 WIDTH = 800
@@ -999,7 +996,6 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
-# setup assets folders
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, 'img')
 
@@ -1038,10 +1034,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    all_sprites.update()
-
+    
     screen.fill(BLACK)
+    all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
 

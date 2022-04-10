@@ -1,5 +1,4 @@
 import pygame 
-import random 
 import os
 
 WIDTH = 800
@@ -12,7 +11,6 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
-# setup assets folders
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, 'img')
 
@@ -51,10 +49,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    all_sprites.update()
-
+    
     screen.fill(BLACK)
+    all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
 
