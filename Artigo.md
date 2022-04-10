@@ -152,7 +152,7 @@ A figura a seguir nos ajuda a compreender a criação do retângulo:
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/retangulo.png)
 
-Que pode ser reproduzida com o seguinte código
+Que pode ser reproduzida com o seguinte código:
 
 ```python
 import pygame
@@ -183,6 +183,10 @@ while running:
 
 pygame.quit()
 ```
+
+E nos traz o seguinte resultado:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot1.png)
 
 ##### Atributos Virtuais
 
