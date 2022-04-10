@@ -945,7 +945,7 @@ Em computação gráfica, um sprite é um bitmap bidimensional integrado em uma 
 
 Pygame fornece uma [classe Sprite](https://www.pygame.org/docs/ref/sprite.html) que é projetada para conter uma ou várias representações gráficas de qualquer objeto do Game que você deseja exibir na tela. Para usá-la, criamos uma nova classe que estende **Sprite**. Isso permite usarmos todos os seus métodos embutidos.
 
-Existe a classe Sprite principal e várias classes de Grupo que contêm Sprites. O uso dessas classes é totalmente opcional ao usar pygame. As classes são bastante leves e fornecem apenas um ponto de partida para o código comum à maioria dos Games.
+Existe a classe Sprite principal e várias classes de Grupo que contêm Sprites. O uso dessas classes é totalmente opcional ao usar Pygame. As classes são bastante leves e fornecem apenas um ponto de partida para o código comum à maioria dos Games.
 
 A classe Sprite tem como intenção ser usada como uma classe base para os diferentes tipos de objetos do Game. Existe também uma classe base [Group](https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Group) que simplesmente armazena sprites. Um Game pode criar novos tipos de classes de Grupo que operam em instâncias de Sprite especialmente personalizadas.
 
@@ -957,7 +957,7 @@ Os grupos são projetados para alta eficiência na remoção e adição de Sprit
 
 Sprites e grupos gerenciam seus relacionamentos com os métodos **add()** e **remove()**. Esses métodos podem aceitar um único ou vários destinos para associação. Os inicializadores padrão para essas classes também usam um único ou uma lista de destinos para a associação inicial. É seguro adicionar e remover repetidamente o mesmo Sprite de um Grupo.
 
-A classe base para objetos visíveis do Game. As classes derivadas necessitarão substituir `Sprite.update()` e atribuir atributos **Sprite.image** e **Sprite.rect**. O inicializador pode aceitar qualquer número de instâncias de Grupo a serem adicionadas.
+A classe base para objetos visíveis do Game é [pygame.sprite.Sprite](http://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite). As classes derivadas necessitarão substituir `Sprite.update()` e atribuir atributos **Sprite.image** e **Sprite.rect**. O inicializador pode aceitar qualquer número de instâncias de Grupo a serem adicionadas.
 
 Ao criar uma subclasse do Sprite, certifique-se de chamar o inicializador base antes de adicionar o Sprite aos grupos. Por exemplo:
 
@@ -1126,9 +1126,133 @@ Este exemplo irá nos apresentar a seguinte tela:
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot7.png)
 
-Usamos a tecla **P** para dar Play na música e a tecla **S** para dar Stop.
+Usamos a tecla **p** para dar Play na música e a tecla **s** para dar Stop.
 
 Perceba também que estamos carregando um [ícone de música](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Sound/icon.png) para customizar nossa janela.
+
+### Debugging
+
+[Debugging](https://en.wikipedia.org/wiki/Debugging) é o processo de detecção e remoção de erros existentes e potenciais (também chamados de 'bugs') em um código de software, que podem fazer com que ele se comporte inesperadamente ou falhe. Para evitar a operação incorreta de um software ou sistema, debugging é usada para localizar e resolver bugs ou defeitos.
+
+Sabemos que no Pygame temos um Game Loop e que quando ele está executando é interessante que possamos inspecionar o valor de certas variáveis que estão sofrendo alterações, para isso, poderíamos utilizar o comando **print()**, porém seria inconveniente devido ao fato de que o valor será impresso muitas vezes na tela e será difícil de rastreá-lo.
+
+Para solucionar este problema com o comando **print()**, podemos utilizar as próprias funcionalidades da biblioteca Pygame, utilizando o módulo [pygame.font](https://www.pygame.org/docs/ref/font.html) para carregar e renderizar fontes.
+
+No exemplo a seguir vamos definir uma função chamada **debug** que receberá um valor a ser inspecionado como argumento e também as coordenadas em que ele será apresentado na tela:
+
+```python
+import pygame 
+pygame.init()
+
+WIDTH = 835
+HEIGHT = 450
+FPS = 30
+WHITE = (255, 255, 255)
+font = pygame.font.Font(None, 33)
+
+def debug(info, x=10, y=10):
+    display_surface = pygame.display.get_surface()
+    debug_surface = font.render(str(info), True, WHITE)
+    debug_rect = debug_surface.get_rect(topleft=(x,y))
+    display_surface.blit(debug_surface, debug_rect)
+
+class Bug(pygame.sprite.Sprite):
+    def __init__(self, x, y, scale):
+        pygame.sprite.Sprite.__init__(self)
+        self.images_right = []
+        self.images_left = []
+        self.index = 0
+        self.counter = 0
+        for num in range(1,5):
+            img_left = pygame.image.load(f'images/{num}.png').convert_alpha()
+            img_left = pygame.transform.scale(img_left, (int(img_left.get_width() * scale), int(img_left.get_height() * scale)))
+            img_right = pygame.transform.flip(img_left, True, False)
+            self.images_right.append(img_right)
+            self.images_left.append(img_left)   
+        self.image = self.images_right[self.index]    
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.rect.x = x 
+        self.rect.y = y
+        self.direction = 0
+
+    def update(self):
+        dx = 0 
+        dy = 0
+        walk_cooldown = 4
+        key = pygame.key.get_pressed()
+
+        if key[pygame.K_LEFT]:
+            dx -= 6
+            self.counter += 1
+            self.direction = -1
+            if self.rect.left <= 0:
+                self.rect.left = 0
+        if key[pygame.K_RIGHT]:
+            dx += 6
+            self.counter += 1
+            self.direction = 1
+            if self.rect.right >= WIDTH:
+                self.rect.right = WIDTH
+        if key[pygame.K_LEFT] == False and key[pygame.K_RIGHT] == False:
+            self.counter = 0
+            self.index = 0
+            if self.direction == 1:
+                self.image = self.images_right[self.index]
+            if self.direction == -1:
+                self.image = self.images_left[self.index]
+
+        if self.counter > walk_cooldown:
+            self.counter = 0
+            self.index += 1 
+            if self.index >= len(self.images_right):
+                self.index = 0
+            if self.direction == 1:
+                self.image = self.images_right[self.index]
+            if self.direction == -1:
+                self.image = self.images_left[self.index]
+
+        self.rect.x += dx 
+        self.rect.y += dy
+
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('Debugging')
+clock = pygame.time.Clock()
+
+background = pygame.image.load('images/bg.png').convert_alpha()
+all_sprites = pygame.sprite.Group()
+player = Bug(50, 165, 0.3)
+all_sprites.add(player)
+
+running = True 
+while running:
+    screen.blit(background,(0,0))
+    clock.tick(FPS)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    all_sprites.update()
+    all_sprites.draw(screen)
+    debug((player.rect.x, player.rect.y))
+    debug(pygame.mouse.get_pressed(), 380)
+    debug(pygame.mouse.get_pos(), 725)
+    pygame.display.flip()
+
+pygame.quit()
+```
+
+Este exemplo nos trará o seguinte resultado:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot7.png)
+
+Observe que na primeira tupla estamos apresentando os valores **x** e **y** que representam a posição do jogador, na tupla do meio estamos mostrando o estado de cada botão do mouse (esquerda, centro e direita), sendo 0 indicando que ele não está pressionado e 1 indicando que está, e por fim, na última tupla temos os valores **x** e **y** da posição do cursor.
+
+Perceba também que é possível mover o personagem para a esquerda e direita (utilizando as setas do teclado), além disso, estamos animando o personagem ao carregar diversas imagens e realizar um loop circular por elas ao sempre resetar o seu índice.
+
+Com essa técnica de debugging, podemos agora inspecionar as variáveis internas de nossos Games com mais facilidade, fazendo que consigamos solucionar os problemas com mais agilidade e eficiência.
 
 ## Construindo um Platform Game
 
@@ -1157,7 +1281,6 @@ Na função **main()** vamos inicializar nosso mapa, os Sprites e desenharemos t
 Vejamos então o código para compreendermos melhor:
 
 ```python
-from pygame import *
 import pygame
 
 SCREEN_SIZE = pygame.Rect((0, 0, 800, 640))
@@ -1165,6 +1288,7 @@ INITIAL_POS = (35, 700)
 BACKGROUND_BLUE = (104, 136, 247)
 GRAVITY = pygame.Vector2((0, 0.29))
 TILE_SIZE = 32
+FPS = 60
 
 class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
@@ -1178,11 +1302,15 @@ class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
     def update(self, *args):
         super().update(*args)
         if self.target:
-            x = -self.target.rect.center[0] + SCREEN_SIZE.width/2
-            y = -self.target.rect.center[1] + SCREEN_SIZE.height/2
+            x = -self.target.rect.centerx + SCREEN_SIZE.width/2
+            y = -self.target.rect.centery + SCREEN_SIZE.height/2
             self.cam += (pygame.Vector2((x, y)) - self.cam) * 0.05
             self.cam.x = max(-(self.world_size.width-SCREEN_SIZE.width), min(0, self.cam.x))
             self.cam.y = max(-(self.world_size.height-SCREEN_SIZE.height), min(0, self.cam.y))
+        if self.target.moving_left:
+            self.target.image = self.target.flipped
+        elif self.target.moving_right:
+            self.target.image = self.target.original_image
 
     def draw(self, surface):
         spritedict = self.spritedict
@@ -1206,56 +1334,65 @@ class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
         return dirty            
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, color, pos, *groups):
+    def __init__(self, pos, *groups):
         super().__init__(*groups)
-        self.image = Surface((TILE_SIZE, TILE_SIZE))
-        self.image.fill(color)
+        self.image = pygame.Surface((TILE_SIZE, TILE_SIZE))
         self.rect = self.image.get_rect(topleft=pos)
 
 class Player(Entity):
     def __init__(self, platforms, pos, *groups):
-        super().__init__(Color("#0000FF"), pos)
+        super().__init__(pos)
         self.image_load = pygame.image.load('mario.png').convert_alpha()
+        self.original_image = pygame.transform.scale(self.image_load, (55,65))
         self.image = pygame.transform.scale(self.image_load, (55,65))
+        self.flipped = pygame.transform.flip(self.image, True, False)
         self.rect = self.image.get_rect(topleft=pos)
         self.vel = pygame.Vector2((0, 0))
-        self.onGround = False
+        self.on_ground = False
+        self.moving_right = False
+        self.moving_left = False
         self.platforms = platforms
         self.speed = 6
         self.jump_strength = 9
 
     def update(self):
         pressed = pygame.key.get_pressed()
-        up = pressed[K_UP]
-        left = pressed[K_LEFT]
-        right = pressed[K_RIGHT]
-        running = pressed[K_SPACE]
+        up = pressed[pygame.K_UP]
+        left = pressed[pygame.K_LEFT]
+        right = pressed[pygame.K_RIGHT]
+        running = pressed[pygame.K_SPACE]
 
         if up:
-            # only jump if on the ground
-            if self.onGround: self.vel.y = -self.jump_strength
+            # pular apenas se estiver no chão
+            if self.on_ground: 
+                self.vel.y = -self.jump_strength
         if left:
             self.vel.x = -self.speed
+            self.moving_left = True
+            self.moving_right = False
         if right:
             self.vel.x = self.speed
+            self.moving_right = True
+            self.moving_left = False
         if running:
             self.vel.x *= 1.3
-        if not self.onGround:
-            # only accelerate with gravity if in the air
+        if not self.on_ground:
+            # só acelere com a gravidade se estiver no ar
             self.vel += GRAVITY
-            # max falling speed
-            if self.vel.y > 100: self.vel.y = 100
+            # velocidade máxima de queda
+            if self.vel.y > 100: 
+                self.vel.y = 100
         if not(left or right):
             self.vel.x = 0
-        # increment in x direction
+        # incrementar na direção x
         self.rect.left += self.vel.x
-        # do x-axis collisions
+        # executar colisão no eixo-x
         self.collide(self.vel.x, 0, self.platforms)
-        # increment in y direction
+        # incrementar na direção y
         self.rect.top += self.vel.y
-        # assuming we're in the air
-        self.onGround = False;
-        # do y-axis collisions
+        # assumindo que estamos no ar
+        self.on_ground = False
+        # executar a colisão no eixo-y
         self.collide(0, self.vel.y, self.platforms)
 
     def collide(self, xvel, yvel, platforms):
@@ -1267,14 +1404,14 @@ class Player(Entity):
                     self.rect.left = p.rect.right
                 if yvel > 0:
                     self.rect.bottom = p.rect.top
-                    self.onGround = True
+                    self.on_ground = True
                     self.yvel = 0
                 if yvel < 0:
                     self.rect.top = p.rect.bottom
 
 class Platform(Entity):
     def __init__(self, pos, *groups):
-        super().__init__(Color("#BE521C"), pos, *groups)
+        super().__init__(pos, *groups)
         self.image_load = pygame.image.load('brick.png').convert_alpha()
         self.image = pygame.transform.scale(self.image_load, (32,32))
 
@@ -1313,11 +1450,11 @@ def main():
 
     platforms = pygame.sprite.Group()
     player = Player(platforms, INITIAL_POS)
-    level_width  = len(level[0])*TILE_SIZE
-    level_height = len(level)*TILE_SIZE
+    level_width  = len(level[0]) * TILE_SIZE
+    level_height = len(level) * TILE_SIZE
     entities = CameraLayeredUpdates(player, pygame.Rect(0, 0, level_width, level_height))
 
-    # build the level
+    # construir o level do game
     x = y = 0
     for row in level:
         for col in row:
@@ -1328,17 +1465,17 @@ def main():
         x = 0
 
     while True:
-        for e in pygame.event.get():
-            if e.type == QUIT: 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
                 return
-            if e.type == KEYDOWN and e.key == K_ESCAPE:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return
 
         entities.update()
         screen.fill(BACKGROUND_BLUE)
         entities.draw(screen)
         pygame.display.update()
-        timer.tick(60)
+        timer.tick(FPS)
 
 if __name__ == "__main__":
     main()
@@ -1364,7 +1501,7 @@ A classe **player** será utilizada para construir o objeto que representará no
 
 Um detalhe importante que devemos lembrar é que estamos utilizando o conceito de Vetores para manipular as coordenadas **x** e **y**, para encontrar mais detalhes sobre eles, podemos visitar a documentação do módulo [math](https://www.pygame.org/docs/ref/math.html) do Pygame.
 
-Na função **main()** de nosso Game, estamos definindo o mapa de nosso Jogo na variável **level**, onde todos os **P's** serão renderizados como tijolos, perceba que esta variável é uma list de strings.
+Na função **main()** de nosso Game, estamos definindo o mapa de nosso Jogo na variável **level**, onde todos os **P's** serão renderizados como tijolos, perceba que esta variável é uma **list** de **strings**.
 
 Finalmente construímos o nosso "level" através da classe **Platform**, damos início ao Game Loop, atualizamos todas as entities, preenchemos o background com a cor definida na variável **BACKGROUND_BLUE**, desenhamos as entities na tela e atualizamos o display. Nosso clock é setado para operar em 60 FPS.
 
