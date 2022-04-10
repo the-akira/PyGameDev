@@ -29,6 +29,7 @@
 	- [Detectando Colisões](#detectando-colisões)
 	- [Sprites](#sprites)
 	- [Efeitos Sonoros](#efeitos-sonoros)
+    - [Debugging](#debugging)
 - [Construindo um Platform Game](#construindo-um-platform-game)
 - [Conclusão](#conclusão)
 
@@ -1246,7 +1247,7 @@ pygame.quit()
 
 Este exemplo nos trará o seguinte resultado:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot7.png)
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot12.png)
 
 Observe que na primeira tupla estamos apresentando os valores **x** e **y** que representam a posição do jogador, na tupla do meio estamos mostrando o estado de cada botão do mouse (esquerda, centro e direita), sendo 0 indicando que ele não está pressionado e 1 indicando que está, e por fim, na última tupla temos os valores **x** e **y** da posição do cursor.
 
