@@ -47,7 +47,7 @@ Para instalarmos Pygame em nossa máquina, utilizaremos [pip](https://pypi.org/p
 pip install pygame
 ```
 
-Podemos verificar se instalação ocorreu corretamente carregando um dos exemplos embutidos com a biblioteca:
+Podemos verificar se a instalação ocorreu corretamente carregando um dos exemplos embutidos com a biblioteca:
 
 ```
 python3 -m pygame.examples.aliens
@@ -74,7 +74,7 @@ Para usar os métodos da biblioteca Pygame, o módulo deve primeiro ser importad
 import pygame
 ```
 
-A instrução **import** grava a versão do pygame e um link para o site do Pygame no console (como efeito colateral):
+A instrução **import** grava a versão do pygame e um link para o site do Pygame no console:
 
 ```
 pygame 1.9.6
@@ -90,10 +90,10 @@ pygame.init()
 pygame.quit()
 ```
 
-- `pygame.init()`: Inicialize todos os módulos de Pygame importados. Podemos sempre inicializar módulos individuais manualmente, mas **pygame.init()** inicializa todos os módulos pygame importados, é uma maneira conveniente de começar tudo.
+- `pygame.init()`: Inicialize todos os módulos de Pygame importados. Podemos sempre inicializar módulos individuais manualmente, mas **pygame.init()** inicializa todos os módulos Pygame importados, é uma maneira conveniente de começar tudo.
 - `pygame.quit()`: Desinicializa todos os módulos do Pygame que foram inicializados anteriormente. Quando o interpretador Python é encerrado, este método é chamado independentemente, portanto, seu programa não deve precisar dele, exceto quando desejar encerrar seus recursos de Pygame.
 
-Se eventualmente precisarmos obter ajuda sobre algum método do Pygame, podemos utilizar a função **help()** do Python, por exemplo:
+Se eventualmente precisarmos obter ajuda sobre algum método ou classe do Pygame, podemos utilizar a função **help()** do Python, por exemplo:
 
 ```python
 help(pygame)
@@ -106,7 +106,7 @@ help(pygame.image)
 
 ### Displays e Superfícies
 
-Além dos módulos, o Pygame também inclui várias classes Python que encapsulam conceitos não dependentes de hardware. Um deles é a **Surface**, que em sua forma mais básica, define uma área retangular na qual podemos desenhar. Objetos Surface são usados em muitos contextos no pygame.
+Além dos módulos, o Pygame também inclui várias classes Python que encapsulam conceitos não dependentes de hardware. Um deles é a **Surface**, que em sua forma mais básica, define uma área retangular na qual podemos desenhar. Objetos Surface são usados em muitos contextos no Pygame.
 
 No Pygame, tudo é visualizado em uma única tela criada pelo usuário, que pode ser uma janela ou tela inteira. O **[display](https://www.pygame.org/docs/ref/display.html)** é criado usando o método **[set_mode()](https://www.pygame.org/docs/ref/display.html#pygame.display.set_mode)**, que retorna uma Surface representando a parte visível da janela. É essa superfície que passamos para as funções de desenho, como por exemplo **[pygame.draw.rect()](https://www.pygame.org/docs/ref/draw.html#pygame.draw.rect)**, e o conteúdo dessa superfície é colocado no display quando chamamos **[pygame.display.flip()](https://www.pygame.org/docs/ref/display.html#pygame.display.flip)**.
 
@@ -120,7 +120,7 @@ O argumento do tamanho é uma tupla com um par de números que representam a lar
 
 ### Coordenadas
 
-O sistema de coordenadas cartesianas, é o sistema ao qual a maioria das pessoas está acostumada ao traçar gráficos. Este é o sistema normalmente ensinado nas escolas. O Pygame usa um sistema de coordenadas semelhante, mas um pouco diferente.
+O sistema de coordenadas cartesianas é o sistema ao qual a maioria das pessoas está acostumada ao traçar gráficos. Este é o sistema normalmente ensinado nas escolas. O Pygame usa um sistema de coordenadas semelhante, mas um pouco diferente.
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/coordinates.png)
 
@@ -130,7 +130,7 @@ Pygame usa um sistema de coordenadas **x** e **y** onde a posição `(0,0)` é d
 
 Podemos desenhar formas(**shapes**) diretamente na superfície da tela, além disso também podemos trabalhar com imagens no disco. O módulo de imagem permite carregar e salvar imagens em uma variedade de formatos populares. As imagens são carregadas em objetos Surface, que podem ser manipulados e exibidos de várias maneiras.
 
-Os objetos Surface são representados por retângulos, assim como muitos outros objetos no pygame, como imagens e janelas. Retângulos são tão usados que existe uma classe especial **[Rect](https://www.pygame.org/docs/ref/rect.html)** apenas para manipulá-los. Usaremos objetos e imagens Rect em nossos jogos para desenhar personagens e inimigos e para gerenciar colisões entre eles.
+Os objetos Surface são representados por retângulos, assim como muitos outros objetos no Pygame, como imagens e janelas. Retângulos são tão usados que existe uma classe especial **[Rect](https://www.pygame.org/docs/ref/rect.html)** apenas para manipulá-los. Usaremos objetos e imagens Rect em nossos jogos para desenhar personagens e inimigos e para gerenciar colisões entre eles.
 
 #### Retângulo
 
@@ -147,6 +147,10 @@ Rect(left, top, width, height)
 Rect(posicao, tamanho)
 Rect(objeto)
 ```
+
+A figura a seguir nos ajuda a compreender a criação do retângulo:
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/retangulo.png)
 
 ##### Atributos Virtuais
 
