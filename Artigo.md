@@ -410,15 +410,15 @@ Vamos executá-lo em nosso console:
 ```python
 >>> import pygame
 >>> screen = pygame.display.set_mode((625, 220))
->>> screen.fill(WHITE)
+>>> screen.fill(BRANCO)
 
->>> pygame.draw.rect(screen, RED, (50, 20, 120, 100))
->>> pygame.draw.rect(screen, GREEN, (100, 60, 120, 100))
->>> pygame.draw.rect(screen, BLUE, (150, 100, 120, 100))
+>>> pygame.draw.rect(screen, VERMELHO, (50, 20, 120, 100))
+>>> pygame.draw.rect(screen, VERDE, (100, 60, 120, 100))
+>>> pygame.draw.rect(screen, AZUL, (150, 100, 120, 100))
 
->>> pygame.draw.rect(screen, RED, (350, 20, 120, 100), 1)
->>> pygame.draw.rect(screen, GREEN, (400, 60, 120, 100), 4)
->>> pygame.draw.rect(screen, BLUE, (450, 100, 120, 100), 8)
+>>> pygame.draw.rect(screen, VERMELHO, (350, 20, 120, 100), 1)
+>>> pygame.draw.rect(screen, VERDE, (400, 60, 120, 100), 4)
+>>> pygame.draw.rect(screen, AZUL, (450, 100, 120, 100), 8)
 ```
 
 Perceba que o segundo comando que executamos irá abrir a tela e os comandos seguintes não apresentam nenhum resultado na tela, isso porque devemos atualizar ela:
@@ -444,15 +444,15 @@ Novamente, vamos executá-lo em nosso console:
 ```python
 >>> import pygame
 >>> screen = pygame.display.set_mode((660, 220))
->>> screen.fill(WHITE)
+>>> screen.fill(BRANCO)
 
->>> pygame.draw.ellipse(screen, RED, (50, 20, 160, 100))
->>> pygame.draw.ellipse(screen, GREEN, (100, 60, 160, 100))
->>> pygame.draw.ellipse(screen, BLUE, (150, 100, 160, 100))
+>>> pygame.draw.ellipse(screen, VERMELHO, (50, 20, 160, 100))
+>>> pygame.draw.ellipse(screen, VERDE, (100, 60, 160, 100))
+>>> pygame.draw.ellipse(screen, AZUL, (150, 100, 160, 100))
 
->>> pygame.draw.ellipse(screen, RED, (350, 20, 160, 100), 1)
->>> pygame.draw.ellipse(screen, GREEN, (400, 60, 160, 100), 4)
->>> pygame.draw.ellipse(screen, BLUE, (450, 100, 160, 100), 8)
+>>> pygame.draw.ellipse(screen, VERMELHO, (350, 20, 160, 100), 1)
+>>> pygame.draw.ellipse(screen, VERDE, (400, 60, 160, 100), 4)
+>>> pygame.draw.ellipse(screen, AZUL, (450, 100, 160, 100), 8)
 
 >>> pygame.display.update()
 ```
@@ -922,8 +922,8 @@ As imagens, representam, respectivamente:
 - Um [jogador](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/player.png)
 - Um [portal](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/portal.png)
 - Um [tronco](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/trunk.png)
-- Um [baú]((https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/box.png))
-- Um [crânio]((https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/skull.png))
+- Um [baú](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/box.png)
+- Um [crânio](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/skull.png)
 
 Um detalhe que devemos citar é que o fundo do tronco é branco, então estamos usando uma técnica chamada *colorkey* que torna uma cor totalmente transparente. A função é bastante simples, é chamada `set_colorkey(COR)`.
 
