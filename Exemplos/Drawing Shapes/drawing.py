@@ -23,7 +23,6 @@ retangulos = [
 ]
 
 done = True
-
 while done:
     screen.fill(BLACK)
     for event in pg.event.get():
@@ -56,7 +55,7 @@ while done:
     pg.draw.polygon(screen, YELLOW, [[140, 120], [100, 200], [300, 200]])
     # Desenha um polígono verde (borda)
     pg.draw.polygon(screen, GREEN, [[140, 120], [100, 200], [300, 200]], 3)
-
+    # Atualiza a tela
     pg.display.update()
     
 pg.quit()
