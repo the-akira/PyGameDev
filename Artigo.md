@@ -90,8 +90,8 @@ pygame.init()
 pygame.quit()
 ```
 
-- `pygame.init()`: Inicialize todos os módulos de pygame importados. Podemos sempre inicializar módulos individuais manualmente, mas **pygame.init()** inicializa todos os módulos pygame importados, é uma maneira conveniente de começar tudo.
-- `pygame.quit()`: Desinicializa todos os módulos do pygame que foram inicializados anteriormente. Quando o interpretador Python é encerrado, este método é chamado independentemente, portanto, seu programa não deve precisar dele, exceto quando deseja encerrar seus recursos de pygame e continuar. É seguro chamar esta função mais de uma vez, pois as chamadas repetidas não surtem efeito.
+- `pygame.init()`: Inicialize todos os módulos de Pygame importados. Podemos sempre inicializar módulos individuais manualmente, mas **pygame.init()** inicializa todos os módulos pygame importados, é uma maneira conveniente de começar tudo.
+- `pygame.quit()`: Desinicializa todos os módulos do Pygame que foram inicializados anteriormente. Quando o interpretador Python é encerrado, este método é chamado independentemente, portanto, seu programa não deve precisar dele, exceto quando desejar encerrar seus recursos de Pygame.
 
 Se eventualmente precisarmos obter ajuda sobre algum método do Pygame, podemos utilizar a função **help()** do Python, por exemplo:
 
@@ -1139,7 +1139,7 @@ Sabemos que no Pygame temos um Game Loop e que quando ele está executando é in
 
 Para solucionar este problema com o comando **print()**, podemos utilizar as próprias funcionalidades da biblioteca Pygame, utilizando o módulo [pygame.font](https://www.pygame.org/docs/ref/font.html) para carregar e renderizar fontes.
 
-No exemplo a seguir vamos definir uma função chamada **debug** que receberá um valor a ser inspecionado como argumento e também as coordenadas em que ele será apresentado na tela:
+No [exemplo a seguir](https://github.com/the-akira/PyGameDev/tree/master/Exemplos/Debugging) vamos definir uma função chamada **debug** que receberá um valor a ser inspecionado como argumento e também as coordenadas em que ele será apresentado na tela:
 
 ```python
 import pygame 
