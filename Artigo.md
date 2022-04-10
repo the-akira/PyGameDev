@@ -186,7 +186,7 @@ pygame.quit()
 
 E nos traz o seguinte resultado:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot1.png)
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot13.png)
 
 ##### Atributos Virtuais
 
