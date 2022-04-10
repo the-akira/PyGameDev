@@ -618,7 +618,7 @@ class PlayerLocation:
     x: int 
     y: int
 
-player_location = PlayerLocation(x=155, y=310)
+player_location = PlayerLocation(x=155, y=125)
 velocity = 3.5
 
 # Game Loop
@@ -650,10 +650,8 @@ while running:
     
     if player_location.x < 0:
         player_location.x = 0
-    elif player_location.x + player.get_width() > WIDTH:
+    if player_location.x + player.get_width() > WIDTH:
         player_location.x = WIDTH - player.get_width()
-    elif player_location.y + player.get_height() > HEIGHT:
-        player_location.y = HEIGHT - player.get_height()
 
     pygame.display.update() 
     clock.tick(FPS) 
