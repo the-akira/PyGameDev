@@ -458,7 +458,7 @@ Novamente, vamos executá-lo em nosso console:
 >>> pygame.display.update()
 ```
 
-Que nos trará o seguint *output*:
+Que nos trará o seguinte *output*:
 
 ![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot11.png)
 
@@ -1166,7 +1166,8 @@ class Bug(pygame.sprite.Sprite):
         self.counter = 0
         for num in range(1,5):
             img_left = pygame.image.load(f'images/{num}.png').convert_alpha()
-            img_left = pygame.transform.scale(img_left, (int(img_left.get_width() * scale), int(img_left.get_height() * scale)))
+            new_dimension = (int(img_left.get_width() * scale), int(img_left.get_height() * scale))
+            img_left = pygame.transform.scale(img_left, new_dimension)
             img_right = pygame.transform.flip(img_left, True, False)
             self.images_right.append(img_right)
             self.images_left.append(img_left)   
