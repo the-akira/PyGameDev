@@ -106,7 +106,7 @@ help(pygame.image)
 
 ### Displays e Superfícies
 
-Além dos módulos, o Pygame também inclui várias classes Python que encapsulam conceitos não dependentes de hardware. Um deles é a **Surface**, que em sua forma mais básica, define uma área retangular na qual podemos desenhar. Objetos Surface são usados em muitos contextos no Pygame.
+Além dos módulos, o Pygame também inclui várias classes Python que encapsulam conceitos não dependentes de hardware. Uma delas é a **Surface**, que em sua forma mais básica, define uma área retangular na qual podemos desenhar. Objetos Surface são usados em muitos contextos no Pygame.
 
 No Pygame, tudo é visualizado em uma única tela criada pelo usuário, que pode ser uma janela ou tela inteira. O **[display](https://www.pygame.org/docs/ref/display.html)** é criado usando o método **[set_mode()](https://www.pygame.org/docs/ref/display.html#pygame.display.set_mode)**, que retorna uma Surface representando a parte visível da janela. É essa superfície que passamos para as funções de desenho, como por exemplo **[pygame.draw.rect()](https://www.pygame.org/docs/ref/draw.html#pygame.draw.rect)**, e o conteúdo dessa superfície é colocado no display quando chamamos **[pygame.display.flip()](https://www.pygame.org/docs/ref/display.html#pygame.display.flip)**.
 
@@ -130,7 +130,7 @@ Pygame usa um sistema de coordenadas **x** e **y** onde a posição `(0,0)` é d
 
 Podemos desenhar formas(**shapes**) diretamente na superfície da tela, além disso também podemos trabalhar com imagens no disco. O módulo de imagem permite carregar e salvar imagens em uma variedade de formatos populares. As imagens são carregadas em objetos Surface, que podem ser manipulados e exibidos de várias maneiras.
 
-Os objetos Surface são representados por retângulos, assim como muitos outros objetos no Pygame, como imagens e janelas. Retângulos são tão usados que existe uma classe especial **[Rect](https://www.pygame.org/docs/ref/rect.html)** apenas para manipulá-los. Usaremos objetos e imagens Rect em nossos jogos para desenhar personagens e inimigos e para gerenciar colisões entre eles.
+Os objetos Surface são representados por retângulos, assim como muitos outros objetos no Pygame, como imagens e janelas. Retângulos são tão usados que existe uma classe especial **[Rect](https://www.pygame.org/docs/ref/rect.html)** apenas para manipulá-los. Usaremos objetos e imagens Rect em nossos jogos para desenhar personagens e obstáculos e para gerenciar colisões entre eles.
 
 #### Retângulo
 
@@ -162,7 +162,7 @@ O objeto **Rect** tem vários atributos virtuais que podem ser usados para mover
 - midtop, midleft, midbottom, midright
 - center, centerx, centery
 
-A atribuição desses 5 atributos a seguir altera o tamanho do retângulo, mantendo sua posição superior esquerda.
+A atribuição desses 5 atributos a seguir altera o tamanho do retângulo, mantendo sua posição superior esquerda:
 
 - size, width, height, w, h
 
@@ -408,7 +408,7 @@ circle(Surface, color, center, radius, width) -> Rect
 
 A maioria das funções tem um argumento de largura. Se a largura for 0, a forma será preenchida com a devida cor.
 
-O seguinte código desenha primeiro a cor de fundo e, em seguida, adiciona três retângulos sólidos sobrepostos e, ao lado, três retângulos sobrepostos contornados com largura de linha crescente.
+O seguinte código preenche a cor de fundo com branco e, em seguida, adiciona três retângulos sólidos sobrepostos e, ao lado, três retângulos sobrepostos contornados com largura de linha crescente.
 
 Vamos executá-lo em nosso console:
 
@@ -426,7 +426,7 @@ Vamos executá-lo em nosso console:
 >>> pygame.draw.rect(screen, AZUL, (450, 100, 120, 100), 8)
 ```
 
-Perceba que o segundo comando que executamos irá abrir a tela e os comandos seguintes não apresentam nenhum resultado na tela, isso porque devemos atualizar ela:
+Perceba que o segundo comando que executamos irá abrir a tela e os comandos seguintes não apresentam nenhum resultado na tela, isso porque devemos atualizá-la:
 
 ```python
 pygame.display.flip()
@@ -442,7 +442,7 @@ Para fechar a janela podemos utilizar o método `quit()`:
 pygame.quit()
 ```
 
-O código a seguir desenha primeiro a cor de fundo e, em seguida, adiciona três elipses sólidas sobrepostas e, ao lado, três elipses sobrepostas contornadas com largura de linha crescente.
+O código a seguir preenche a cor de fundo com branco e, em seguida, adiciona três elipses sólidas sobrepostas e, ao lado, três elipses sobrepostas contornadas com largura de linha crescente.
 
 Novamente, vamos executá-lo em nosso console:
 
@@ -548,7 +548,7 @@ O [módulo de imagem](https://www.pygame.org/docs/ref/image.html) contém funç�
 
 Observe que não há classe Image; uma imagem é carregada como um objeto Surface. A classe Surface permite a manipulação (desenhar linhas, definir pixels, capturar regiões, etc).
 
-Quando construída com suporte total de imagem, a função `pygame.image.load()` pode suportar os formatos a seguir.
+Quando construída com suporte total de imagem, a função `pygame.image.load()` pode suportar os formatos a seguir:
 
 - JPG
 - PNG
@@ -560,7 +560,7 @@ Quando construída com suporte total de imagem, a função `pygame.image.load()`
 - PBM (e PGM, PPM)
 - XPM
 
-Salvar imagens suporta apenas um conjunto limitado de formatos. Podemos salvar nos seguintes formatos.
+Salvar imagens suporta apenas um conjunto limitado de formatos. Podemos salvar nos seguintes formatos:
 
 - BMP
 - TGA
@@ -666,7 +666,7 @@ Sendo assim, **blit()** recebe dois importantes argumentos:
 1. A superfície para desenhar (neste caso estamos usando uma imagem)
 2. O local onde desenhá-lo na superfície de origem
 
-Perceba também que definimos um objeto chamada de **player_location** que representa as coordenadas da posição do player na tela. A variável **velocity** representa a velocidade de deslocamento do player. Para movermos o player usamos as Arrow Keys do teclado (<- & ->), ao pressionarmos elas, iremos acionar as respectivas variáveis **moving_right** e **moving_left** como **True** fazendo assim o player se movimentar. Por fim definimos os limites da tela, para que o player não desapareça de nossa visão e atualizamos a tela com o comando `pygame.display.update()`.
+Perceba também que definimos um objeto chamada de **player_location** que representa as coordenadas da posição do player na tela. A variável **velocity** representa a velocidade de deslocamento do player. Para mover o player usamos as Arrow Keys do teclado (<- & ->), ao pressionarmos elas, iremos acionar as respectivas variáveis **moving_right** e **moving_left** como **True** fazendo assim o player se movimentar. Por fim definimos os limites da tela, para que o player não desapareça de nossa visão e atualizamos a tela com o comando `pygame.display.update()`.
 
 Para transparência alfa, como em imagens **.png**, usamos o método **convert_alpha()** após o carregamento para que a imagem tenha transparência por pixel.
 
@@ -1141,7 +1141,7 @@ Sabemos que no Pygame temos um Game Loop e que quando ele está executando é in
 
 Para solucionar este problema com o comando **print()**, podemos utilizar as próprias funcionalidades da biblioteca Pygame, utilizando o módulo [pygame.font](https://www.pygame.org/docs/ref/font.html) para carregar e renderizar fontes.
 
-No [exemplo a seguir](https://github.com/the-akira/PyGameDev/tree/master/Exemplos/Debugging) vamos definir uma função chamada **debug** que receberá um valor a ser inspecionado como argumento e também as coordenadas em que ele será apresentado na tela:
+No [exemplo a seguir](https://github.com/the-akira/PyGameDev/tree/master/Exemplos/Debugging) vamos definir uma função chamada **debug** que receberá como argumento um valor a ser inspecionado e também as coordenadas em que ele será apresentado na tela:
 
 ```python
 import pygame 
@@ -1270,8 +1270,8 @@ Neste exemplo, vamos emular um simples Mario [8-bit](https://en.wikipedia.org/wi
 
 Vamos usar apenas duas imagens:
 
-- O personagem [Mario](https://github.com/the-akira/PyGameDev/blob/master/Exemplos/Mario/mario.png)
-- O [tijolo](https://github.com/the-akira/PyGameDev/blob/master/Exemplos/Mario/brick.png) tradicional do Game Mario
+- O personagem [Mario](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%202.0/mario.png)
+- O [tijolo](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%202.0/brick.png) tradicional do Game Mario
 
 O Game contará com apenas 4 Classes e uma função **main()**:
 
