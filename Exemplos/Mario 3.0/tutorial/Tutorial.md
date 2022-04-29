@@ -40,4 +40,8 @@ Uma vez que você fez o download e instalou **Tiled**, vamos para o primeiro pas
 
 Agora temos o nosso nível em um formato que podemos facilmente carregar em nosso Game!
 
-Neste **[exemplo](https://github.com/the-akira/PyGameDev/tree/master/Exemplos/Mario%203.0)** mostramos como carregar um nível e desenhá-lo na tela. Também temos um personagem que pode caminhar pelo nível com as devidas colisões e *scrolling* da tela. Bons estudos!
+Neste **[exemplo](https://github.com/the-akira/PyGameDev/tree/master/Exemplos/Mario%203.0)** mostramos como carregar um nível e desenhá-lo na tela. Também temos um personagem que pode caminhar pelo nível com as devidas colisões e *scrolling* da tela: 
+
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%203.0/tutorial/imagens/screenshot.png)
+
+Bons estudos!
