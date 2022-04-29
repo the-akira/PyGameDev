@@ -22,7 +22,7 @@ Uma vez que você fez o download e instalou **Tiled**, vamos para o primeiro pas
 
 4. Devemos então clicar no botão `Explorar...`, buscar o caminho do nosso [tileset](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%203.0/imagens/tileset.png) em nossa máquina e então confirmar com a opção `OK`, de acordo com a ilustração a seguir:
 
-[img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%203.0/tutorial/imagens/4.png)
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%203.0/tutorial/imagens/4.png)
 
 5. Uma vez que temos o nosso **tileset** carregado, podemos então desenhar o nosso nível conforme o nosso desejo:
 
