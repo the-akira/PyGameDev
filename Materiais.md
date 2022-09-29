@@ -2,7 +2,6 @@
 
 - [PyGame Docs](https://www.pygame.org/docs/)
 - [PyGame Tutorial Documentation](https://buildmedia.readthedocs.org/media/pdf/pygame/latest/pygame.pdf)
-- [Kite PyGame Docs](https://www.kite.com/python/docs/pygame)
 - [PyGame Tutorial](https://pygame.readthedocs.io/en/latest/index.html)
 - [PyGame For Beginners](https://medium.com/iothincvit/pygame-for-beginners-234da7d3c56f)
 - [Desbravando PyGame](https://humberto.io/pt-br/tags/pygame/)
