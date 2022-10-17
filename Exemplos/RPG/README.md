@@ -26,6 +26,7 @@ An experiment that aims to create a template for RPG Games with [PyGame](https:/
 - `a`: Move left
 - `s`: Move down
 - `d`: Move right
+- `esc`: Pause menu
 - `Left Mouse Click`: Casts a fireball in the direction of the cursor
 
 ## Maps
