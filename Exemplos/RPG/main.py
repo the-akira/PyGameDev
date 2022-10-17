@@ -314,6 +314,7 @@ def main():
     player = Player(platforms, INITIAL_POS)
     skeletons = [
         Skeleton(platforms, (200,200)),
+        Skeleton(platforms, (200,350)),
         Skeleton(platforms, (200,850)),
         Skeleton(platforms, (1250,330))
     ]
@@ -361,6 +362,8 @@ def main():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and not main_menu:
                 screen.fill(pygame.Color("Black"))
                 paused = True
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                main_menu = False
 
         if main_menu and not paused:
             if exit_button.draw(screen):
