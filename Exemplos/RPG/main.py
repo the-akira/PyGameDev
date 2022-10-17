@@ -156,6 +156,48 @@ class Necromancer(Entity):
         surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
             self.rect.centery - int(self.image.get_height()/2) + scroll_y))
 
+    def update(self, platforms):
+        self.rect.y -= 1
+        self.collide(0, -1, platforms)
+
+    def collide(self, xvel, yvel, platforms):
+        for platform in platforms:
+            if pygame.sprite.collide_rect(self, platform):
+                if yvel < 0:
+                    self.rect.top = platform.rect.bottom
+
+class Beholder(Entity):
+    def __init__(self, platforms, pos, *groups):
+        super().__init__(pos)
+        img = pygame.image.load('sprites/beholder.png').convert_alpha()
+        self.image = pygame.transform.scale(img, (70,75)).convert_alpha()
+        self.rect = self.image.get_rect(topleft=pos)
+
+    def draw(self, surface, scroll_x, scroll_y):
+        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
+            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+
+class Orc(Entity):
+    def __init__(self, platforms, pos, *groups):
+        super().__init__(pos)
+        img = pygame.image.load('sprites/orc.png').convert_alpha()
+        self.image = pygame.transform.scale(img, (85,75)).convert_alpha()
+        self.rect = self.image.get_rect(topleft=pos)
+
+    def draw(self, surface, scroll_x, scroll_y):
+        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
+            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+
+    def update(self, platforms):
+        self.rect.x -= 1
+        self.collide(-1, 0, platforms)
+
+    def collide(self, xvel, yvel, platforms):
+        for platform in platforms:
+            if pygame.sprite.collide_rect(self, platform):
+                if xvel < 0:
+                    self.rect.left = platform.rect.right
+
 class Player(Entity):
     def __init__(self, platforms, pos, *groups):
         super().__init__(pos)
@@ -264,8 +306,10 @@ def main():
     weapon = Weapon(fireball_image)
     floors = pygame.sprite.Group()
     platforms = pygame.sprite.Group()
+    orc_group = pygame.sprite.Group()
     fireball_group = pygame.sprite.Group()
     skeleton_group = pygame.sprite.Group()
+    beholder_group = pygame.sprite.Group()
     necromancer_group = pygame.sprite.Group()
     player = Player(platforms, INITIAL_POS)
     skeletons = [
@@ -282,6 +326,19 @@ def main():
     ]
     for necromancer in necromancers:
         necromancer_group.add(necromancer)
+    orcs = [
+        Orc(platforms, (200,1480)),
+        Orc(platforms, (3200,250)),
+        Orc(platforms, (1000,600)),
+    ]
+    for orc in orcs:
+        orc_group.add(orc)
+    beholders = [
+        Beholder(platforms, (2800,40)),
+        Beholder(platforms, (2800,1400)),
+    ]
+    for beholder in beholders:
+        beholder_group.add(beholder)
     level_width  = len(world_data[0]) * TILE_SIZE
     level_height = len(world_data) * TILE_SIZE
     entities = CameraLayeredUpdates(player, pygame.Rect(0, 0, level_width, level_height))
@@ -322,12 +379,15 @@ def main():
             entities.draw(screen)
             for skeleton in skeletons:
                 skeleton.draw(screen, entities.cam.x, entities.cam.y)
-                skeleton_group.add(skeleton)
             skeleton_group.update(platforms)
             for necromancer in necromancers:
                 necromancer.draw(screen, entities.cam.x, entities.cam.y)
-                necromancer_group.add(necromancer)
-            necromancer_group.update()
+            necromancer_group.update(platforms)
+            for orc in orcs:
+                orc.draw(screen, entities.cam.x, entities.cam.y)
+            orc_group.update(platforms)
+            for beholder in beholders:
+                beholder.draw(screen, entities.cam.x, entities.cam.y)
             fireball = weapon.update(player, entities.cam.x, entities.cam.y)
             if fireball:
                 fireball_group.add(fireball)
