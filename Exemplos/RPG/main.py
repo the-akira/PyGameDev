@@ -124,6 +124,38 @@ class Entity(pygame.sprite.Sprite):
         self.image = pygame.Surface((TILE_SIZE, TILE_SIZE))
         self.rect = self.image.get_rect(topleft=pos)
 
+class Skeleton(Entity):
+    def __init__(self, platforms, pos, *groups):
+        super().__init__(pos)
+        img = pygame.image.load('sprites/skeleton.png').convert_alpha()
+        self.image = pygame.transform.scale(img, (55,65)).convert_alpha()
+        self.rect = self.image.get_rect(topleft=pos)
+
+    def draw(self, surface, scroll_x, scroll_y):
+        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
+            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+
+    def update(self, platforms):
+        self.rect.x += 1
+        self.collide(1, 0, platforms)
+
+    def collide(self, xvel, yvel, platforms):
+        for platform in platforms:
+            if pygame.sprite.collide_rect(self, platform):
+                if xvel > 0:
+                    self.rect.right = platform.rect.left
+
+class Necromancer(Entity):
+    def __init__(self, platforms, pos, *groups):
+        super().__init__(pos)
+        img = pygame.image.load('sprites/necromancer.png').convert_alpha()
+        self.image = pygame.transform.scale(img, (55,75)).convert_alpha()
+        self.rect = self.image.get_rect(topleft=pos)
+
+    def draw(self, surface, scroll_x, scroll_y):
+        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
+            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+
 class Player(Entity):
     def __init__(self, platforms, pos, *groups):
         super().__init__(pos)
@@ -197,7 +229,6 @@ class Button:
             if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
                 action = True
                 self.clicked = True
-
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
 
@@ -234,7 +265,23 @@ def main():
     floors = pygame.sprite.Group()
     platforms = pygame.sprite.Group()
     fireball_group = pygame.sprite.Group()
+    skeleton_group = pygame.sprite.Group()
+    necromancer_group = pygame.sprite.Group()
     player = Player(platforms, INITIAL_POS)
+    skeletons = [
+        Skeleton(platforms, (200,200)),
+        Skeleton(platforms, (200,850)),
+        Skeleton(platforms, (1250,330))
+    ]
+    for skeleton in skeletons:
+        skeleton_group.add(skeleton)
+    necromancers = [
+        Necromancer(platforms, (2500,300)),
+        Necromancer(platforms, (600,550)),
+        Necromancer(platforms, (450,1210))
+    ]
+    for necromancer in necromancers:
+        necromancer_group.add(necromancer)
     level_width  = len(world_data[0]) * TILE_SIZE
     level_height = len(world_data) * TILE_SIZE
     entities = CameraLayeredUpdates(player, pygame.Rect(0, 0, level_width, level_height))
@@ -273,6 +320,14 @@ def main():
         if not paused and not main_menu:
             entities.update()
             entities.draw(screen)
+            for skeleton in skeletons:
+                skeleton.draw(screen, entities.cam.x, entities.cam.y)
+                skeleton_group.add(skeleton)
+            skeleton_group.update(platforms)
+            for necromancer in necromancers:
+                necromancer.draw(screen, entities.cam.x, entities.cam.y)
+                necromancer_group.add(necromancer)
+            necromancer_group.update()
             fireball = weapon.update(player, entities.cam.x, entities.cam.y)
             if fireball:
                 fireball_group.add(fireball)
