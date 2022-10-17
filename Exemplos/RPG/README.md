@@ -18,14 +18,15 @@ An experiment that aims to create a template for RPG Games with [PyGame](https:/
 - [ ] Merchant
 - [ ] Map
 - [ ] Books and scrolls
+- [ ] Music and sound
 
 ## Controls
 
-- `w`: Move up.
-- `a`: Move left.
-- `s`: Move down.
-- `d`: Move right.
-- `Left Mouse Click`: Casts a fireball in the direction of the cursor.
+- `w`: Move up
+- `a`: Move left
+- `s`: Move down
+- `d`: Move right
+- `Left Mouse Click`: Casts a fireball in the direction of the cursor
 
 ## Maps
 
