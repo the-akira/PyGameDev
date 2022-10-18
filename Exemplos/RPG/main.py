@@ -63,7 +63,7 @@ class Fireball(pygame.sprite.Sprite):
         self.dy = -(math.sin(math.radians(self.angle)) * FIREBALL_SPEED)
         self.last_shot = pygame.time.get_ticks()
 
-    def update(self):
+    def update(self, skeletons, scroll_x, scroll_y):
         self.rect.x += self.dx
         self.rect.y += self.dy
         fireball_lifetime = 333
@@ -74,6 +74,13 @@ class Fireball(pygame.sprite.Sprite):
         if self.rect.right < 0 or self.rect.left > SCREEN_SIZE.width \
             or self.rect.bottom < 0 or self.rect.top > SCREEN_SIZE.height:
             self.kill()
+
+        for skeleton in skeletons:
+            if skeleton.rect.colliderect(self.rect):
+                self.kill()
+                skeleton.health -= 10
+                if skeleton.health <= 0:
+                    skeletons.remove(skeleton)
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
@@ -129,6 +136,7 @@ class Skeleton(Entity):
         img = pygame.image.load('sprites/skeleton.png').convert_alpha()
         self.image = pygame.transform.scale(img, (55,65)).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
+        self.health = 30
 
     def draw(self, surface, scroll_x, scroll_y):
         surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
@@ -390,7 +398,7 @@ def main():
             if fireball:
                 fireball_group.add(fireball)
             for fireball in fireball_group:
-                fireball.update()
+                fireball.update(skeletons, entities.cam.x, entities.cam.y)
                 fireball.draw(screen)
                 
         pygame.display.update()
