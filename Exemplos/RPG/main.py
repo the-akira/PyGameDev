@@ -76,8 +76,7 @@ class Fireball(pygame.sprite.Sprite):
             self.kill()
 
     def draw(self, surface):
-        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2)), 
-            self.rect.centery - int(self.image.get_height()/2)))
+        surface.blit(self.image, self.rect)
 
 class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
@@ -132,8 +131,7 @@ class Skeleton(Entity):
         self.rect = self.image.get_rect(topleft=pos)
 
     def draw(self, surface, scroll_x, scroll_y):
-        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
-            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+        surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
     def update(self, platforms):
         self.rect.x += 1
@@ -153,8 +151,7 @@ class Necromancer(Entity):
         self.rect = self.image.get_rect(topleft=pos)
 
     def draw(self, surface, scroll_x, scroll_y):
-        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
-            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+        surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
     def update(self, platforms):
         self.rect.y -= 1
@@ -174,8 +171,7 @@ class Beholder(Entity):
         self.rect = self.image.get_rect(topleft=pos)
 
     def draw(self, surface, scroll_x, scroll_y):
-        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
-            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+        surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
 class Orc(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -185,8 +181,7 @@ class Orc(Entity):
         self.rect = self.image.get_rect(topleft=pos)
 
     def draw(self, surface, scroll_x, scroll_y):
-        surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width()/2) + scroll_x),
-            self.rect.centery - int(self.image.get_height()/2) + scroll_y))
+        surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
     def update(self, platforms):
         self.rect.x -= 1
