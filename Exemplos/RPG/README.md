@@ -1,6 +1,6 @@
 # RPG Simulation
 
-An experiment that aims to create a template for RPG Games with [PyGame](https://www.pygame.org/news).
+An experiment that aims to create a simple RPG Game with [PyGame](https://www.pygame.org/news).
 
 ## TODO
 
@@ -23,12 +23,23 @@ An experiment that aims to create a template for RPG Games with [PyGame](https:/
 
 ## Controls
 
+### Movement
+
 - `w`: Move up
 - `a`: Move left
 - `s`: Move down
 - `d`: Move right
+
+### Combat
+
+- `i`: Cast fireball up
+- `j`: Cast fireball left
+- `k`: Cast fireball down
+- `l`: Cast fireball right
+
+### Menu
+
 - `Esc`: Pause menu
-- `Left Mouse Click`: Casts a fireball in the direction of the cursor
 
 ## Maps
 
