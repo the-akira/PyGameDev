@@ -74,7 +74,7 @@ class Fireball(pygame.sprite.Sprite):
         self.last_shot = pygame.time.get_ticks()
         self.key = key
         self.flip = False
-        self.speed = 5
+        self.speed = 8.5
 
     def update(self, enemies, platforms):
         if self.key == 'i':
