@@ -60,20 +60,25 @@ class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
             spritedict[sprite] = newrect
         return dirty
 
-def cast_fireball(centerx, centery, key, time):
-    fireball = Fireball(centerx, centery, key)
+def cast_fireball(x, y, key, time):
+    fireball = Fireball(x, y, key)
     fireball_group.add(fireball)
     return time
 
 class Fireball(pygame.sprite.Sprite):
     def __init__(self, x, y, key):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('sprites/fireball.png').convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.center = [x, y]
+        self.image_right = pygame.image.load('sprites/fireballright.png').convert_alpha()
+        self.image_top = pygame.image.load('sprites/fireballtop.png').convert_alpha()
         self.last_shot = pygame.time.get_ticks()
         self.key = key
+        if self.key == 'i' or self.key == 'k':
+            self.rect = self.image_top.get_rect()
+        elif self.key == 'j' or self.key == 'l':
+            self.rect = self.image_right.get_rect()
+        self.rect.center = [x, y]
         self.flip = False
+        self.horizontal = False
         self.speed = 8.5
 
     def update(self, enemies, platforms):
@@ -84,9 +89,11 @@ class Fireball(pygame.sprite.Sprite):
         if self.key == 'j':
             self.rect.x -= self.speed
             self.flip = True
+            self.horizontal = True
         if self.key == 'l':
             self.rect.x += self.speed
             self.flip = False
+            self.horizontal = True
 
         for skeleton in enemies["skeletons"]:
             if skeleton.rect.colliderect(self.rect):
@@ -125,8 +132,14 @@ class Fireball(pygame.sprite.Sprite):
             self.kill()
 
     def draw(self, surface, scroll_x, scroll_y):
-        surface.blit(pygame.transform.flip(self.image, self.flip, False), 
-            (self.rect.x + scroll_x, self.rect.y + scroll_y))         
+        if self.horizontal:
+            surface.blit(pygame.transform.flip(self.image_right, self.flip, False),
+                (self.rect.x + scroll_x, self.rect.y + scroll_y))
+        elif self.key == 'i':
+            surface.blit(self.image_top, (self.rect.x + scroll_x, self.rect.y + scroll_y))
+        elif self.key == 'k':
+            surface.blit(pygame.transform.rotate(self.image_top, 180),
+                (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
 class Entity(pygame.sprite.Sprite):
     def __init__(self, pos, *groups):
@@ -142,8 +155,8 @@ class Player(Entity):
         self.rect = self.image.get_rect(topleft=pos)
         self.vel = pygame.Vector2((0, 0))
         self.platforms = platforms
-        self.speed = 3.85
         self.last_shot = pygame.time.get_ticks()
+        self.speed = 3.85
 
     def update(self):
         pressed = pygame.key.get_pressed()
@@ -168,9 +181,9 @@ class Player(Entity):
 
         time_now = pygame.time.get_ticks()
         if pressed[pygame.K_k] and time_now - self.last_shot > cooldown:
-            self.last_shot = cast_fireball(self.rect.centerx, self.rect.centery, 'k', time_now)
+            self.last_shot = cast_fireball(self.rect.centerx, self.rect.bottom, 'k', time_now)
         if pressed[pygame.K_i] and time_now - self.last_shot > cooldown:
-            self.last_shot = cast_fireball(self.rect.centerx, self.rect.centery, 'i', time_now)
+            self.last_shot = cast_fireball(self.rect.centerx, self.rect.top, 'i', time_now)
         if pressed[pygame.K_j] and time_now - self.last_shot > cooldown:
             self.last_shot = cast_fireball(self.rect.centerx, self.rect.centery, 'j', time_now)
         if pressed[pygame.K_l] and time_now - self.last_shot > cooldown:
