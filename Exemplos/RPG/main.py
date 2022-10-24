@@ -12,6 +12,9 @@ wall = pygame.image.load('sprites/wall.png').convert_alpha()
 wall_scaled = pygame.transform.scale(wall, (TILE_SIZE,TILE_SIZE)).convert_alpha()
 floor = pygame.image.load('sprites/floor.png').convert_alpha()
 floor_scaled = pygame.transform.scale(floor, (TILE_SIZE,TILE_SIZE)).convert_alpha()
+dungeon = pygame.image.load('images/dungeon.png').convert_alpha()
+dungeon_scaled = pygame.transform.scale(dungeon,
+    (SCREEN_SIZE.width,SCREEN_SIZE.height)).convert_alpha()
 
 floors = pygame.sprite.Group()
 platforms = pygame.sprite.Group()
@@ -20,6 +23,12 @@ beholder_group = pygame.sprite.Group()
 skeleton_group = pygame.sprite.Group()
 fireball_group = pygame.sprite.Group()
 necromancer_group = pygame.sprite.Group()
+
+pygame.mixer.init()
+music = pygame.mixer.Sound('sounds/musics/Dragon_Level_David_Fesliyan.wav')
+music.set_volume(0.1)
+firecast = pygame.mixer.Sound('sounds/effects/firecast.wav')
+firecast.set_volume(0.7)
 
 class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
@@ -61,6 +70,7 @@ class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
         return dirty
 
 def cast_fireball(x, y, key, time):
+    firecast.play()
     fireball = Fireball(x, y, key)
     fireball_group.add(fireball)
     return time
@@ -393,11 +403,14 @@ def main():
         x = 0
 
     while True:
+        if main_menu or paused:
+            music.play(loops=-1)
+            screen.blit(dungeon_scaled, (0,0))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 sys.exit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and not main_menu:
-                screen.fill(pygame.Color("Black"))
                 paused = True
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 main_menu = False
@@ -415,8 +428,10 @@ def main():
                 paused = False
 
         if not paused and not main_menu:
+            music.stop()
             entities.update()
             entities.draw(screen)
+
             for skeleton in skeletons:
                 skeleton.draw(screen, entities.cam.x, entities.cam.y)
             skeleton_group.update(platforms)

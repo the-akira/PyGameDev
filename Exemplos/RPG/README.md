@@ -44,3 +44,7 @@ An experiment that aims to create a simple RPG Game with [PyGame](https://www.py
 ## Maps
 
 Maps can be loaded with [Tiled](https://www.mapeditor.org/).
+
+## Music
+
+- [Dragon Level - David Fesliyan](https://www.fesliyanstudios.com/royalty-free-music/download/dragon-level/2412)
