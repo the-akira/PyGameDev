@@ -1,5 +1,7 @@
 # Desenvolvimento de Games com Python
 
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/pac-man.png)
+
 Repositório voltado para estudos sobre o desenvolvimento de Games com Python.
 
 ```
