@@ -1,5 +1,7 @@
 # Platformer Adventurer
 
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Platformer%20Adventurer/assets/title.png)
+
 2D Platformer Prototype inspired by **[Crystals of Time](https://smellyfrog.itch.io/crystals-of-time)**.
 
 ## Assets
