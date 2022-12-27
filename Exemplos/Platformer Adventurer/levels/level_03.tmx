@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <editorsettings>
+  <export target="level_03.csv" format="csv"/>
+ </editorsettings>
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="10" columns="10">
+  <image source="../assets/tileset.png" width="320" height="32"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="15" height="9">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
+0,0,0,0,0,0,10,0,0,0,10,0,0,0,7,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
+0,0,0,0,0,2,5,0,0,2,2,6,0,0,7,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
+1,1,1,5,1,1,1,1,1,1,1,1,1,1,7,
+9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
+3,3,3,3,3,3,3,3,3,3,3,3,3,3,3
+</data>
+ </layer>
+</map>
