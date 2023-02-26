@@ -13,12 +13,13 @@ font = pygame.font.Font(None, 20)
 
 # Define colors
 black = (0, 0, 0)
+white = (255, 255, 255)
 yellow = (255, 255, 102)
 orange = (255, 153, 0)
 red = (255, 0, 0)
 blue = (102, 178, 255)
 green = (176, 245, 64)
-white = (255, 255, 255)
+pink = (217, 189, 219)
 
 # Define classes
 class Planet:
@@ -45,8 +46,9 @@ mercury = Planet("Mercury", 5, green, 80, 0.02)
 venus = Planet("Venus", 10, red, 120, 0.03)
 earth = Planet("Earth", 15, blue, 160, 0.02)
 mars = Planet("Mars", 10, orange, 200, 0.015)
+jupiter = Planet("Jupiter", 22, pink, 255, 0.0019)
 
-planets = [sun, mercury, venus, earth, mars]
+planets = [sun, mercury, venus, earth, mars, jupiter]
 
 # Game loop
 running = True
