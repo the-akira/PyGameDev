@@ -166,7 +166,7 @@ class Player(Entity):
         self.vel = pygame.Vector2((0, 0))
         self.platforms = platforms
         self.last_shot = pygame.time.get_ticks()
-        self.speed = 3.85
+        self.speed = 3.3
 
     def update(self):
         pressed = pygame.key.get_pressed()
@@ -229,13 +229,13 @@ class Skeleton(Entity):
 
     def update(self, platforms):
         self.rect.x += 1
-        self.collide(1, 0, platforms)
+        self.collide(platforms)
 
-    def collide(self, xvel, yvel, platforms):
-        for platform in platforms:
-            if pygame.sprite.collide_rect(self, platform):
-                if xvel > 0:
-                    self.rect.right = platform.rect.left
+    def collide(self, platforms):
+        collisions = pygame.sprite.spritecollide(self, platforms, False)
+        for platform in collisions:
+            if self.rect.x < platform.rect.x:
+                self.rect.right = platform.rect.left
 
 class Necromancer(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -250,13 +250,13 @@ class Necromancer(Entity):
 
     def update(self, platforms):
         self.rect.y -= 1
-        self.collide(0, -1, platforms)
+        self.collide(platforms)
 
-    def collide(self, xvel, yvel, platforms):
-        for platform in platforms:
-            if pygame.sprite.collide_rect(self, platform):
-                if yvel < 0:
-                    self.rect.top = platform.rect.bottom
+    def collide(self, platforms):
+        collisions = pygame.sprite.spritecollide(self, platforms, False)
+        for platform in collisions:
+            if self.rect.x < platform.rect.x:
+                self.rect.top = platform.rect.bottom
 
 class Beholder(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -282,13 +282,13 @@ class Orc(Entity):
 
     def update(self, platforms):
         self.rect.x -= 1
-        self.collide(-1, 0, platforms)
+        self.collide(platforms)
 
-    def collide(self, xvel, yvel, platforms):
-        for platform in platforms:
-            if pygame.sprite.collide_rect(self, platform):
-                if xvel < 0:
-                    self.rect.left = platform.rect.right
+    def collide(self, platforms):
+        collisions = pygame.sprite.spritecollide(self, platforms, False)
+        for platform in collisions:
+            if self.rect.x > platform.rect.x:
+                self.rect.left = platform.rect.right
 
 class Wall(Entity):
     def __init__(self, pos, *groups):
