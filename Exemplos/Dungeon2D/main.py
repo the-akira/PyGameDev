@@ -34,7 +34,7 @@ def read_level_map_from_csv(file_path):
                 elif value == '0':
                     row_values.append("2")
                 elif value == '-1':
-                    row_values.append("0")
+                    row_values.append("#")
             level_map.append(''.join(map(str, row_values)))   
     return level_map
 
@@ -185,7 +185,7 @@ class Sword(pygame.sprite.Sprite):
         if self.rect.right < 0 or self.rect.left > SCREEN_WIDTH:
             self.kill()
 
-    def draw(self, surface, scroll_x, scroll_y):
+    def draw(self, surface):
         if self.direction == 1:
             surface.blit(self.image, (self.rect.x, self.rect.y))
         elif self.direction == -1:
@@ -237,7 +237,7 @@ while running:
     # Render the sword
     sword_group.update()
     for sword in sword_group:
-        sword.draw(screen, camera_x, camera_y)
+        sword.draw(screen)
 
     # Check if the sword collides with the tiles
     for tile in tiles:
