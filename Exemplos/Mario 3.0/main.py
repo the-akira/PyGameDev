@@ -38,7 +38,6 @@ class Mario(pygame.sprite.Sprite):
         self.flip = False
         self.jump = False
         self.in_air = False
-        self.flip = False
         self.vel_y = 0
 
     def move(self, moving_left, moving_right):
@@ -47,12 +46,10 @@ class Mario(pygame.sprite.Sprite):
 
         if moving_left:
             dx = -self.speed
-            self.flip = True 
-            self.direction = -1
+            self.flip = True
         if moving_right:
             dx = self.speed
             self.flip = False 
-            self.direction = 1
         if self.jump and not self.in_air:
             self.vel_y = -13
             self.jump = False
