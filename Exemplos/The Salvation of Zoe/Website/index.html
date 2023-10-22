@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The Salvation of Zoe</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://kit.fontawesome.com/abb211c046.js"></script>
+</head>
+<body>
+	<h1>The Salvation of Zoe</h1>
+	<div class="avatar color">
+		<img id="main-image" src="images/avatar.png">
+	</div>
+	<h2>O espectro da esperança caminha na escuridão em busca da Luz...</h2>
+	<hr>
+	<div class="gallery color">
+		<h3>Gallery</h3>
+		<img src="images/ss1.png" alt="Imagem 1" class="gallery-image">
+		<img src="images/ss2.png" alt="Imagem 2" class="gallery-image">
+	</div>
+	<hr>
+	<div class="text">
+		<h2>Background</h2>
+		<p>O espectro simboliza a vida que está encarcerada na escuridão temporal e deve buscar energia mana o suficiente para encontrar a Luz da Salvação de Cristo. Seu único recurso é o tempo, e, sob a santa vigília do Grande Olho Onisciente de Deus θεωρέω, ele está sendo atormentado por criaturas das trevas oriundas do abismo primordial de Lúcifer.</p>
+		<p>Os cristais de mana lhe dão tempo, e ao reunir 33 destes artefatos sagrados você receberá a palavra da Salvação. Foi-lhe concedido através do Todo-Poderoso e Soberano Grande Arquiteto Criador יהוה as habilidades de dissolução no espaço-tempo e o poder de teleportar, para que consiga cumprir sua missão profética da união com a Luz e a sua Eterna Paz e Amor. Lembre que todas as suas ações lhe custarão tempo, você deve agir com sabedoria para salvar sua alma do domínio tenebroso de Lúcifer!</p>
+	</div>
+	<div class="links">
+		<h2>Download</h2>
+		<p>Para experimentar <b>The Salvation of Zoe</b> é necessário instalar o Python em sua máquina (versão 3.7+), assim como obter os arquivos do jogo.</p>
+		<p>Também é necessário instalar a biblioteca de games do Python conhecida como PyGame, normalmente você consegue fazer isso com um simples comando: <b>pip install pygame</b>, feito isso, é só executar o arquivo principal: <b>python main.py</b> e se aventurar.</p>
+		<a href="https://www.python.org/downloads/">Python</a>
+		<a href="https://drive.google.com/file/d/1SBTvXUyKI7Xzm9Pf4csOLrDcRc1q-Oin/view?usp=share_link">Game Files</a>
+		<a href="https://www.pygame.org/wiki/GettingStarted">PyGame</a>
+	</div>
+	<div class="final">
+		<h2>Missão</h2>
+		<p>O intuito do game é fazer-nos refletir sobre as questões fundamentais da vida e enfrentarmos a escuridão que reside dentro de nós para que possamos transmutá-la em Luz e Salvação, o mundo está um caos, mas ainda há esperança e ela está em Cristo.</p>
+		<p>O game é simples, gratuito e open-source e com ele haverá as suas etapas de desenvolvimento, para que você possa entender como ele foi construído, o que lhe possibilitará criar diversos jogos através da linguagem Python e a biblioteca PyGame, aprendendo conceitos básicos de programação, manipulanado imagens e adquirindo uma visão matemática da criação de jogos 2D.</p>
+		<hr>
+		<h2>Desenvolvedores</h2>
+		<ul>
+			<li><b>Tiles:</b> EraSoren</li>
+			<li><b>Espectro:</b> H3xmode</li>
+			<li><b>Olhos:</b> Diego Lopez</li>
+			<li><b>Caveiras:</b> Jessica Andrade</li>
+			<li><b>Música:</b> The Devil - Tarot</li>
+			<li><b>Desenhos e Código:</b> Gabriel Felippe</li>
+		</ul>
+        <a class="icon" href="https://github.com/the-akira/CC33Z" target="_blank"><i class="fab fa-github fa-4x"></i></a>
+	</div>
+	<div class="final">
+		<h2>Palavra Sagrada</h2>
+		<p id="palavra-aleatoria"></p>
+	</div>
+	<script type="text/javascript">
+		const imagem = document.getElementById("main-image");
+		const body = document.body;
+
+		imagem.addEventListener("mouseover", () => {
+		  body.style.backgroundImage = "linear-gradient(to right, black, #2F084D)";
+		  paragrafo.textContent = selecionarTextoAleatorio();
+		});
+
+		imagem.addEventListener("mouseout", () => {
+		  body.style.backgroundImage = "linear-gradient(to right, #2F084D, black)";
+		});
+
+		const palavra = [
+		  "✠ Daniel 2:22 ♱ He reveals deep and hidden things; he knows what is in the darkness, and the light dwells with him.",
+		  "✠ Ecclesiastes 2:13 ♱ Then I saw that there is more gain in wisdom than in folly, as there is more gain in light than in darkness.",
+		  "✠ Ephesians 5:8 ♱ For at one time you were darkness, but now you are light in the Lord. Walk as children of light.",
+		  "✠ Genesis 1:3 ♱ And God said, “Let there be light,” and there was light.",
+		  "✠ Genesis 1:4 ♱ And God saw that the light was good. And God separated the light from the darkness.",
+		  "✠ Isaiah 60:1 ♱ Arise, shine, for your light has come, and the glory of the Lord has risen upon you.",
+		  "✠ John 1:5 ♱ The light shines in the darkness, and the darkness has not overcome it.",
+		  "✠ John 1:7 ♱ He came as a witness, to bear witness about the light, that all might believe through him.",
+		  "✠ John 9:5 ♱ As long as I am in the world, I am the light of the world.",
+		  "✠ John 12:46 ♱ I have come into the world as light, so that whoever believes in me may not remain in darkness.",
+		  "✠ Matthew 5:14 ♱ You are the light of the world. A city set on a hill cannot be hidden.",
+		  "✠ Proverbs 20:27 ♱ The spirit of man is the lamp of the Lord, searching all his innermost parts."
+		];
+
+		// Função para selecionar um texto aleatório da lista
+		function selecionarTextoAleatorio() {
+		  const indiceAleatorio = Math.floor(Math.random() * palavra.length);
+		  const textoSelecionado = palavra[indiceAleatorio];
+		  return textoSelecionado;
+		}
+
+		// Atribuir um texto aleatório ao elemento <p>
+		const paragrafo = document.getElementById("palavra-aleatoria");
+		paragrafo.textContent = selecionarTextoAleatorio();
+	</script>
+</body>
+</html>
