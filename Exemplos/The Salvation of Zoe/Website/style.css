@@ -42,6 +42,13 @@ p {
 	padding: 0px 40px 0px 40px;
 }
 
+#number {
+	background: #2F084D;
+	border: 1.3px solid #FF00D0;
+	padding: 3px;
+	border-radius: 4px;
+}
+
 .avatar {
 	text-align: center;
 }
@@ -96,6 +103,15 @@ p {
 
 .links > a:nth-child(4), .links > a:nth-child(5) {
 	margin-right: 20px;
+}
+
+#link-guia {
+	color: #970CED;
+	text-decoration: none;
+}
+
+#link-guia:hover {
+	opacity: 0.85;	
 }
 
 .gallery-image {
@@ -166,6 +182,33 @@ li {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: #5c0556; 
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	color: #FF00D0;
+	width: 70%;
+	margin-bottom: 35px;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 10px;
+	text-align: center;
+	font-size: 1.4rem;
+}
+
+th {
+	background-color: #2F084D;
+}
+
+td {
+	background-color: #24011c;
+}
+
+table, th, td {
+  border: 1px solid #FF00D0;
 }
 
 @media screen and (max-width: 1048px) {
