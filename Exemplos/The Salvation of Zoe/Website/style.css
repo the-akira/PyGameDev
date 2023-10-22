@@ -229,3 +229,17 @@ table, th, td {
     margin-right: 0px;
   }
 }
+
+@media screen and (max-width: 455px) {
+  table {
+    width: 50%;
+  }
+  th, td {
+    padding: 4px;
+    font-size: 0.9rem;
+  }
+  p {
+    font-size: 1.15rem;
+    padding: 0px 25px 0px 25px;
+  }
+}
