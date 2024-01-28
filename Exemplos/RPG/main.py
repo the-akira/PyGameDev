@@ -166,7 +166,7 @@ class Player(Entity):
         self.vel = pygame.Vector2((0, 0))
         self.platforms = platforms
         self.last_shot = pygame.time.get_ticks()
-        self.speed = 3.3
+        self.speed = 4.33
 
     def update(self):
         pressed = pygame.key.get_pressed()
