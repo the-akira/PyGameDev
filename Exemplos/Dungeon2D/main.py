@@ -121,8 +121,7 @@ class Player(pygame.sprite.Sprite):
     def throw_sword(self, camera_x, camera_y):
         if self.throw_cooldown == 0:
             self.throw_cooldown = 35
-            sword = Sword(self.rect.centerx + 
-                (0.6 * self.rect.size[0] * self.direction) - camera_x, self.rect.centery - camera_y, self.direction)
+            sword = Sword(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
             sword_group.add(sword)
 
     def load_map(self, new_map_file, door_col, door_row):
@@ -182,15 +181,15 @@ class Sword(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += (self.direction * self.speed)
-        if self.rect.right < 0 or self.rect.left > SCREEN_WIDTH:
+        if self.rect.right < 0 or self.rect.left > MAP_WIDTH:  # Alteração aqui para usar a largura do mapa
             self.kill()
 
-    def draw(self, surface):
+    def draw(self, surface, camera_x, camera_y):  # Alteração aqui para adicionar posição da câmera
         if self.direction == 1:
-            surface.blit(self.image, (self.rect.x, self.rect.y))
+            surface.blit(self.image, (self.rect.x - camera_x, self.rect.y - camera_y))
         elif self.direction == -1:
             surface.blit(pygame.transform.rotate(self.image, 180),
-                (self.rect.x, self.rect.y))
+                (self.rect.x - camera_x, self.rect.y - camera_y))
 
 # Load the map from a file (sample format)
 level_map = read_level_map_from_csv("maps/map1.csv")
@@ -237,13 +236,14 @@ while running:
     # Render the sword
     sword_group.update()
     for sword in sword_group:
-        sword.draw(screen)
+        sword.draw(screen, camera_x, camera_y)
 
     # Check if the sword collides with the tiles
     for tile in tiles:
         for sword in sword_group:
             tile_rect_offset = tile.rect.move(-camera_x, -camera_y)
-            if tile_rect_offset.colliderect(sword):
+            sword_rect_offset = sword.rect.move(-camera_x, -camera_y)  # Ajuste da posição da espada
+            if tile_rect_offset.colliderect(sword_rect_offset):  # Usando o retângulo ajustado da espada
                 sword.kill()
 
     # Render the player
