@@ -59,7 +59,7 @@ def check_collision(car_x, car_y, car_width, car_height, obstacle_x, obstacle_y,
     return car_x + car_width > obstacle_x and car_x < obstacle_x + obstacle_width and car_y < obstacle_y + obstacle_height and car_y + car_height > obstacle_y
 
 def restart_game():
-    global car_x, car_y, background_y1, background_y2, obstacle_x, obstacle_y, score, game_state
+    global car_x, car_y, background_y1, background_y2, obstacle_x, obstacle_y, score, game_state, obstacle_speed
 
     car_x = window_width // 2 - car_width // 2
     car_y = window_height - car_height - 20
@@ -71,6 +71,7 @@ def restart_game():
     obstacle_y = -obstacle_height
 
     score = 0
+    obstacle_speed = 5
 
     game_state = RUNNING
 
@@ -132,8 +133,6 @@ while True:
     else:
         lost_text = score_font.render("Game Over. Press any key to restart", True, (0, 0, 0))
         window.blit(lost_text, (window_width // 2 - lost_text.get_width() // 2, window_height // 2 - 30))
-        score = 0
-        obstacle_speed = 5
 
     pygame.display.update()
     clock.tick(FPS)
