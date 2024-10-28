@@ -133,6 +133,11 @@
             <td>Enemies</td>
             <td><a id="link-guia" href="https://github.com/the-akira/PyGameDev/tree/master/Exemplos/The%20Salvation%20of%20Zoe/15%20-%20Enemies">Acessar</a></td>
           </tr>
+          <tr>
+            <td>16</td>
+            <td>Transparency</td>
+            <td><a id="link-guia" href="https://github.com/the-akira/PyGameDev/tree/master/Exemplos/The%20Salvation%20of%20Zoe/16%20-%20Transparency">Acessar</a></td>
+          </tr>
         </table>
     </div>
     <div class="final">
@@ -143,13 +148,18 @@
         const imagem = document.getElementById("main-image");
         const body = document.body;
 
-        imagem.addEventListener("mouseover", () => {
-          body.style.backgroundImage = "linear-gradient(to right, black, #2F084D)";
-          paragrafo.textContent = selecionarTextoAleatorio();
-        });
+        let isAlternate = false;
 
-        imagem.addEventListener("mouseout", () => {
-          body.style.backgroundImage = "linear-gradient(to right, #2F084D, black)";
+        imagem.addEventListener("mouseover", () => {
+          if (isAlternate) {
+            body.style.backgroundImage = "linear-gradient(to right, #2F084D, black)";
+            paragrafo.textContent = selecionarTextoAleatorio();
+          } else {
+            body.style.backgroundImage = "linear-gradient(to right, black, #2F084D)";
+            paragrafo.textContent = selecionarTextoAleatorio();
+          }
+
+          isAlternate = !isAlternate;
         });
 
         const palavra = [
@@ -167,14 +177,12 @@
           "✠ Proverbs 20:27 ♱ The spirit of man is the lamp of the Lord, searching all his innermost parts."
         ];
 
-        // Função para selecionar um texto aleatório da lista
         function selecionarTextoAleatorio() {
           const indiceAleatorio = Math.floor(Math.random() * palavra.length);
           const textoSelecionado = palavra[indiceAleatorio];
           return textoSelecionado;
         }
 
-        // Atribuir um texto aleatório ao elemento <p>
         const paragrafo = document.getElementById("palavra-aleatoria");
         paragrafo.textContent = selecionarTextoAleatorio();
     </script>
