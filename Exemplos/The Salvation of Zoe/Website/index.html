@@ -153,10 +153,12 @@
         imagem.addEventListener("mouseover", () => {
           if (isAlternate) {
             body.style.backgroundImage = "linear-gradient(to right, #2F084D, black)";
+            changeScrollbarTrackColor('#2F084D');
             paragrafo.textContent = selecionarTextoAleatorio();
           } else {
             body.style.backgroundImage = "linear-gradient(to right, black, #2F084D)";
             paragrafo.textContent = selecionarTextoAleatorio();
+            changeScrollbarTrackColor('black');
           }
 
           isAlternate = !isAlternate;
@@ -185,6 +187,18 @@
 
         const paragrafo = document.getElementById("palavra-aleatoria");
         paragrafo.textContent = selecionarTextoAleatorio();
+
+        const styleElement = document.createElement("style");
+        document.head.appendChild(styleElement);
+
+        // Função para mudar a cor da track do scrollbar
+        function changeScrollbarTrackColor(color) {
+          styleElement.innerHTML = `
+            ::-webkit-scrollbar-track {
+              background-color: ${color};
+            }
+          `;
+        }
     </script>
 </body>
 </html>
