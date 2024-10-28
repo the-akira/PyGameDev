@@ -7,6 +7,8 @@ h1 {
   font-size: 4.33rem;
   color: #FF00D0;
   text-shadow: 3px 3px #2F084D;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 
 h2 {
@@ -215,11 +217,14 @@ table, th, td {
   .gallery-image {
     margin-right: 0px;
   }
-  h1 {
-    font-size: 2.33rem;
-  }
   h2 {
     font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 735px) {
+  h1 {
+    font-size: 2.83rem;
   }
 }
 
@@ -227,6 +232,12 @@ table, th, td {
   .links > a:nth-child(4), .links > a:nth-child(5) {
     margin-bottom: 8px;
     margin-right: 0px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  h1 {
+    font-size: 2.23rem;
   }
 }
 
