@@ -55,7 +55,12 @@ class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
         self.lostsprites = []
         dirty_append = dirty.append
         init_rect = self._init_rect
-        for sprite in self.sprites():
+        visible_sprites = [
+            sprite for sprite in self.sprites()
+            if sprite.rect.colliderect(pygame.Rect(
+                -self.cam.x, -self.cam.y, SCREEN_SIZE.width, SCREEN_SIZE.height))
+        ]
+        for sprite in visible_sprites:
             rec = spritedict[sprite]
             newrect = surface_blit(sprite.image, sprite.rect.move(self.cam))
             if rec is init_rect:
@@ -199,10 +204,12 @@ class Player(Entity):
         if pressed[pygame.K_l] and time_now - self.last_shot > cooldown:
             self.last_shot = cast_fireball(self.rect.centerx, self.rect.centery, 'l', time_now)
 
+        nearby_platforms = get_nearby_platforms(platforms, self.rect.center, radius=100)
+
         self.rect.left += self.vel.x
-        self.collide(self.vel.x, 0, self.platforms)
+        self.collide(self.vel.x, 0, nearby_platforms)
         self.rect.top += self.vel.y
-        self.collide(0, self.vel.y, self.platforms)
+        self.collide(0, self.vel.y, nearby_platforms)
 
     def collide(self, xvel, yvel, platforms):
         for platform in platforms:
@@ -228,8 +235,9 @@ class Skeleton(Entity):
         surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
     def update(self, platforms):
+        nearby_platforms = get_nearby_platforms(platforms, self.rect.center, radius=100)
         self.rect.x += 1
-        self.collide(platforms)
+        self.collide(nearby_platforms)
 
     def collide(self, platforms):
         collisions = pygame.sprite.spritecollide(self, platforms, False)
@@ -249,8 +257,9 @@ class Necromancer(Entity):
         surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
     def update(self, platforms):
+        nearby_platforms = get_nearby_platforms(platforms, self.rect.center, radius=100)
         self.rect.y -= 1
-        self.collide(platforms)
+        self.collide(nearby_platforms)
 
     def collide(self, platforms):
         collisions = pygame.sprite.spritecollide(self, platforms, False)
@@ -281,8 +290,9 @@ class Orc(Entity):
         surface.blit(self.image, (self.rect.x + scroll_x, self.rect.y + scroll_y))
 
     def update(self, platforms):
+        nearby_platforms = get_nearby_platforms(platforms, self.rect.center, radius=100)
         self.rect.x -= 1
-        self.collide(platforms)
+        self.collide(nearby_platforms)
 
     def collide(self, platforms):
         collisions = pygame.sprite.spritecollide(self, platforms, False)
@@ -321,6 +331,19 @@ class Button:
 
         screen.blit(self.image, self.rect)
         return action
+
+def get_visible_entities(entities, camera, screen_size):
+    visible_rect = pygame.Rect(-camera.x, -camera.y, screen_size.width, screen_size.height)
+    return [entity for entity in entities if entity.rect.colliderect(visible_rect)]
+
+def get_nearby_platforms(platforms, position, radius):
+    nearby_rect = pygame.Rect(
+        position[0] - radius,
+        position[1] - radius,
+        radius * 2,
+        radius * 2
+    )
+    return [platform for platform in platforms if platform.rect.colliderect(nearby_rect)]
 
 def main():
     pygame.init()
@@ -432,16 +455,21 @@ def main():
             entities.update()
             entities.draw(screen)
 
-            for skeleton in skeletons:
+            visible_skeletons = get_visible_entities(skeletons, entities.cam, SCREEN_SIZE)
+            visible_necromancers = get_visible_entities(necromancers, entities.cam, SCREEN_SIZE)
+            visible_orcs = get_visible_entities(orcs, entities.cam, SCREEN_SIZE)
+            visible_beholders = get_visible_entities(beholders, entities.cam, SCREEN_SIZE)
+
+            for skeleton in visible_skeletons:
                 skeleton.draw(screen, entities.cam.x, entities.cam.y)
             skeleton_group.update(platforms)
-            for necromancer in necromancers:
+            for necromancer in visible_necromancers:
                 necromancer.draw(screen, entities.cam.x, entities.cam.y)
             necromancer_group.update(platforms)
-            for orc in orcs:
+            for orc in visible_orcs:
                 orc.draw(screen, entities.cam.x, entities.cam.y)
             orc_group.update(platforms)
-            for beholder in beholders:
+            for beholder in visible_beholders:
                 beholder.draw(screen, entities.cam.x, entities.cam.y)
             fireball_group.update(enemies, platforms)
             for fireball in fireball_group:
