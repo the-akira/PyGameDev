@@ -1,8 +1,8 @@
 import pygame, csv, sys
 
 SCREEN_SIZE = pygame.Rect((0, 0, 800, 640))
-INITIAL_POS = (50, 50)
-ROWS, COLS = 50, 150
+INITIAL_POS = (45, 45)
+ROWS, COLS = 40, 60
 TILE_SIZE = 32
 FPS = 60
 
@@ -364,7 +364,7 @@ def main():
         r = [-1] * COLS
         world_data.append(r)
 
-    with open('map/map.csv', newline='') as csvfile:
+    with open('map/mapa.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for x,row in enumerate(reader):
             for y,tile in enumerate(row):
@@ -376,33 +376,29 @@ def main():
     entities = CameraLayeredUpdates(player, pygame.Rect(0, 0, level_width, level_height))
 
     skeletons = [
-        Skeleton(platforms, (200,200)),
-        Skeleton(platforms, (200,350)),
+        Skeleton(platforms, (280,200)),
+        Skeleton(platforms, (250,350)),
         Skeleton(platforms, (200,850)),
-        Skeleton(platforms, (1250,330))
+        Skeleton(platforms, (300,600))
     ]
     for skeleton in skeletons:
         skeleton_group.add(skeleton)
 
     necromancers = [
-        Necromancer(platforms, (2500,300)),
-        Necromancer(platforms, (600,550)),
-        Necromancer(platforms, (450,1210))
+        Necromancer(platforms, (250,480)),
+        Necromancer(platforms, (500,300))
     ]
     for necromancer in necromancers:
         necromancer_group.add(necromancer)
 
     orcs = [
-        Orc(platforms, (200,1480)),
-        Orc(platforms, (3200,250)),
-        Orc(platforms, (1000,600)),
+        Orc(platforms, (650,200)),
     ]
     for orc in orcs:
         orc_group.add(orc)
 
     beholders = [
-        Beholder(platforms, (2800,40)),
-        Beholder(platforms, (2800,1400)),
+        Beholder(platforms, (560,600)),
     ]
     for beholder in beholders:
         beholder_group.add(beholder)
