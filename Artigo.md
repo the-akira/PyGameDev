@@ -1,6 +1,6 @@
 # Introdução ao Desenvolvimento de Games 2D com PyGame
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/pygame.png)
+![img](/Images/pygame.png)
 
 <figure>
     <blockquote>
@@ -122,7 +122,7 @@ O argumento do tamanho é uma tupla com um par de números que representam a lar
 
 O sistema de coordenadas cartesianas é o sistema ao qual a maioria das pessoas está acostumada ao traçar gráficos. Este é o sistema normalmente ensinado nas escolas. O Pygame usa um sistema de coordenadas semelhante, mas um pouco diferente.
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/coordinates.png)
+![img](/Images/coordinates.png)
 
 Pygame usa um sistema de coordenadas **x** e **y** onde a posição `(0,0)` é definida como o canto superior esquerdo da tela. Mover para baixo significa ter um valor de **y** mais alto, mover para a direita significa ter um valor de **x** mais alto.
 
@@ -134,7 +134,7 @@ Os objetos Surface são representados por retângulos, assim como muitos outros 
 
 #### Retângulo
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/Rect.png)
+![img](/Images/Rect.png)
 
 Um objeto **Rect** pode ser criado fornecendo:
 
@@ -150,7 +150,7 @@ Rect(objeto)
 
 A figura a seguir nos ajuda a compreender a criação do retângulo e seu posicionamento:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/retangulo.png)
+![img](/Images/retangulo.png)
 
 ##### Atributos Virtuais
 
@@ -194,7 +194,7 @@ A tabela a seguir apresenta uma lista dos atributos mais importantes que os obje
 
 As cores são definidas como tuplas das cores básicas **vermelho**, **verde** e **azul**. Isso é chamado de [modelo RGB](https://en.wikipedia.org/wiki/RGB_color_model). Cada cor de base é representada como um número entre 0 (mínimo) e 255 (máximo) que ocupa 1 byte na memória. Uma cor RGB é então representada como um valor de 3 bytes. A mistura de duas ou mais cores resulta em novas cores. Um total aproximado de 16 milhões (255³) de cores diferentes podem ser representadas dessa forma.
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/colors.png)
+![img](/Images/colors.png)
 
 Definimos então as cores básicas como tuplas dos três valores base. Como as cores são constantes, vamos escrevê-las em maiúsculas. A ausência de todas as cores resulta em preto. O valor máximo para todos os três componentes resulta em branco. Três valores intermediários idênticos resultam em cinza:
 
@@ -255,7 +255,7 @@ A primeira coisa que o Game Loop faz é processar o *Input* do Usuário para per
 
 O fluxograma a seguir nos apresenta uma ideia geral de como um Game é estruturado e funciona no PyGame:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/pgflowchart.png)
+![img](/Images/pgflowchart.png)
 
 #### Processando Eventos
 
@@ -376,7 +376,7 @@ O comando `pygame.time.Clock()` cria um [objeto relógio](https://www.pygame.org
 
 Ao executarmos este **template**, vamos obter o seguinte resultado:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot1.png)
+![img](/Screenshots/screenshot1.png)
 
 Como podemos observar, é apenas uma tela preenchida com a cor preta, mas que servirá como estrutura básica para nossos projetos futuros.
 
@@ -434,7 +434,7 @@ pygame.display.flip()
 
 O resultado será este:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot10.png)
+![img](/Screenshots/screenshot10.png)
 
 Para fechar a janela podemos utilizar o método `quit()`:
 
@@ -464,7 +464,7 @@ Novamente, vamos executá-lo em nosso console:
 
 Que nos trará o seguinte *output*:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot11.png)
+![img](/Screenshots/screenshot11.png)
 
 **Importante**: `display.update()` nos permite atualizar uma parte da tela, em vez de toda a área da tela. Sem passar argumentos, atualizará toda a tela.
 
@@ -540,7 +540,7 @@ Observe que neste exemplo específico estamos importando **pygame** como **pg**,
 
 Ao executarmos este script, obteremos como resultado diversos desenhos em nossa tela:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot2.png)
+![img](/Screenshots/screenshot2.png)
 
 ### Trabalhando com Imagens
 
@@ -578,7 +578,7 @@ O método **get_rect()** retorna um objeto Rect de uma imagem, nos permitindo as
 
 O módulo [pygame.transform](https://www.pygame.org/docs/ref/transform.html) fornece métodos para **dimensionar**, **girar** e **inverter** imagens.
 
-No exemplo a seguir iremos carregar a imagem [player.png](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Sprite/player.png), redimensioná-la e desenhá-la na tela.
+No exemplo a seguir iremos carregar a imagem [player.png](/Exemplos/Sprite/player.png), redimensioná-la e desenhá-la na tela.
 
 ```python
 from dataclasses import dataclass
@@ -672,7 +672,7 @@ Para transparência alfa, como em imagens **.png**, usamos o método **convert_a
 
 Este exemplo nos trará o seguinte resultado:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot3.png)
+![img](/Screenshots/screenshot3.png)
 
 ### Trabalhando com Textos
 
@@ -746,7 +746,7 @@ if __name__ == '__main__':
 
 Observe que escolhemos a fonta *dyuthi*. Também utilizamos os atributos **centerx** e **centery** para nos auxiliar a centralizar o texto. O resultado será este:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot4.png)
+![img](/Screenshots/screenshot4.png)
 
 ### Detectando Colisões
 
@@ -922,11 +922,11 @@ Observe que estamos carregando cinco imagens, redimensionando-as e usando o mét
 
 As imagens, representam, respectivamente:
 
-- Um [jogador](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/player.png)
-- Um [portal](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/portal.png)
-- Um [tronco](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/trunk.png)
-- Um [baú](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/box.png)
-- Um [crânio](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/skull.png)
+- Um [jogador](/Exemplos/Collision/sprites/player.png)
+- Um [portal](/Exemplos/Collision/sprites/portal.png)
+- Um [tronco](/Exemplos/Collision/sprites/trunk.png)
+- Um [baú](/Exemplos/Collision/sprites/box.png)
+- Um [crânio](/Exemplos/Collision/sprites/skull.png)
 
 Um detalhe que devemos citar é que o fundo do tronco é branco, então estamos usando uma técnica chamada *colorkey* que torna uma cor totalmente transparente. A função é bastante simples, é chamada `set_colorkey(COR)`.
 
@@ -934,13 +934,13 @@ Um detalhe que devemos citar é que o fundo do tronco é branco, então estamos 
 
 O jogador poderá se mover livremente para as quatro direções (norte, sul, leste e oeste) usando as Arrow Keys: 
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Images/arrowkeys.png)
+![img](/Images/arrowkeys.png)
 
 E testaremos se ele irá colidir com o **portal**, o **tronco**, o **baú** ou o **crânio**, este último que apagará a luz. Se houver uma colisão com o portal, iremos mover o jogador para uma posição específica da tela, caso haja uma colisão com o tronco ou o baú, não permitiremos que ocorra sobreposição entre os retângulos.
 
 Executando este script, teremos a seguinte tela como *output*:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot5.png)
+![img](/Screenshots/screenshot5.png)
 
 ### Sprites
 
@@ -1046,7 +1046,7 @@ while running:
 pygame.quit()
 ```
 
-Neste exemplo definimos um Sprite chamado de **Player**, que é uma imagem do personagem [Guy Fawkes](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/SpriteOOP/img/guy.png) que carregamos de nosso disco, localizada em um diretório que denominei **img**, também estamos definindo algumas propriedades básicas para este Sprite, como o retângulo e sua velocidade no eixo **y**. Também estamos sobrescrevendo o método **update()**, fazendo o Sprite se deslocar para a direita e alternando os valores do eixo **y** quando o Sprite atinge uma determinada posição na tela, nos dando assim a impressão de um movimento diagonal.
+Neste exemplo definimos um Sprite chamado de **Player**, que é uma imagem do personagem [Guy Fawkes](/Exemplos/SpriteOOP/img/guy.png) que carregamos de nosso disco, localizada em um diretório que denominei **img**, também estamos definindo algumas propriedades básicas para este Sprite, como o retângulo e sua velocidade no eixo **y**. Também estamos sobrescrevendo o método **update()**, fazendo o Sprite se deslocar para a direita e alternando os valores do eixo **y** quando o Sprite atinge uma determinada posição na tela, nos dando assim a impressão de um movimento diagonal.
 
 Instanciamos o objeto **Group** em uma variável chamada de **all_sprites**, lembre que Group é uma classe de contêiner para armazenar e gerenciar vários objetos Sprite.
 
@@ -1054,13 +1054,13 @@ Em seguida instanciamos o sprite **Player** e guardamos ele na variável **playe
 
 Em nosso Game Loop estamos atualizando todos os Sprites do grupo **all_sprites** e também desenhando eles (neste exemplo é apenas um Sprite). Preenchemos o fundo com a cor preta, que eventualmente nos fornece o seguinte resultado:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot6.png)
+![img](/Screenshots/screenshot6.png)
 
 ### Efeitos Sonoros
 
 O módulo [pygame.mixer](https://www.pygame.org/docs/ref/mixer.html) permite reproduzir arquivos [OGG](https://en.wikipedia.org/wiki/Ogg) compactados ou [WAV](https://en.wikipedia.org/wiki/WAV) descompactados.
 
-O exemplo a seguir verifica os parâmetros de inicialização e imprime o número de canais disponíveis. Ele inicializa um objeto som e imprime o tempo do arquivo em segundos, ao pressionarmos a tecla `[Enter]` o som de um [Corvo Americano](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Sound/american_crow_spring.ogg) será tocado.
+O exemplo a seguir verifica os parâmetros de inicialização e imprime o número de canais disponíveis. Ele inicializa um objeto som e imprime o tempo do arquivo em segundos, ao pressionarmos a tecla `[Enter]` o som de um [Corvo Americano](/Exemplos/Sound/american_crow_spring.ogg) será tocado.
 
 ```python
 import pygame
@@ -1127,11 +1127,11 @@ pygame.quit()
 
 Este exemplo irá nos apresentar a seguinte tela:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot7.png)
+![img](/Screenshots/screenshot7.png)
 
 Usamos a tecla **p** para dar Play na música e a tecla **s** para dar Stop.
 
-Perceba também que estamos carregando um [ícone de música](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Sound/icon.png) para customizar nossa janela.
+Perceba também que estamos carregando um [ícone de música](/Exemplos/Sound/icon.png) para customizar nossa janela.
 
 ### Debugging
 
@@ -1250,7 +1250,7 @@ pygame.quit()
 
 Este exemplo nos trará o seguinte resultado:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot12.png)
+![img](/Screenshots/screenshot12.png)
 
 Observe que na primeira tupla estamos apresentando os valores **x** e **y** que representam a posição do jogador, na tupla do meio estamos mostrando o estado de cada botão do mouse (esquerda, centro e direita), sendo 0 indicando que ele não está pressionado e 1 indicando que está, e por fim, na última tupla temos os valores **x** e **y** da posição do cursor.
 
@@ -1270,8 +1270,8 @@ Neste exemplo, vamos emular um simples Mario [8-bit](https://en.wikipedia.org/wi
 
 Vamos usar apenas duas imagens:
 
-- O personagem [Mario](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%202.0/mario.png)
-- O [tijolo](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Mario%202.0/brick.png) tradicional do Game Mario
+- O personagem [Mario](/Exemplos/Mario%202.0/mario.png)
+- O [tijolo](/Exemplos/Mario%202.0/brick.png) tradicional do Game Mario
 
 O Game contará com apenas 4 Classes e uma função **main()**:
 
@@ -1487,7 +1487,7 @@ if __name__ == "__main__":
 
 Irei salvar o código como `mario.py` e executá-lo com o comando `python mario.py`, que irá me trazer o seguint *output*:
 
-![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot8.png)
+![img](/Screenshots/screenshot8.png)
 
 Usamos as Arrow Keys para movimentar o personagem pela tela. Para encerrar o Game podemos clicar no botão fechar ou pressionar a tecla `[ESC]`.
 
