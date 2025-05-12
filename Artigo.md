@@ -922,11 +922,11 @@ Observe que estamos carregando cinco imagens, redimensionando-as e usando o mét
 
 As imagens, representam, respectivamente:
 
-- Um [jogador](/Exemplos/Collision/sprites/player.png)
-- Um [portal](/Exemplos/Collision/sprites/portal.png)
-- Um [tronco](/Exemplos/Collision/sprites/trunk.png)
-- Um [baú](/Exemplos/Collision/sprites/box.png)
-- Um [crânio](/Exemplos/Collision/sprites/skull.png)
+- Um [jogador](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/player.png)
+- Um [portal](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/portal.png)
+- Um [tronco](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/trunk.png)
+- Um [baú](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/box.png)
+- Um [crânio](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Exemplos/Collision/sprites/skull.png)
 
 Um detalhe que devemos citar é que o fundo do tronco é branco, então estamos usando uma técnica chamada *colorkey* que torna uma cor totalmente transparente. A função é bastante simples, é chamada `set_colorkey(COR)`.
 
