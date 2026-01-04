@@ -1293,10 +1293,10 @@ import pygame
 # Configurações globais
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 640
 SCREEN_SIZE = pygame.Rect((0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
-INITIAL_POS = (35, 500)  # Posição inicial mais adequada
+INITIAL_POS = (35, 500)
 BACKGROUND_BLUE = (104, 136, 247)
 GRAVITY = 0.5
-JUMP_STRENGTH = -12  # Valor negativo para ir para cima
+JUMP_STRENGTH = -12
 PLAYER_SPEED = 5
 TILE_SIZE = 32
 FPS = 60
