@@ -136,7 +136,7 @@ def main():
         "P                    PPPPPPPPPPP                       P",
         "P                                                      P",
         "P                                            PPPPP     P",
-        "P                                                      P",
+        "P                                   PPP                P",
         "P    PPPPPPPP                                          P",
         "P                                                    PPP",
         "P                          PPPPPPP                     P",
