@@ -37,7 +37,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, platforms):
         super().__init__()
         self.original_image = pygame.image.load('mario.png').convert_alpha()
-        self.original_image = pygame.transform.scale(self.original_image, (45, 55))
+        self.original_image = pygame.transform.scale(self.original_image, (45, 59))
         self.image = self.original_image
         self.flipped_image = pygame.transform.flip(self.original_image, True, False)
         self.rect = self.image.get_rect(topleft=pos)
@@ -151,6 +151,7 @@ def main():
         "P                       PPPPPPPP              PPPPPPPPPP",
         "P                                                      P",
         "P             PPPPPP                                   P",
+        "P                                                      P",
         "P                                                      P",
         "P                                                      P",
         "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
