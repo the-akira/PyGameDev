@@ -1273,213 +1273,215 @@ Vamos usar apenas duas imagens:
 - O personagem [Mario](/Exemplos/Mario%202.0/mario.png)
 - O [tijolo](/Exemplos/Mario%202.0/brick.png) tradicional do Game Mario
 
-O Game contará com apenas 4 Classes e uma função **main()**:
+### Estrutura do Jogo
 
-- **CameraLayeredUpdates**: Representará a câmera que irá seguir o nosso personagem. Nela também trataremos as colisões do personagem com os blocos.
-- **Entity**: Representará um objeto genérico que outras classes poderão herdar suas propriedades.
-- **Player**: Representará nosso personagem.
-- **Platform**: Representará uma plataforma no qual o personagem poderá caminhar sob e irá colidir.
+Nosso jogo é composto por três classes principais e uma função **main()**, responsáveis por organizar toda a lógica de funcionamento, movimentação, câmera e renderização do cenário.
 
-Na função **main()** vamos inicializar nosso mapa, os Sprites e desenharemos tudo na tela no Game Loop.
+As classes utilizadas são:
+
+- **Camera:** responsável por controlar a câmera do jogo, fazendo com que ela siga o personagem e respeite os limites do mapa.
+- **Player:** representa o personagem controlado pelo jogador, incluindo movimento, física, pulo e colisões.
+- **Platform:** representa os blocos sólidos do cenário, sobre os quais o personagem pode caminhar e colidir.
+
+Na função **main()** inicializamos o mapa, carregamos os sprites, configuramos a câmera e executamos o Game Loop, que é responsável por atualizar e desenhar o jogo na tela.
 
 Vejamos então o código para compreendermos melhor:
 
 ```python
 import pygame
 
-SCREEN_SIZE = pygame.Rect((0, 0, 800, 640))
-INITIAL_POS = (35, 700)
+# Configurações globais
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 640
+SCREEN_SIZE = pygame.Rect((0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
+INITIAL_POS = (35, 500)  # Posição inicial mais adequada
 BACKGROUND_BLUE = (104, 136, 247)
-GRAVITY = pygame.Vector2((0, 0.29))
+GRAVITY = 0.5
+JUMP_STRENGTH = -12  # Valor negativo para ir para cima
+PLAYER_SPEED = 5
 TILE_SIZE = 32
 FPS = 60
 
-class CameraLayeredUpdates(pygame.sprite.LayeredUpdates):
-    def __init__(self, target, world_size):
-        super().__init__()
+class Camera:
+    def __init__(self, target, world_width, world_height):
         self.target = target
-        self.cam = pygame.Vector2(0, 0)
-        self.world_size = world_size
-        if self.target:
-            self.add(target)
+        self.camera = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.world_width = world_width
+        self.world_height = world_height
 
-    def update(self, *args):
-        super().update(*args)
-        if self.target:
-            x = -self.target.rect.centerx + SCREEN_SIZE.width/2
-            y = -self.target.rect.centery + SCREEN_SIZE.height/2
-            self.cam += (pygame.Vector2((x, y)) - self.cam) * 0.05
-            self.cam.x = max(-(self.world_size.width-SCREEN_SIZE.width), min(0, self.cam.x))
-            self.cam.y = max(-(self.world_size.height-SCREEN_SIZE.height), min(0, self.cam.y))
-        if self.target.moving_left:
-            self.target.image = self.target.flipped
-        elif self.target.moving_right:
-            self.target.image = self.target.original_image
-
-    def draw(self, surface):
-        spritedict = self.spritedict
-        surface_blit = surface.blit
-        dirty = self.lostsprites
-        self.lostsprites = []
-        dirty_append = dirty.append
-        init_rect = self._init_rect
-        for sprite in self.sprites():
-            rec = spritedict[sprite]
-            newrect = surface_blit(sprite.image, sprite.rect.move(self.cam))
-            if rec is init_rect:
-                dirty_append(newrect)
-            else:
-                if newrect.colliderect(rec):
-                    dirty_append(newrect.union(rec))
-                else:
-                    dirty_append(newrect)
-                    dirty_append(rec)
-            spritedict[sprite] = newrect
-        return dirty            
-
-class Entity(pygame.sprite.Sprite):
-    def __init__(self, pos, *groups):
-        super().__init__(*groups)
-        self.image = pygame.Surface((TILE_SIZE, TILE_SIZE))
-        self.rect = self.image.get_rect(topleft=pos)
-
-class Player(Entity):
-    def __init__(self, platforms, pos, *groups):
-        super().__init__(pos)
-        self.image_load = pygame.image.load('mario.png').convert_alpha()
-        self.original_image = pygame.transform.scale(self.image_load, (55,65))
-        self.image = pygame.transform.scale(self.image_load, (55,65))
-        self.flipped = pygame.transform.flip(self.image, True, False)
-        self.rect = self.image.get_rect(topleft=pos)
-        self.vel = pygame.Vector2((0, 0))
-        self.on_ground = False
-        self.moving_right = False
-        self.moving_left = False
-        self.platforms = platforms
-        self.speed = 6
-        self.jump_strength = 9
+    def apply(self, entity):
+        return entity.rect.move(self.camera.topleft)
 
     def update(self):
-        pressed = pygame.key.get_pressed()
-        up = pressed[pygame.K_UP]
-        left = pressed[pygame.K_LEFT]
-        right = pressed[pygame.K_RIGHT]
-        running = pressed[pygame.K_SPACE]
+        x = -self.target.rect.centerx + SCREEN_WIDTH // 2
+        y = -self.target.rect.centery + SCREEN_HEIGHT // 2
+        
+        # Limitar a câmera aos limites do mundo
+        x = min(0, x)  # Lado esquerdo
+        x = max(-(self.world_width - SCREEN_WIDTH), x)  # Lado direito
+        y = min(0, y)  # Topo
+        y = max(-(self.world_height - SCREEN_HEIGHT), y)  # Base
+        
+        self.camera = pygame.Rect(x, y, self.world_width, self.world_height)
 
-        if up:
-            # pular apenas se estiver no chão
-            if self.on_ground: 
-                self.vel.y = -self.jump_strength
-        if left:
-            self.vel.x = -self.speed
-            self.moving_left = True
-            self.moving_right = False
-        if right:
-            self.vel.x = self.speed
-            self.moving_right = True
-            self.moving_left = False
-        if running:
-            self.vel.x *= 1.3
-        if not self.on_ground:
-            # só acelere com a gravidade se estiver no ar
-            self.vel += GRAVITY
-            # velocidade máxima de queda
-            if self.vel.y > 100: 
-                self.vel.y = 100
-        if not(left or right):
-            self.vel.x = 0
-        # incrementar na direção x
-        self.rect.left += self.vel.x
-        # executar colisão no eixo-x
-        self.collide(self.vel.x, 0, self.platforms)
-        # incrementar na direção y
-        self.rect.top += self.vel.y
-        # assumindo que estamos no ar
+class Player(pygame.sprite.Sprite):
+    def __init__(self, pos, platforms):
+        super().__init__()
+        self.original_image = pygame.image.load('mario.png').convert_alpha()
+        self.original_image = pygame.transform.scale(self.original_image, (45, 55))
+        self.image = self.original_image
+        self.flipped_image = pygame.transform.flip(self.original_image, True, False)
+        self.rect = self.image.get_rect(topleft=pos)
+        
+        # Física
+        self.velocity = pygame.Vector2(0, 0)
+        self.acceleration = pygame.Vector2(0, GRAVITY)
         self.on_ground = False
-        # executar a colisão no eixo-y
-        self.collide(0, self.vel.y, self.platforms)
+        self.platforms = platforms
+        
+        # Movimento
+        self.speed = PLAYER_SPEED
+        self.jump_strength = JUMP_STRENGTH
+        self.running_multiplier = 1.5
 
-    def collide(self, xvel, yvel, platforms):
-        for p in platforms:
-            if pygame.sprite.collide_rect(self, p):
-                if xvel > 0:
-                    self.rect.right = p.rect.left
-                if xvel < 0:
-                    self.rect.left = p.rect.right
-                if yvel > 0:
-                    self.rect.bottom = p.rect.top
+    def update(self):
+        self.handle_input()
+        self.apply_physics()
+        self.handle_collisions()
+
+    def handle_input(self):
+        keys = pygame.key.get_pressed()
+        
+        # Movimento horizontal
+        self.velocity.x = 0
+        if keys[pygame.K_LEFT]:
+            self.velocity.x = -self.speed
+            self.image = self.flipped_image
+        if keys[pygame.K_RIGHT]:
+            self.velocity.x = self.speed
+            self.image = self.original_image
+            
+        # Aceleração (corrida)
+        if keys[pygame.K_SPACE] and self.on_ground:
+            self.velocity.x *= self.running_multiplier
+            
+        # Pulo
+        if keys[pygame.K_UP] and self.on_ground:
+            self.velocity.y = self.jump_strength
+            self.on_ground = False
+
+    def apply_physics(self):
+        # Aplicar gravidade
+        if not self.on_ground:
+            self.velocity.y += self.acceleration.y
+            # Limitar velocidade de queda
+            self.velocity.y = min(self.velocity.y, 15)
+
+    def handle_collisions(self):
+        # Movimento horizontal
+        self.rect.x += self.velocity.x
+        for platform in self.platforms:
+            if self.rect.colliderect(platform.rect):
+                if self.velocity.x > 0:  # Movendo para a direita
+                    self.rect.right = platform.rect.left
+                elif self.velocity.x < 0:  # Movendo para a esquerda
+                    self.rect.left = platform.rect.right
+
+        # Movimento vertical
+        self.rect.y += self.velocity.y
+        self.on_ground = False
+        for platform in self.platforms:
+            if self.rect.colliderect(platform.rect):
+                if self.velocity.y > 0:  # Caindo
+                    self.rect.bottom = platform.rect.top
                     self.on_ground = True
-                    self.yvel = 0
-                if yvel < 0:
-                    self.rect.top = p.rect.bottom
+                    self.velocity.y = 0
+                elif self.velocity.y < 0:  # Pulando
+                    self.rect.top = platform.rect.bottom
+                    self.velocity.y = 0
 
-class Platform(Entity):
-    def __init__(self, pos, *groups):
-        super().__init__(pos, *groups)
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, pos):
+        super().__init__()
         self.image_load = pygame.image.load('brick.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image_load, (32,32))
+        self.image = pygame.transform.scale(self.image_load, (TILE_SIZE,TILE_SIZE))
+        self.rect = self.image.get_rect(topleft=pos)
+
+def create_level(level_layout, platform_group, all_sprites):
+    for y, row in enumerate(level_layout):
+        for x, tile in enumerate(row):
+            if tile == "P":
+                Platform((x * TILE_SIZE, y * TILE_SIZE)).add(platform_group, all_sprites)
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode(SCREEN_SIZE.size)
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Mario")
-    timer = pygame.time.Clock()
+    clock = pygame.time.Clock()
 
     level = [
-        "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
-        "P                                                       P",
-        "P                                                       P",
-        "P                                                       P",
-        "P                    PPPPPPPPPPP                        P",
-        "P                                                       P",
-        "P                                            PPPPP      P",
-        "P                                                       P",
-        "P    PPPPPPPP                                           P",
-        "P                                                     PPP",
-        "P                          PPPPPPP                      P",
-        "P                 PPPPPP                                P",
-        "P                                                       P",
-        "P         PPPPPPP                                PP     P",
-        "P                                               P       P",
-        "P                     PPPPPP          PPPPPPPPPP        P",
-        "P                                                       P",
-        "P   PPPPPPPPPPP                                         P",
-        "P                                                       P",
-        "P                 PPPPPPPPPPP      PPP        PPPPPPPPPPP",
-        "P                                                       P",
-        "P                                                       P",
-        "P                                                       P",
-        "P                                                       P",
-        "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",]
+        "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "P                                                      P",
+        "P                                                      P",
+        "P                                                      P",
+        "P                    PPPPPPPPPPP                       P",
+        "P                                                      P",
+        "P                                            PPPPP     P",
+        "P                                                      P",
+        "P    PPPPPPPP                                          P",
+        "P                                                    PPP",
+        "P                          PPPPPPP                     P",
+        "P                 PPPP                   PPPPPP        P",
+        "P                                                      P",
+        "P         PPPP                                         P",
+        "P                                                      P",
+        "P                     PPPPPP          PPPPPPPPPP       P",
+        "P                                                      P",
+        "P   PPPPPPPPPPP                                        P",
+        "P                                                      P",
+        "P                       PPPPPPPP              PPPPPPPPPP",
+        "P                                                      P",
+        "P             PPPPPP                                   P",
+        "P                                                      P",
+        "P                                                      P",
+        "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+    ]
 
+    # Grupos de sprites
+    all_sprites = pygame.sprite.Group()
     platforms = pygame.sprite.Group()
-    player = Player(platforms, INITIAL_POS)
-    level_width  = len(level[0]) * TILE_SIZE
+    
+    # Criar nível
+    level_width = len(level[0]) * TILE_SIZE
     level_height = len(level) * TILE_SIZE
-    entities = CameraLayeredUpdates(player, pygame.Rect(0, 0, level_width, level_height))
+    create_level(level, platforms, all_sprites)
+    
+    # Criar jogador
+    player = Player(INITIAL_POS, platforms)
+    all_sprites.add(player)
+    
+    # Configurar câmera
+    camera = Camera(player, level_width, level_height)
 
-    # construir o level do game
-    x = y = 0
-    for row in level:
-        for col in row:
-            if col == "P":
-                Platform((x, y), platforms, entities)
-            x += TILE_SIZE
-        y += TILE_SIZE
-        x = 0
-
-    while True:
+    running = True
+    while running:
+        # Eventos
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
-                return
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                running = False
 
-        entities.update()
+        # Atualizações
+        all_sprites.update()
+        camera.update()
+        
+        # Desenho
         screen.fill(BACKGROUND_BLUE)
-        entities.draw(screen)
-        pygame.display.update()
-        timer.tick(FPS)
+        for sprite in all_sprites:
+            screen.blit(sprite.image, camera.apply(sprite))
+        
+        pygame.display.flip()
+        clock.tick(FPS)
+
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
@@ -1487,27 +1489,155 @@ if __name__ == "__main__":
 
 Irei salvar o código como `mario.py` e executá-lo com o comando `python mario.py`, que irá me trazer o seguint *output*:
 
-![img](/Screenshots/screenshot8.png)
+![img](https://raw.githubusercontent.com/the-akira/PyGameDev/master/Screenshots/screenshot8.png)
 
 Usamos as Arrow Keys para movimentar o personagem pela tela. Para encerrar o Game podemos clicar no botão fechar ou pressionar a tecla `[ESC]`.
 
 Devemos agora considerar alguns detalhes importantes sobre nosso código.
 
-Vamos usar a classe **CameraLayeredUpdates** para construir o objeto **entities**, que receberá o objeto **player** como argumento e um retângulo que representará nosso mapa. Nela temos dois métodos:
+### Configurações Globais
 
-- **update()**: Responsável por atualizar a posição do personagem na tela e fixar a câmera no personagem fazendo com que ela siga ele.
-- **draw()**: Responsável por atualizar apenas certas áreas, essas áreas são chamadas de "dirty rects" porque precisam de um redesenho e normalmente têm uma forma retangular. Para compreender melhor este conceito você poder ler este excelente [artigo](https://dr0id.bitbucket.io/legacy/pygame_tutorial01.html) escrito pelo dr0id.
+Antes da definição das classes, declaramos algumas constantes globais que controlam o comportamento do jogo:
 
-A classe **player** será utilizada para construir o objeto que representará nosso personagem, ela recebe como argumento as plataformas e a posição inicial do personagem e conta com dois métodos:
+```python
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 640
+TILE_SIZE = 32
+FPS = 60
+GRAVITY = 0.5
+PLAYER_SPEED = 5
+JUMP_STRENGTH = -12
+```
 
-- **update()**: Responsável por atualizar a posição do personagem na tela de acordo com a tecla acionada pelo jogador.
-- **collide()**: Responsável por tratar as colisões com os retângulos.
+Essas constantes facilitam ajustes futuros e tornam o código mais organizado, centralizando valores importantes como tamanho da tela e dos tiles, taxa de quadros por segundo, gravidade, velocidade do personagem e força do pulo.
 
-Um detalhe importante que devemos lembrar é que estamos utilizando o conceito de Vetores para manipular as coordenadas **x** e **y**, para encontrar mais detalhes sobre eles, podemos visitar a documentação do módulo [math](https://www.pygame.org/docs/ref/math.html) do Pygame.
+### Classe Camera
 
-Na função **main()** de nosso Game, estamos definindo o mapa de nosso Jogo na variável **level**, onde todos os **P's** serão renderizados como tijolos, perceba que esta variável é uma **list** de **strings**.
+A classe **Camera** é responsável por simular uma câmera que acompanha o personagem pelo mapa. Em vez de mover diretamente o jogador pela tela, o que fazemos é mover o mundo ao redor dele.
 
-Finalmente construímos o nosso "level" através da classe **Platform**, damos início ao Game Loop, atualizamos todas as entities, preenchemos o background com a cor definida na variável **BACKGROUND_BLUE**, desenhamos as entities na tela e atualizamos o display. Nosso clock é setado para operar em 60 FPS.
+A câmera recebe como parâmetros:
+
+- O alvo (**target**), que será o jogador
+- A largura e altura do mundo
+
+#### Atualização da Câmera
+
+No método **update()**, calculamos a posição da câmera de modo que o jogador fique centralizado na tela:
+
+```python
+x = -self.target.rect.centerx + SCREEN_WIDTH // 2
+y = -self.target.rect.centery + SCREEN_HEIGHT // 2
+```
+
+Em seguida, limitamos o deslocamento da câmera para impedir que ela mostre áreas fora do mapa:
+
+```python
+x = min(0, x)
+x = max(-(self.world_width - SCREEN_WIDTH), x)
+```
+
+Isso garante que a câmera nunca ultrapasse os limites do cenário.
+
+#### Aplicação da Câmera
+
+O método **apply()** ajusta a posição dos sprites antes de desenhá-los na tela:
+
+```python
+def apply(self, entity):
+    return entity.rect.move(self.camera.topleft)
+```
+
+Dessa forma, todos os objetos do jogo são desenhados considerando o deslocamento da câmera.
+
+### Classe Player
+
+A classe **Player** representa o personagem principal do jogo. Ela herda de `pygame.sprite.Sprite` e encapsula toda a lógica de movimentação, física e colisões.
+
+O personagem possui:
+
+- Um sprite original e um sprite invertido.
+- Vetores de velocidade e aceleração.
+- Controle de estado para saber se está no chão.
+- Referência às plataformas do cenário.
+
+#### Entrada do Jogador
+
+A leitura do teclado ocorre no método **handle_input()**:
+
+- Setas esquerda e direita movem o personagem horizontalmente.
+- Seta para cima faz o personagem pular (apenas se estiver no chão).
+- Barra de espaço permite correr.
+
+A velocidade horizontal é redefinida a cada frame, garantindo um movimento preciso e previsível.
+
+#### Física e Gravidade
+
+No método **apply_physics()**, aplicamos a gravidade ao personagem sempre que ele estiver no ar:
+
+```python
+self.velocity.y += self.acceleration.y
+```
+
+Também limitamos a velocidade máxima de queda para manter o controle do movimento.
+
+#### Colisões
+
+As colisões são tratadas no método **handle_collisions()** e ocorrem separadamente em cada eixo, uma técnica amplamente utilizada em jogos 2D.
+
+**Colisões no eixo X**
+
+- O personagem se move horizontalmente.
+- Caso haja colisão, sua posição é ajustada para evitar atravessar a plataforma.
+
+**Colisões no eixo Y**
+
+- O personagem se move verticalmente.
+- Detectamos se ele está caindo ou pulando.
+- Quando toca o chão, o estado **on_ground** é ativado.
+
+**Esse processo garante:**
+
+- Pulos consistentes.
+- Detecção correta de chão.
+- Interações físicas estáveis.
+
+### Classe Platform
+
+A classe **Platform** representa os blocos sólidos do cenário, como tijolos ou chão. Cada plataforma possui um sprite e um retângulo de colisão.
+
+Esses objetos são usados tanto para renderização quanto para detecção de colisões com o jogador.
+
+### Construção do Mapa
+
+O mapa do jogo é definido como uma **lista de strings**, onde cada caractere representa um elemento do cenário:
+
+- "P" indica uma plataforma sólida
+- Espaços representam áreas vazias
+
+A função **create_level()** percorre essa matriz e cria os blocos correspondentes no mundo do jogo.
+
+Essa abordagem torna o mapa fácil de visualizar, editar e expandir.
+
+### Função main() e Game Loop
+
+Na função **main()** inicializamos o [Pygame](https://www.pygame.org/news), configuramos a janela, criamos o nível, o jogador e a câmera.
+
+Em seguida, iniciamos o Game Loop, que executa continuamente enquanto o jogo estiver rodando:
+
+1. Processa eventos (teclado e fechamento da janela).
+2. Atualiza a lógica dos objetos.
+3. Atualiza a câmera.
+4. Desenha o cenário na tela.
+5. Controla a taxa de FPS.
+
+Durante a renderização, todos os sprites são desenhados com a posição ajustada pela câmera:
+
+```python
+screen.blit(sprite.image, camera.apply(sprite))
+```
+
+Isso cria o efeito de deslocamento do mundo conforme o personagem se move.
+
+Com essa estrutura, temos um jogo de plataforma 2D funcional, organizado e fácil de expandir. A separação clara entre câmera, personagem e cenário facilita a manutenção do código e permite a adição de novos recursos, como inimigos, animações, fases adicionais e itens coletáveis.
 
 ## Conclusão
 
