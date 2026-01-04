@@ -1275,13 +1275,13 @@ Vamos usar apenas duas imagens:
 
 ### Estrutura do Jogo
 
-Nosso jogo é composto por três classes principais e uma função **main()**, responsáveis por organizar toda a lógica de funcionamento, movimentação, câmera e renderização do cenário.
+Nosso jogo é composto por três classes principais e uma função **main()**, responsáveis por organizar toda a lógica de funcionamento, movimentação, câmera e renderização do cenário. Também temos a função auxiliar **create_level()**, que constrói o nosso mapa a partir de uma matriz de strings.
 
 As classes utilizadas são:
 
-- **Camera:** responsável por controlar a câmera do jogo, fazendo com que ela siga o personagem e respeite os limites do mapa.
-- **Player:** representa o personagem controlado pelo jogador, incluindo movimento, física, pulo e colisões.
-- **Platform:** representa os blocos sólidos do cenário, sobre os quais o personagem pode caminhar e colidir.
+- **Camera:** Responsável por controlar a câmera do jogo, fazendo com que ela siga o personagem e respeite os limites do mapa.
+- **Player:** Representa o personagem controlado pelo jogador, incluindo movimento, física, pulo e colisões.
+- **Platform:** Representa os blocos sólidos do cenário, sobre os quais o personagem pode caminhar e colidir.
 
 Na função **main()** inicializamos o mapa, carregamos os sprites, configuramos a câmera e executamos o Game Loop, que é responsável por atualizar e desenhar o jogo na tela.
 
@@ -1501,14 +1501,27 @@ Antes da definição das classes, declaramos algumas constantes globais que cont
 
 ```python
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 640
+SCREEN_SIZE = pygame.Rect((0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
+INITIAL_POS = (35, 500)  # Posição inicial mais adequada
+BACKGROUND_BLUE = (104, 136, 247)
+GRAVITY = 0.5
+JUMP_STRENGTH = -12  # Valor negativo para ir para cima
+PLAYER_SPEED = 5
 TILE_SIZE = 32
 FPS = 60
-GRAVITY = 0.5
-PLAYER_SPEED = 5
-JUMP_STRENGTH = -12
 ```
 
-Essas constantes facilitam ajustes futuros e tornam o código mais organizado, centralizando valores importantes como tamanho da tela e dos tiles, taxa de quadros por segundo, gravidade, velocidade do personagem e força do pulo.
+Essas constantes facilitam ajustes futuros e tornam o código mais organizado, centralizando valores importantes como:
+
+- **SCREEN_WIDTH e SCREEN_HEIGHT:** Definem a largura e a altura da janela do jogo, em pixels. Neste projeto, a tela possui 800×640 pixels.
+- **SCREEN_SIZE:** Cria um objeto `pygame.Rect` que representa a área visível da tela. Esse retângulo pode ser utilizado para cálculos de câmera, limites de tela e centralização de elementos.
+- **INITIAL_POS:** Define a posição inicial do jogador no mapa, em coordenadas (x, y). Esse valor foi escolhido para posicionar o personagem em um ponto seguro do cenário ao iniciar o jogo.
+- **BACKGROUND_BLUE:** Define a cor de fundo da tela no formato RGB. Neste caso, é um tom de azul usado para representar o céu.
+- **GRAVITY:** Valor que representa a força da gravidade aplicada ao personagem. Esse número é somado à velocidade vertical a cada frame enquanto o personagem está no ar.
+- **JUMP_STRENGTH:** Define a força do pulo do personagem. O valor é negativo porque, no sistema de coordenadas do Pygame, valores negativos no eixo Y fazem o objeto subir.
+- **PLAYER_SPEED:** Controla a velocidade horizontal do personagem ao se mover para a esquerda ou direita.
+- **TILE_SIZE:** Define o tamanho padrão dos blocos do cenário (plataformas), em pixels. Esse valor é usado tanto para renderização quanto para o cálculo do mapa.
+- **FPS:** Define a taxa máxima de quadros por segundo do jogo. Um valor de 60 FPS garante uma movimentação suave e consistente.
 
 ### Classe Camera
 
@@ -1602,7 +1615,7 @@ As colisões são tratadas no método **handle_collisions()** e ocorrem separada
 
 ### Classe Platform
 
-A classe **Platform** representa os blocos sólidos do cenário, como tijolos ou chão. Cada plataforma possui um sprite e um retângulo de colisão.
+A classe **Platform** representa os blocos sólidos do cenário, neste caso, os tijolos. Cada plataforma possui um sprite e um retângulo de colisão.
 
 Esses objetos são usados tanto para renderização quanto para detecção de colisões com o jogador.
 
@@ -1613,6 +1626,19 @@ O mapa do jogo é definido como uma **lista de strings**, onde cada caractere re
 - "P" indica uma plataforma sólida
 - Espaços representam áreas vazias
 
+```python
+for y, row in enumerate(level_layout):
+    for x, tile in enumerate(row):
+        if tile == "P":
+            Platform((x * TILE_SIZE, y * TILE_SIZE))
+```
+
+Essa abordagem facilita:
+
+- Edição do mapa.
+- Criação de novos níveis.
+- Possível carregamento futuro via arquivo externo.
+
 A função **create_level()** percorre essa matriz e cria os blocos correspondentes no mundo do jogo.
 
 Essa abordagem torna o mapa fácil de visualizar, editar e expandir.
@@ -1621,13 +1647,13 @@ Essa abordagem torna o mapa fácil de visualizar, editar e expandir.
 
 Na função **main()** inicializamos o [Pygame](https://www.pygame.org/news), configuramos a janela, criamos o nível, o jogador e a câmera.
 
-Em seguida, iniciamos o Game Loop, que executa continuamente enquanto o jogo estiver rodando:
+Em seguida, iniciamos o Game Loop, que executa continuamente enquanto o jogo estiver rodando e irá:
 
-1. Processa eventos (teclado e fechamento da janela).
-2. Atualiza a lógica dos objetos.
-3. Atualiza a câmera.
-4. Desenha o cenário na tela.
-5. Controla a taxa de FPS.
+1. Processar eventos (teclado e fechamento da janela).
+2. Atualizar a lógica dos objetos.
+3. Atualizar a câmera.
+4. Desenhar o cenário na tela.
+5. Controlar a taxa de FPS.
 
 Durante a renderização, todos os sprites são desenhados com a posição ajustada pela câmera:
 
