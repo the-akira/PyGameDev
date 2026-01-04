@@ -57,7 +57,7 @@ class Player(Entity):
     def __init__(self, platforms, pos, *groups):
         super().__init__(Color("#0000FF"), pos)
         self.image_load = pygame.image.load('mario.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image_load, (55,65))
+        self.image = pygame.transform.scale(self.image_load, (55,72))
         self.rect = self.image.get_rect(topleft=pos)
         self.vel = pygame.Vector2((0, 0))
         self.onGround = False
