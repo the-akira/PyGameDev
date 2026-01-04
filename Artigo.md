@@ -1633,12 +1633,6 @@ for y, row in enumerate(level_layout):
             Platform((x * TILE_SIZE, y * TILE_SIZE))
 ```
 
-Essa abordagem facilita:
-
-- Edição do mapa.
-- Criação de novos níveis.
-- Possível carregamento futuro via arquivo externo.
-
 A função **create_level()** percorre essa matriz e cria os blocos correspondentes no mundo do jogo.
 
 Essa abordagem torna o mapa fácil de visualizar, editar e expandir.
