@@ -1529,8 +1529,8 @@ A classe **Camera** é responsável por simular uma câmera que acompanha o pers
 
 A câmera recebe como parâmetros:
 
-- O alvo (**target**), que será o jogador
-- A largura e altura do mundo
+- O alvo (**target**), que será o jogador.
+- A largura e altura do mundo.
 
 #### Atualização da Câmera
 
@@ -1623,8 +1623,8 @@ Esses objetos são usados tanto para renderização quanto para detecção de co
 
 O mapa do jogo é definido como uma **matriz de strings**, onde cada caractere representa um elemento do cenário:
 
-- "P" indica uma plataforma sólida
-- Espaços representam áreas vazias
+- "P" indica uma plataforma sólida.
+- Espaços representam áreas vazias.
 
 ```python
 for y, row in enumerate(level_layout):
