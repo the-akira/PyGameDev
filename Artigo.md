@@ -1621,7 +1621,7 @@ Esses objetos são usados tanto para renderização quanto para detecção de co
 
 ### Construção do Mapa
 
-O mapa do jogo é definido como uma **lista de strings**, onde cada caractere representa um elemento do cenário:
+O mapa do jogo é definido como uma **matriz de strings**, onde cada caractere representa um elemento do cenário:
 
 - "P" indica uma plataforma sólida
 - Espaços representam áreas vazias
